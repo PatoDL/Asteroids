@@ -6,50 +6,54 @@ namespace Juego
 {
 	namespace Gameplay
 	{
-		Nave nave;
+		//Nave nave;
 		
 		void iniciarNave();
 		void moverNave();
 		void dibujarNave();
 
+		Vector2 posPunta;
+		Vector2 posIzq;
+		Vector2 posDer;
+
 		void iniciarNave()
 		{
-			nave.posPunta = { screenWidth / 2, screenHeight / 2 };
-			nave.posIzq = { screenWidth / 2 - 15,screenHeight / 2 + 15 };
-			nave.posDer = { screenWidth / 2 + 15,screenHeight / 2 + 15 };
+			posPunta = { (float)screenWidth/2,(float)screenHeight/2};
+			posIzq = { (float)screenWidth / 2-15,(float)screenHeight / 2+15 };
+			posDer = { (float)screenWidth / 2+15,(float)screenHeight / 2+15 };
 		}
 
 		void moverNave()
 		{
 			if (IsKeyDown(KEY_UP))
 			{
-				nave.posPunta.y--;
-				nave.posDer.y--;
-				nave.posIzq.y--;
+				posPunta.y--;
+				posDer.y--;
+				 posIzq.y--;
 			}
 			if (IsKeyDown(KEY_DOWN))
 			{
-				nave.posPunta.y++;
-				nave.posDer.y++;
-				nave.posIzq.y++;
+				 posPunta.y++;
+				 posDer.y++;
+				 posIzq.y++;
 			}
 			if (IsKeyDown(KEY_LEFT))
 			{
-				nave.posPunta.x--;
-				nave.posDer.x--;
-				nave.posIzq.x--;
+				 posPunta.x--;
+				 posDer.x--;
+				 posIzq.x--;
 			}
 			if (IsKeyDown(KEY_RIGHT))
 			{
-				nave.posPunta.x++;
-				nave.posDer.x++;
-				nave.posIzq.x++;
+				 posPunta.x++;
+				 posDer.x++;
+				 posIzq.x++;
 			}
 		}
 
 		void dibujarNave()
 		{
-			DrawTriangle(nave.posPunta, nave.posDer, nave.posIzq, WHITE);
+			DrawTriangle(posIzq, posDer, posPunta, WHITE);
 		}
 
 	}

@@ -4,12 +4,12 @@ namespace Juego
 {
 	namespace Gameplay
 	{
-		struct Nave
+		/*struct Nave
 		{
 			Vector2 posPunta;
 			Vector2 posIzq;
 			Vector2 posDer;
-		};
+		};*/
 
 		void iniciarNave();
 		void moverNave();
