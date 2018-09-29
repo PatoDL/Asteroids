@@ -10,8 +10,8 @@ namespace Juego
 
 	Estado estado=menu;
 	Estado estadoA=menu;
-	static void inicializarJuego();
 	void ejecutarJuego();
+	static void inicializarJuego();
 	static void finalizarJuego();
 	static void dibujarJuego();
 	static void cambiarEstado();
@@ -37,7 +37,7 @@ namespace Juego
 		{
 			if (estado != estadoA)
 			{
-				Gameplay::iniciarNave();
+				Gameplay::iniciarComponentesGP();
 			}
 		}
 	}
@@ -60,7 +60,7 @@ namespace Juego
 			Menu::dibujarMenu();
 			break;
 		case juego:
-			Gameplay::dibujarNave();
+			Gameplay::dibujarGameplay();
 			break;
 		}
 		EndDrawing();
