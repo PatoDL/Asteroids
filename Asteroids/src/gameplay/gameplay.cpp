@@ -7,43 +7,50 @@ namespace Juego
 	namespace Gameplay
 	{
 		Nave nave;
-		Asteroide asteroides[10];
+		static const int cantAsteroides = 5;
+		Asteroide asteroides[cantAsteroides];
+		static bool gameOver;
 		
 		static void iniciarNave();
+		static void moverNave();
 		static void dibujarNave();
 		static void iniciarAsteroides();
 		static void dibujarAsteroides();
-		void moverNave();
+		static void chequearColisionConAsteroide();
+		void chequearInputGP();
+		void actualizarGP();
 		void dibujarGameplay();
 		void iniciarComponentesGP();
 
-		bool separarAsteroides(int i, int j)
+		int randomizarColor()
 		{
-			//if(asteroides[i].pos.x<=)
-			return true;
+			return GetRandomValue(0, 255);
 		}
 
 		void iniciarAsteroides()
 		{
-			for (int i = 0; i < 10; i++)
+			for (int i = 0; i < cantAsteroides; i++)
 			{
-				asteroides[i].pos = { (float)GetRandomValue(0,screenWidth),(float)GetRandomValue(0,screenHeight) };
+				asteroides[i].radio = 45;
 
-				asteroides[i].radio = 30;
+				asteroides[i].pos = { (float)GetRandomValue(asteroides[i].radio,screenWidth - asteroides[i].radio),(float)GetRandomValue(asteroides[i].radio,screenHeight - asteroides[i].radio) };
+			
+				asteroides[i].color = { (unsigned char)randomizarColor() ,(unsigned char)randomizarColor() ,(unsigned char)randomizarColor() ,(unsigned char)255 };
 
-				for (int j = 0; j < 20; j++)
+			}
+
+			for (int i = 0; i < cantAsteroides; i++)
+			{
+				for (int j = 0; j < cantAsteroides; j++)
 				{
-					if (CheckCollisionCircles(asteroides[i].pos, asteroides[i].radio, asteroides[j].pos, asteroides[j].radio))
+					if (i != j)
 					{
-						asteroides[j].pos = { (float)GetRandomValue(0,screenWidth),(float)GetRandomValue(0,screenHeight) };
+						while (CheckCollisionCircles(asteroides[i].pos, asteroides[i].radio, asteroides[j].pos, asteroides[j].radio + 20) || CheckCollisionCircles({ screenWidth / 2 - nave.base / 2,screenHeight / 2 - nave.altura / 2 }, 250.0, asteroides[i].pos, asteroides[i].radio))
+						{
+							asteroides[i].pos = { (float)GetRandomValue(asteroides[i].radio,screenWidth - asteroides[i].radio),(float)GetRandomValue(asteroides[i].radio,screenHeight - asteroides[i].radio) };
+						}
 					}
 				}
-
-				while (CheckCollisionCircles({ screenWidth / 2 - nave.base / 2,screenHeight / 2 - nave.altura / 2 }, 250.0, asteroides[i].pos, asteroides[i].radio))
-				{
-					asteroides[i].pos = { (float)GetRandomValue(0,screenWidth),(float)GetRandomValue(0,screenHeight) };
-				}
-
 			}
 		}
 
@@ -61,6 +68,12 @@ namespace Juego
 		{
 			iniciarNave();
 			iniciarAsteroides();
+			gameOver = false;
+		}
+
+		void chequearInputGP()
+		{
+			moverNave();
 		}
 
 		void moverNave()
@@ -91,6 +104,27 @@ namespace Juego
 			}
 		}
 
+		void chequearColisionConAsteroide()
+		{
+			for (int i = 0; i < cantAsteroides; i++)
+			{
+				if (CheckCollisionCircles({ nave.posDer.x - (nave.posDer.x - nave.posIzq.x) / 2, nave.posPunta.y + (nave.posDer.y - nave.posPunta.y) / 2 }, nave.radioColision, asteroides[i].pos, asteroides[i].radio))
+				{
+					asteroides[i].color = BLACK;
+					gameOver = true;
+				}
+			}
+		}
+
+		void actualizarGP()
+		{
+			chequearColisionConAsteroide();
+			if (gameOver)
+			{
+			//	estado = gameover;
+			}
+		}
+
 		void dibujarNave()
 		{
 			if (IsKeyDown(KEY_SPACE)) { DrawCircle(nave.posDer.x - (nave.posDer.x - nave.posIzq.x) / 2, nave.posPunta.y + (nave.posDer.y - nave.posPunta.y) / 2, nave.radioColision, GREEN); }
@@ -101,7 +135,7 @@ namespace Juego
 		{
 			for (int i = 0; i < 20; i++)
 			{
-				DrawCircle(asteroides[i].pos.x, asteroides[i].pos.y, asteroides[i].radio, RED);
+				DrawCircle(asteroides[i].pos.x, asteroides[i].pos.y, asteroides[i].radio, asteroides[i].color);
 			}
 		}
 

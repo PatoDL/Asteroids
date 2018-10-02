@@ -26,19 +26,22 @@ namespace Juego
 			Menu::chequearInputMenu();
 			break;
 		case juego:
-			Gameplay::moverNave();
+			Gameplay::chequearInputGP();
 			break;
 		}
 	}
 
 	void actualizarJuego()
 	{
-		if (estado == juego)
+		switch (estado)
 		{
+		case juego:
 			if (estado != estadoA)
 			{
 				Gameplay::iniciarComponentesGP();
 			}
+			Gameplay::actualizarGP();
+			break;
 		}
 	}
 

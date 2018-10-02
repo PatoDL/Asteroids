@@ -14,6 +14,7 @@ namespace Juego
 			int radioColision;
 			float altura;
 			float base;
+			Color color;
 		};
 
 		struct Asteroide
@@ -21,11 +22,13 @@ namespace Juego
 			Vector2 pos;
 			float radio;
 			Vector2 vel;
+			Color color;
 		};
 
-		void moverNave();
-		void dibujarGameplay();
 		void iniciarComponentesGP();
+		void chequearInputGP();
+		void actualizarGP();
+		void dibujarGameplay();
 	}
 }
 #endif // !GAMEPLAY_H
