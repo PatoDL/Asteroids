@@ -23,24 +23,21 @@ namespace Juego
 			{
 				asteroides[i].pos = { (float)GetRandomValue(0,screenWidth),(float)GetRandomValue(0,screenHeight) };
 
-				asteroides[i].radio = GetRandomValue(20, 30);
+				asteroides[i].radio = 30;
+
+				for (int j = 0; j < 20; j++)
+				{
+					if (CheckCollisionCircles(asteroides[i].pos, asteroides[i].radio, asteroides[j].pos, asteroides[j].radio))
+					{
+						asteroides[j].pos = { (float)GetRandomValue(0,screenWidth),(float)GetRandomValue(0,screenHeight) };
+					}
+				}
 
 				while (CheckCollisionCircles({ screenWidth / 2 - nave.base / 2,screenHeight / 2 - nave.altura / 2 }, 250.0, asteroides[i].pos, asteroides[i].radio))
 				{
 					asteroides[i].pos = { (float)GetRandomValue(0,screenWidth),(float)GetRandomValue(0,screenHeight) };
 				}
 
-
-				for (int j = 0; j < 20; j++)
-				{
-					if (CheckCollisionCircles(asteroides[i].pos, asteroides[i].radio, asteroides[j].pos, asteroides[j].radio))
-					{
-						while (CheckCollisionCircles(asteroides[i].pos, asteroides[i].radio, asteroides[j].pos, asteroides[j].radio))
-						{
-							asteroides[j].pos = { (float)GetRandomValue(0,screenWidth),(float)GetRandomValue(0,screenHeight) };
-						}
-					}
-				}
 			}
 		}
 
