@@ -7,7 +7,7 @@ namespace Juego
 	namespace Gameplay
 	{
 		Nave nave;
-		Asteroide asteroides[20];
+		Asteroide asteroides[10];
 		
 		static void iniciarNave();
 		static void dibujarNave();
@@ -19,18 +19,38 @@ namespace Juego
 
 		void iniciarAsteroides()
 		{
-			for (int i = 0; i < 20; i++)
+			for (int i = 0; i < 10; i++)
 			{
 				asteroides[i].pos = { (float)GetRandomValue(0,screenWidth),(float)GetRandomValue(0,screenHeight) };
+
 				asteroides[i].radio = GetRandomValue(20, 30);
+
+				while (CheckCollisionCircles({ screenWidth / 2 - nave.base / 2,screenHeight / 2 - nave.altura / 2 }, 250.0, asteroides[i].pos, asteroides[i].radio))
+				{
+					asteroides[i].pos = { (float)GetRandomValue(0,screenWidth),(float)GetRandomValue(0,screenHeight) };
+				}
+
+
+				for (int j = 0; j < 20; j++)
+				{
+					if (CheckCollisionCircles(asteroides[i].pos, asteroides[i].radio, asteroides[j].pos, asteroides[j].radio))
+					{
+						while (CheckCollisionCircles(asteroides[i].pos, asteroides[i].radio, asteroides[j].pos, asteroides[j].radio))
+						{
+							asteroides[j].pos = { (float)GetRandomValue(0,screenWidth),(float)GetRandomValue(0,screenHeight) };
+						}
+					}
+				}
 			}
 		}
 
 		void iniciarNave()
 		{
-			nave.posPunta = { (float)screenWidth/2,(float)screenHeight/2-15};
-			nave.posIzq = { (float)screenWidth / 2-15,(float)screenHeight / 2+15 };
-			nave.posDer = { (float)screenWidth / 2+15,(float)screenHeight / 2+15 };
+			nave.altura = 30;
+			nave.base = 30;
+			nave.posPunta = { (float)screenWidth/2,(float)screenHeight/2-nave.altura/2};
+			nave.posIzq = { (float)screenWidth / 2-nave.base/2,(float)screenHeight / 2+nave.base/2 };
+			nave.posDer = { (float)screenWidth / 2+nave.base/2,(float)screenHeight / 2+nave.base/2 };
 			nave.radioColision = (nave.posDer.y-nave.posPunta.y)/2+10;
 		}
 

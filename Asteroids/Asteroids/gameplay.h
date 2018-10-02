@@ -12,12 +12,14 @@ namespace Juego
 			Vector2 posDer;
 			float rotacion;
 			int radioColision;
+			float altura;
+			float base;
 		};
 
 		struct Asteroide
 		{
 			Vector2 pos;
-			int radio;
+			float radio;
 			Vector2 vel;
 		};
 
