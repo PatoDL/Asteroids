@@ -17,6 +17,12 @@ namespace Juego
 		void dibujarGameplay();
 		void iniciarComponentesGP();
 
+		bool separarAsteroides(int i, int j)
+		{
+			//if(asteroides[i].pos.x<=)
+			return true;
+		}
+
 		void iniciarAsteroides()
 		{
 			for (int i = 0; i < 10; i++)
