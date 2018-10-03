@@ -2,6 +2,7 @@
 #include "raylib.h"
 #include "menu/menu.h"
 #include "gameplay/gameplay.h"
+#include "gameover/gameover.h"
 
 namespace Juego 
 {
@@ -28,6 +29,9 @@ namespace Juego
 		case juego:
 			Gameplay::chequearInputGP();
 			break;
+		case gameover:
+			Gameover::chequearInputGO();
+			break;
 		}
 	}
 
@@ -50,6 +54,15 @@ namespace Juego
 		if (estado != estadoA)
 		{
 			estadoA = estado;
+			switch (estado)
+			{
+			case menu:
+				SetExitKey(KEY_ESCAPE);
+				break;
+			default:
+				SetExitKey(0);
+				break;
+			}
 		}
 	}
 

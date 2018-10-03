@@ -19,6 +19,9 @@
     <Filter Include="Archivos de origen\menu">
       <UniqueIdentifier>{fedcb8a6-25a0-456d-88d0-2eb8175bced9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Archivos de origen\gameover">
+      <UniqueIdentifier>{e1b2f2e0-9cc5-4910-9b7c-6882cfb2927c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\juego.cpp">
@@ -33,6 +36,9 @@
     <ClCompile Include="..\src\menu\menu.cpp">
       <Filter>Archivos de origen\menu</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\gameover\gameover.cpp">
+      <Filter>Archivos de origen\gameover</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\juego.h">
@@ -43,6 +49,9 @@
     </ClInclude>
     <ClInclude Include="..\src\menu\menu.h">
       <Filter>Archivos de origen\menu</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\gameover\gameover.h">
+      <Filter>Archivos de origen\gameover</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
