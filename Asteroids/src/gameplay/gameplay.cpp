@@ -10,9 +10,10 @@ namespace Juego
 		static const int cantAsteroides = 5;
 		Asteroide asteroides[cantAsteroides];
 		static bool gameOver;
-		bool tocoPared= false;
+		float bordes[4];
 		
 		static void iniciarNave();
+		static void iniciarBordes();
 		static void moverNave();
 		static void dibujarNave();
 		static void iniciarAsteroides();
@@ -56,20 +57,29 @@ namespace Juego
 			}
 		}
 
+		void iniciarBordes()
+		{
+			bordes[0] = nave.altura/2;
+			bordes[1] = nave.base/2;
+			bordes[2] = screenWidth - nave.base / 2;
+			bordes[3] = screenHeight - nave.altura / 2;
+		}
+
 		void iniciarNave()
 		{
 			nave.altura = 30;
 			nave.base = 30;
-			nave.posPunta = { (float)screenWidth/2,(float)screenHeight/2-nave.altura/2};
-			nave.posIzq = { (float)screenWidth / 2-nave.base/2,(float)screenHeight / 2+nave.base/2 };
-			nave.posDer = { (float)screenWidth / 2+nave.base/2,(float)screenHeight / 2+nave.base/2 };
-			nave.posPrin = { nave.posDer.x - (nave.posDer.x - nave.posIzq.x) / 2, nave.posPunta.y + (nave.posDer.y - nave.posPunta.y) / 2 };
+			nave.posPrin = {(float)screenWidth / 2,(float)screenHeight / 2 };
+			nave.posPunta = {(float) nave.posPrin.x,(float) nave.posPrin.y-nave.altura/2};
+			nave.posIzq = {(float) nave.posPrin.x-nave.base/2,(float) nave.posPrin.y+nave.altura/2};
+			nave.posDer = {(float) nave.posPrin.x+nave.base/2,(float) nave.posPrin.y+nave.altura/2};
 			nave.radioColision = (nave.posDer.y-nave.posPunta.y)/2+10;
 			nave.color = WHITE;
 		}
 
 		void iniciarComponentesGP()
 		{
+			iniciarBordes();
 			iniciarNave();
 			iniciarAsteroides();
 			gameOver = false;
@@ -89,71 +99,66 @@ namespace Juego
 		{
 			if (IsKeyDown(KEY_UP))
 			{
-				nave.posPunta.y--;
-				nave.posDer.y--;
-				nave.posIzq.y--;
+				nave.posPrin.y-=0.25;
 			}
 			if (IsKeyDown(KEY_DOWN))
 			{
-				nave.posPunta.y++;
-				nave.posDer.y++;
-				nave.posIzq.y++;
+				nave.posPrin.y+=0.25;
 			}
 			if (IsKeyDown(KEY_LEFT))
 			{
-				nave.posPunta.x--;
-				nave.posDer.x--;
-				nave.posIzq.x--;
+				nave.posPrin.x-=0.25;
 			}
 			if (IsKeyDown(KEY_RIGHT))
 			{
-				nave.posPunta.x++;
-				nave.posDer.x++;
-				nave.posIzq.x++;
-			}
-			if (nave.posPunta.y < 0 || nave.posDer.x > screenWidth||nave.posIzq.x<0||nave.posDer.y>screenHeight)
-			{
-				nave.posPunta = nave.posPunta;
-				nave.posDer = nave.posDer;
-				nave.posIzq = nave.posIzq;
+				nave.posPrin.x+=0.25;
 			}
 		}
 
 		void chequearColisionConBordes()
 		{
-			Rectangle bordes[4];
-			bordes[0].x = -1;
-			bordes[0].y = 0;
-			bordes[0].width = 3;
-			bordes[0].height = screenHeight;
-			bordes[1].x = 0;
-			bordes[1].y = -1;
-			bordes[1].width = screenWidth;
-			bordes[1].height = 3;
-			bordes[2].x = 0;
-			bordes[2].y = screenHeight-2;
-			bordes[2].height = 3;
-			bordes[2].width = screenWidth;
-			bordes[3].x = screenWidth-2;
-			bordes[3].y = 0;
-			bordes[3].width = 3;
-			bordes[3].height = screenHeight;
+			Rectangle bordesR[4];
+			bordesR[0].x = -1;
+			bordesR[0].y = 0;
+			bordesR[0].width = 3;
+			bordesR[0].height = screenHeight;
+			bordesR[1].x = 0;
+			bordesR[1].y = -1;
+			bordesR[1].width = screenWidth;
+			bordesR[1].height = 3;
+			bordesR[2].x = 0;
+			bordesR[2].y = screenHeight-2;
+			bordesR[2].height = 3;
+			bordesR[2].width = screenWidth;
+			bordesR[3].x = screenWidth-2;
+			bordesR[3].y = 0;
+			bordesR[3].width = 3;
+			bordesR[3].height = screenHeight;
 
 			for (int i = 0; i < 4; i++)
 			{
-				if (CheckCollisionCircleRec({ nave.posDer.x - (nave.posDer.x - nave.posIzq.x) / 2, nave.posPunta.y + (nave.posDer.y - nave.posPunta.y) / 2 }, nave.radioColision,bordes[i]))
+				if (CheckCollisionCircleRec({ nave.posDer.x - (nave.posDer.x - nave.posIzq.x) / 2, nave.posPunta.y + (nave.posDer.y - nave.posPunta.y) / 2 }, nave.radioColision,bordesR[i]))
 				{
-					nave.posDer = nave.posDer;
-					nave.posPunta = nave.posPunta;
-					nave.posIzq = nave.posIzq;
-					DrawRectangleRec(bordes[i], RED);
+					DrawRectangleRec(bordesR[i], RED);
 					nave.color = BLUE;
-					tocoPared = true;
 				}
-				else
-				{
-					tocoPared = false;
-				}
+			}
+
+			if (nave.posPrin.x < bordes[1])
+			{
+				nave.posPrin.x = bordes[1];
+			}
+			if (nave.posPrin.x > bordes[2])
+			{
+				nave.posPrin.x = bordes[2];
+			}
+			if (nave.posPrin.y < bordes[0])
+			{
+				nave.posPrin.y = bordes[0];
+			}
+			if (nave.posPrin.y > bordes[3])
+			{
+				nave.posPrin.y = bordes[3];
 			}
 		}
 
@@ -177,6 +182,9 @@ namespace Juego
 			{
 				estado = gameover;
 			}
+			nave.posPunta = { (float)nave.posPrin.x,(float)nave.posPrin.y - nave.altura / 2 };
+			nave.posIzq = { (float)nave.posPrin.x - nave.base / 2,(float)nave.posPrin.y + nave.altura / 2 };
+			nave.posDer = { (float)nave.posPrin.x + nave.base / 2,(float)nave.posPrin.y + nave.altura / 2 };
 		}
 
 		void dibujarNave()
