@@ -6,6 +6,15 @@ namespace Juego
 {
 	namespace Menu
 	{
+		Color colorTitulo = RED;
+
+		void cambiarColorTitulo()
+		{
+			
+			colorTitulo = { (unsigned char)randomizarColor() ,(unsigned char)randomizarColor(), (unsigned char)randomizarColor() , 255 };
+		
+		}
+
 		void chequearInputMenu()
 		{
 			if (IsKeyDown(KEY_ENTER))
@@ -16,7 +25,11 @@ namespace Juego
 
 		void dibujarMenu()
 		{
-			DrawText("Asteroids!", screenWidth / 4, screenHeight / 3, 80, RED);
+			if (estado != estadoA)
+			{
+				cambiarColorTitulo();
+			}
+			DrawText("Asteroids!", screenWidth / 4, screenHeight / 3, 80, colorTitulo);
 		}
 	}
 }

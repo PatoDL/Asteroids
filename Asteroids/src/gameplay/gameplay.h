@@ -11,6 +11,7 @@ namespace Juego
 			Vector2 posIzq;
 			Vector2 posDer;
 			float rotacion;
+			Vector2 colision;
 			int radioColision;
 			float altura;
 			float base;
@@ -23,6 +24,7 @@ namespace Juego
 			Vector2 pos;
 			float radio;
 			Vector2 vel;
+			float angulo;
 			Color color;
 		};
 

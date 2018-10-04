@@ -13,6 +13,7 @@ namespace Juego
 	extern int screenWidth;
 	extern int screenHeight;
 	void ejecutarJuego();
+	int randomizarColor();
 }
 #endif // !JUEGO_H
 

@@ -19,6 +19,11 @@ namespace Juego
 	static void chequearInput();
 	static void actualizarJuego();
 
+	int randomizarColor()
+	{
+		return GetRandomValue(0, 255);
+	}
+
 	void chequearInput()
 	{
 		switch (estado)
@@ -102,6 +107,7 @@ namespace Juego
 	{
 		//init game
 		InitWindow(screenWidth, screenHeight, "Asteroids");
+		SetTargetFPS(60);
 	}
 
 	void finalizarJuego()
