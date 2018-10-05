@@ -4,6 +4,7 @@ namespace Juego
 {
 	namespace Menu
 	{
+		void setearPosBotones();
 		void chequearInputMenu();
 		void dibujarMenu();
 	}

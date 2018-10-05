@@ -174,7 +174,7 @@ namespace Juego
 			{
 				if (CheckCollisionCircles({ nave.posPrin.x + sin(nave.rotacion*DEG2RAD)*(nave.altura / 2.5f), nave.posPrin.y - cos(nave.rotacion*DEG2RAD)*(nave.altura / 2.5f) }, nave.radioColision,asteroides[i].pos,asteroides[i].radio))
 				{
-					asteroides[i].color = BLACK;
+					//asteroides[i].color = BLACK;
 					gameOver = true;
 				}
 			}
