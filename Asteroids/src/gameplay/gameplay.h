@@ -17,6 +17,13 @@ namespace Juego
 			Texture2D sprite;
 		};
 
+		struct Disparo
+		{
+			Vector2 pos;
+			float radio;
+			bool active;
+		};
+
 		struct Asteroide
 		{
 			Vector2 pos;

@@ -18,6 +18,8 @@ namespace Juego
 		Asteroide asteroides[cantAsteroides];
 		static bool gameOver;
 		float bordes[4];
+		const int cantDisparos = 30;
+		Disparo disparos[cantDisparos];
 		
 		static void iniciarNave();
 		static void iniciarBordes();
@@ -28,11 +30,22 @@ namespace Juego
 		static void chequearColisionConAsteroide();
 		static void chequearColisionConBordes();
 		static void moverAsteroides();
+		static void inicializarDisparos();
 		void chequearInputGP();
 		void actualizarGP();
 		void dibujarGameplay();
 		void iniciarComponentesGP();
 
+
+		void inicializarDisparos()
+		{
+			for (int i = 0; i < cantDisparos; i++)
+			{
+				disparos[i].pos = { -100,-100 };
+				disparos[i].radio = 4.0f;
+				disparos[i].active = false;
+			}
+		}
 
 		void iniciarAsteroides()
 		{
