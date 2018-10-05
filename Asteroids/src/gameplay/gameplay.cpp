@@ -195,7 +195,13 @@ namespace Juego
 
 		void dibujarNave()
 		{
-			if (IsKeyDown(KEY_SPACE)) { DrawCircle(nave.posPrin.x + sin(nave.rotacion*DEG2RAD)*(nave.altura / 2.5f), nave.posPrin.y - cos(nave.rotacion*DEG2RAD)*(nave.altura / 2.5f), nave.radioColision, GREEN); }
+			if (IsKeyDown(KEY_SPACE))
+			{
+				DrawCircle(nave.posPrin.x + sin(nave.rotacion*DEG2RAD)*(nave.altura / 2.5f),
+						   nave.posPrin.y - cos(nave.rotacion*DEG2RAD)*(nave.altura / 2.5f),
+						   nave.radioColision, 
+						   GREEN); 
+			}
 
 
 			Vector2 v1 = { nave.posPrin.x + sinf(nave.rotacion*DEG2RAD)*(nave.altura), nave.posPrin.y - cosf(nave.rotacion*DEG2RAD)*(nave.altura) };
@@ -208,7 +214,7 @@ namespace Juego
 
 		void dibujarAsteroides()
 		{
-			for (int i = 0; i < 20; i++)
+			for (int i = 0; i < cantAsteroides; i++)
 			{
 				DrawCircle(asteroides[i].pos.x, asteroides[i].pos.y, asteroides[i].radio, asteroides[i].color);
 			}

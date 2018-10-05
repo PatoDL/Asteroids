@@ -28,10 +28,12 @@ namespace Juego
 			play.boton[0].y = screenHeight / 3 * 2;
 			play.boton[0].width = 270;
 			play.boton[0].height = 115;
+
 			play.boton[1].x = screenWidth / 5.5 * 2 + 10;
 			play.boton[1].y = screenHeight / 3 * 2 + 10;
 			play.boton[1].width = 250;
 			play.boton[1].height = 95;
+
 			play.color[0] = WHITE;
 			play.color[1] = BLACK;
 		}
