@@ -74,8 +74,9 @@ namespace Juego
 			nave.rotacion = 0;
 			nave.posPrin = {(float)screenWidth / 2,(float)screenHeight / 2 };
 			nave.colision = { nave.posPrin.x + sin(nave.rotacion*DEG2RAD)*(nave.altura / 2.5f), nave.posPrin.y - cos(nave.rotacion*DEG2RAD)*(nave.altura / 2.5f) };
-			nave.radioColision=nave.altura*2/3;
+			nave.radioColision=nave.altura*2/3+10;
 			nave.color = WHITE;
+			nave.sprite = LoadTexture("../res/cohete.png");
 		}
 
 		void iniciarComponentesGP()
@@ -197,14 +198,19 @@ namespace Juego
 						   GREEN); 
 			}
 
-
 			Vector2 v1 = { nave.posPrin.x + sinf(nave.rotacion*DEG2RAD)*(nave.altura), nave.posPrin.y - cosf(nave.rotacion*DEG2RAD)*(nave.altura) };
 
 			Vector2 v2 = { nave.posPrin.x - cosf(nave.rotacion*DEG2RAD)*(nave.base / 2), nave.posPrin.y - sinf(nave.rotacion*DEG2RAD)*(nave.base / 2) };
 
 			Vector2 v3 = { nave.posPrin.x + cosf(nave.rotacion*DEG2RAD)*(nave.base / 2), nave.posPrin.y + sinf(nave.rotacion*DEG2RAD)*(nave.base / 2) };
 
-			DrawTriangle(v1,v2,v3,nave.color);
+			//DrawTriangle(v1,v2,v3,nave.color);
+			
+			DrawCircleV(nave.posPrin, 4, RED);
+
+			DrawTexturePro(nave.sprite, { 0.0f,0.0f,(float)nave.sprite.width,(float)nave.sprite.height },
+				{ nave.posPrin.x , nave.posPrin.y , (float)nave.sprite.width/8 , (float)nave.sprite.height/8 },
+				{ (float)nave.sprite.width / 16,(float)nave.sprite.height/16 }, nave.rotacion, WHITE);
 		}
 
 		void dibujarAsteroides()

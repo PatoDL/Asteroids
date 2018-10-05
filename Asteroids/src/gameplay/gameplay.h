@@ -14,6 +14,7 @@ namespace Juego
 			float base;
 			Color color;
 			Vector2 posPrin;
+			Texture2D sprite;
 		};
 
 		struct Asteroide
