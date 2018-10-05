@@ -73,9 +73,6 @@ namespace Juego
 			nave.altura = (nave.base/2)/tanf(25*DEG2RAD);
 			nave.rotacion = 0;
 			nave.posPrin = {(float)screenWidth / 2,(float)screenHeight / 2 };
-			nave.posPunta = {(float) nave.posPrin.x,(float) nave.posPrin.y-nave.altura/2};
-			nave.posIzq = {(float) nave.posPrin.x-nave.base/2,(float) nave.posPrin.y+nave.altura/2};
-			nave.posDer = {(float) nave.posPrin.x+nave.base/2,(float) nave.posPrin.y+nave.altura/2};
 			nave.colision = { nave.posPrin.x + sin(nave.rotacion*DEG2RAD)*(nave.altura / 2.5f), nave.posPrin.y - cos(nave.rotacion*DEG2RAD)*(nave.altura / 2.5f) };
 			nave.radioColision=nave.altura*2/3;
 			nave.color = WHITE;
@@ -142,7 +139,7 @@ namespace Juego
 
 			for (int i = 0; i < 4; i++)
 			{
-				if (CheckCollisionCircleRec({ nave.posDer.x - (nave.posDer.x - nave.posIzq.x) / 2, nave.posPunta.y + (nave.posDer.y - nave.posPunta.y) / 2 }, nave.radioColision,bordesR[i]))
+				if (CheckCollisionCircleRec(nave.posPrin, nave.radioColision,bordesR[i]))
 				{
 					DrawRectangleRec(bordesR[i], RED);
 					if(IsKeyDown(KEY_SPACE))nave.color = BLUE;
@@ -188,9 +185,6 @@ namespace Juego
 			{
 				estado = gameover;
 			}
-			nave.posPunta = { (float)nave.posPrin.x,(float)nave.posPrin.y - nave.altura / 2 };
-			nave.posIzq = { (float)nave.posPrin.x - nave.base / 2,(float)nave.posPrin.y + nave.altura / 2 };
-			nave.posDer = { (float)nave.posPrin.x + nave.base / 2,(float)nave.posPrin.y + nave.altura / 2 };
 		}
 
 		void dibujarNave()
@@ -209,6 +203,7 @@ namespace Juego
 			Vector2 v2 = { nave.posPrin.x - cosf(nave.rotacion*DEG2RAD)*(nave.base / 2), nave.posPrin.y - sinf(nave.rotacion*DEG2RAD)*(nave.base / 2) };
 
 			Vector2 v3 = { nave.posPrin.x + cosf(nave.rotacion*DEG2RAD)*(nave.base / 2), nave.posPrin.y + sinf(nave.rotacion*DEG2RAD)*(nave.base / 2) };
+
 			DrawTriangle(v1,v2,v3,nave.color);
 		}
 

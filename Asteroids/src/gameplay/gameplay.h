@@ -7,9 +7,6 @@ namespace Juego
 	{
 		struct Nave
 		{
-			Vector2 posPunta;
-			Vector2 posIzq;
-			Vector2 posDer;
 			float rotacion;
 			Vector2 colision;
 			int radioColision;
