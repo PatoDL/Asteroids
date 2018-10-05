@@ -27,10 +27,12 @@ namespace Juego
 		static void dibujarAsteroides();
 		static void chequearColisionConAsteroide();
 		static void chequearColisionConBordes();
+		static void moverAsteroides();
 		void chequearInputGP();
 		void actualizarGP();
 		void dibujarGameplay();
 		void iniciarComponentesGP();
+
 
 		void iniciarAsteroides()
 		{
@@ -38,10 +40,13 @@ namespace Juego
 			{
 				asteroides[i].radio = 45;
 
-				asteroides[i].pos = { (float)GetRandomValue(asteroides[i].radio,screenWidth - asteroides[i].radio),(float)GetRandomValue(asteroides[i].radio,screenHeight - asteroides[i].radio) };
+				asteroides[i].pos = { (float)GetRandomValue(asteroides[i].radio,screenWidth - asteroides[i].radio),
+									  (float)GetRandomValue(asteroides[i].radio,screenHeight - asteroides[i].radio) };
 			
-				asteroides[i].color = { (unsigned char)randomizarColor() ,(unsigned char)randomizarColor() ,(unsigned char)randomizarColor() ,(unsigned char)255 };
+				asteroides[i].color = { (unsigned char)randomizarColor() ,(unsigned char)randomizarColor() ,
+										(unsigned char)randomizarColor() ,(unsigned char)255 };
 
+				asteroides[i].angulo = (float)GetRandomValue(-360, 360);
 			}
 
 			for (int i = 0; i < cantAsteroides; i++)
@@ -50,9 +55,12 @@ namespace Juego
 				{
 					if (i != j)
 					{
-						while (CheckCollisionCircles(asteroides[i].pos, asteroides[i].radio, asteroides[j].pos, asteroides[j].radio + 20) || CheckCollisionCircles({ screenWidth / 2 - nave.base / 2,screenHeight / 2 - nave.altura / 2 }, 250.0, asteroides[i].pos, asteroides[i].radio))
+						while (CheckCollisionCircles(asteroides[i].pos, asteroides[i].radio, asteroides[j].pos, asteroides[j].radio + 20) || 
+							   CheckCollisionCircles({ screenWidth / 2 - nave.base / 2,screenHeight / 2 - nave.altura / 2 }, 250.0, asteroides[i].pos, 
+							   asteroides[i].radio))
 						{
-							asteroides[i].pos = { (float)GetRandomValue(asteroides[i].radio,screenWidth - asteroides[i].radio),(float)GetRandomValue(asteroides[i].radio,screenHeight - asteroides[i].radio) };
+							asteroides[i].pos = { (float)GetRandomValue(asteroides[i].radio,screenWidth - asteroides[i].radio),
+												  (float)GetRandomValue(asteroides[i].radio,screenHeight - asteroides[i].radio) };
 						}
 					}
 				}
@@ -73,7 +81,8 @@ namespace Juego
 			nave.altura = (nave.base/2)/tanf(25*DEG2RAD);
 			nave.rotacion = 0;
 			nave.posPrin = {(float)screenWidth / 2,(float)screenHeight / 2 };
-			nave.colision = { nave.posPrin.x + sin(nave.rotacion*DEG2RAD)*(nave.altura / 2.5f), nave.posPrin.y - cos(nave.rotacion*DEG2RAD)*(nave.altura / 2.5f) };
+			nave.colision = { nave.posPrin.x + sin(nave.rotacion*DEG2RAD)*(nave.altura / 2.5f),
+							  nave.posPrin.y - cos(nave.rotacion*DEG2RAD)*(nave.altura / 2.5f) };
 			nave.radioColision=nave.altura*2/3+10;
 			nave.color = WHITE;
 			nave.sprite = LoadTexture("../res/cohete.png");
@@ -146,6 +155,7 @@ namespace Juego
 					if(IsKeyDown(KEY_SPACE))nave.color = BLUE;
 					else nave.color = WHITE;
 				}
+
 			}
 
 			if (nave.posPrin.x < bordes[izquierda])
@@ -166,11 +176,39 @@ namespace Juego
 			}
 		}
 
+		void moverAsteroides()
+		{
+			for (int i = 0; i < cantAsteroides; i++)
+			{
+				asteroides[i].pos.x += sinf(asteroides[i].angulo*DEG2RAD)*2;
+				asteroides[i].pos.y -= cosf(asteroides[i].angulo*DEG2RAD)*2;
+				
+				if (asteroides[i].pos.x > screenWidth + asteroides[i].radio)
+				{
+					asteroides[i].pos.x = -asteroides[i].radio;
+				}
+				if (asteroides[i].pos.x < -asteroides[i].radio)
+				{
+					asteroides[i].pos.x = screenWidth + asteroides[i].radio;
+				}
+				if (asteroides[i].pos.y < -asteroides[i].radio)
+				{
+					asteroides[i].pos.y = screenHeight + asteroides[i].radio;
+				}
+				if (asteroides[i].pos.y > screenHeight + asteroides[i].radio)
+				{
+					asteroides[i].pos.y = -asteroides[i].radio;
+				}
+			}
+		}
+
 		void chequearColisionConAsteroide()
 		{
 			for (int i = 0; i < cantAsteroides; i++)
 			{
-				if (CheckCollisionCircles({ nave.posPrin.x + sin(nave.rotacion*DEG2RAD)*(nave.altura / 2.5f), nave.posPrin.y - cos(nave.rotacion*DEG2RAD)*(nave.altura / 2.5f) }, nave.radioColision,asteroides[i].pos,asteroides[i].radio))
+				if (CheckCollisionCircles({ nave.posPrin.x + sin(nave.rotacion*DEG2RAD)*(nave.altura / 2.5f),
+					nave.posPrin.y - cos(nave.rotacion*DEG2RAD)*(nave.altura / 2.5f) },
+					nave.radioColision,asteroides[i].pos,asteroides[i].radio))
 				{
 					//asteroides[i].color = BLACK;
 					gameOver = true;
@@ -182,6 +220,7 @@ namespace Juego
 		{
 			chequearColisionConAsteroide();
 			chequearColisionConBordes();
+			moverAsteroides();
 			if (gameOver)
 			{
 				estado = gameover;
@@ -197,16 +236,6 @@ namespace Juego
 						   nave.radioColision, 
 						   GREEN); 
 			}
-
-			Vector2 v1 = { nave.posPrin.x + sinf(nave.rotacion*DEG2RAD)*(nave.altura), nave.posPrin.y - cosf(nave.rotacion*DEG2RAD)*(nave.altura) };
-
-			Vector2 v2 = { nave.posPrin.x - cosf(nave.rotacion*DEG2RAD)*(nave.base / 2), nave.posPrin.y - sinf(nave.rotacion*DEG2RAD)*(nave.base / 2) };
-
-			Vector2 v3 = { nave.posPrin.x + cosf(nave.rotacion*DEG2RAD)*(nave.base / 2), nave.posPrin.y + sinf(nave.rotacion*DEG2RAD)*(nave.base / 2) };
-
-			//DrawTriangle(v1,v2,v3,nave.color);
-			
-			DrawCircleV(nave.posPrin, 4, RED);
 
 			DrawTexturePro(nave.sprite, { 0.0f,0.0f,(float)nave.sprite.width,(float)nave.sprite.height },
 				{ nave.posPrin.x , nave.posPrin.y , (float)nave.sprite.width/8 , (float)nave.sprite.height/8 },
@@ -226,6 +255,5 @@ namespace Juego
 			dibujarNave();
 			dibujarAsteroides();
 		}
-
 	}
 }
