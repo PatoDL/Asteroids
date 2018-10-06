@@ -31,6 +31,8 @@ namespace Juego
 		static void chequearColisionConBordes();
 		static void moverAsteroides();
 		static void inicializarDisparos();
+		static void actualizarDisparos();
+		static void dibujarDisparos();
 		void chequearInputGP();
 		void actualizarGP();
 		void dibujarGameplay();
@@ -41,7 +43,6 @@ namespace Juego
 		{
 			for (int i = 0; i < cantDisparos; i++)
 			{
-				disparos[i].pos = { -100,-100 };
 				disparos[i].radio = 4.0f;
 				disparos[i].active = false;
 			}
@@ -106,16 +107,45 @@ namespace Juego
 			iniciarNave();
 			iniciarBordes();
 			iniciarAsteroides();
+			inicializarDisparos();
 			gameOver = false;
 		}
 
 		void chequearInputGP()
 		{
 			moverNave();
-		
+
 			if (IsKeyDown(KEY_ESCAPE))
 			{
 				estado = menu;
+			}
+
+			static int balaADisp = 0;
+			if (IsKeyPressed(KEY_P))
+			{
+				disparos[balaADisp].active = true;	
+				balaADisp++;
+			}
+
+			if (balaADisp == cantDisparos - 1)
+			{
+				balaADisp = 0;
+				for (int i = 0; i < cantDisparos; i++)
+				{
+					disparos[i].active = false;
+				}
+			}
+		}
+
+		void moverDisparos()
+		{
+			for (int i = 0; i < cantDisparos; i++)
+			{
+				if (disparos[i].active)
+				{
+					disparos[i].pos.x += sinf(disparos[i].angulo*DEG2RAD) * 8;
+					disparos[i].pos.y -= cosf(disparos[i].angulo*DEG2RAD) * 8;
+				}
 			}
 		}
 
@@ -137,6 +167,18 @@ namespace Juego
 			if (IsKeyDown(KEY_RIGHT))
 			{
 				nave.rotacion += 5;
+			}
+		}
+
+		void actualizarDisparos()
+		{
+			for (int i = 0; i < cantDisparos; i++)
+			{
+				if (!disparos[i].active)
+				{
+					disparos[i].angulo = nave.rotacion;
+					disparos[i].pos = nave.posPrin;
+				}
 			}
 		}
 
@@ -234,9 +276,22 @@ namespace Juego
 			chequearColisionConAsteroide();
 			chequearColisionConBordes();
 			moverAsteroides();
+			actualizarDisparos();
+			moverDisparos();
 			if (gameOver)
 			{
 				estado = gameover;
+			}
+		}
+
+		void dibujarDisparos()
+		{
+			for (int i = 0; i < cantDisparos; i++)
+			{
+				if (disparos[i].active)
+				{
+					DrawCircleV(disparos[i].pos, disparos[i].radio, BLUE);
+				}
 			}
 		}
 
@@ -267,6 +322,7 @@ namespace Juego
 		{
 			dibujarNave();
 			dibujarAsteroides();
+			dibujarDisparos();
 		}
 	}
 }

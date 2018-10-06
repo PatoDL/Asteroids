@@ -22,6 +22,7 @@ namespace Juego
 			Vector2 pos;
 			float radio;
 			bool active;
+			float angulo;
 		};
 
 		struct Asteroide
