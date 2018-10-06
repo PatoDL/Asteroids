@@ -16,8 +16,10 @@ namespace Juego
 		Nave nave;
 		static const int cantAsteroidesG = 5;
 		static const int cantAsteroidesM = 15;
+		static const int cantAsteroidesP = 30;
 		Asteroide asteroidesG[cantAsteroidesG];
 		Asteroide asteroidesM[cantAsteroidesM];
+		Asteroide asteroidesP[cantAsteroidesP];
 		static bool gameOver;
 		float bordes[4];
 		const int cantDisparos = 30;
@@ -89,6 +91,16 @@ namespace Juego
 										 (unsigned char)randomizarColor(),(unsigned char)255, };
 				asteroidesM[i].pos = { -100,-100 };
 				asteroidesM[i].radio = asteroidesG[0].radio / 2;
+			}
+
+			for (int i = 0; i < cantAsteroidesP; i++)
+			{
+				asteroidesP[i].activo = false;
+				asteroidesP[i].angulo = 0;
+				asteroidesP[i].color = { (unsigned char)randomizarColor(),(unsigned char)randomizarColor(),
+										 (unsigned char)randomizarColor(),(unsigned char)255, };
+				asteroidesP[i].pos = { -100,-100 };
+				asteroidesP[i].radio = asteroidesM[0].radio / 2;
 			}
 		}
 
@@ -295,13 +307,39 @@ namespace Juego
 					}
 				}
 			}
-		}
 
-		
+			for (int i = 0; i <cantAsteroidesP; i++)
+			{
+				if (asteroidesP[i].activo)
+				{
+					asteroidesP[i].pos.x += sinf(asteroidesP[i].angulo*DEG2RAD) * 2;
+					asteroidesP[i].pos.y -= cosf(asteroidesP[i].angulo*DEG2RAD) * 2;
+
+					if (asteroidesP[i].pos.x > screenWidth + asteroidesP[i].radio)
+					{
+						asteroidesP[i].pos.x = -asteroidesP[i].radio;
+					}
+					if (asteroidesP[i].pos.x < -asteroidesP[i].radio)
+					{
+						asteroidesP[i].pos.x = screenWidth + asteroidesP[i].radio;
+					}
+					if (asteroidesP[i].pos.y < -asteroidesP[i].radio)
+					{
+						asteroidesP[i].pos.y = screenHeight + asteroidesP[i].radio;
+					}
+					if (asteroidesP[i].pos.y > screenHeight + asteroidesP[i].radio)
+					{
+						asteroidesP[i].pos.y = -asteroidesP[i].radio;
+					}
+				}
+			}
+		}
 
 		void chequearColisionConAsteroide()
 		{
 			static int cantAsteroidesMAc = 0;
+			static int cantAsteroidesPAc = 0;
+
 			for (int i = 0; i <cantAsteroidesG; i++)
 			{
 				if (asteroidesG[i].activo)
@@ -340,11 +378,6 @@ namespace Juego
 
 			}
 
-			if (cantAsteroidesMAc == cantAsteroidesM)
-			{
-				cantAsteroidesMAc = 0;
-			}
-
 			for (int i = 0; i < cantAsteroidesM; i++)
 			{
 				if (asteroidesM[i].activo)
@@ -362,9 +395,51 @@ namespace Juego
 						{
 							disparos[j].activo = false;
 							asteroidesM[i].activo = false;
+							cantAsteroidesPAc += 2;
+
+							asteroidesP[cantAsteroidesPAc - 2].activo = true;
+							asteroidesP[cantAsteroidesPAc - 1].activo = true;
+
+							asteroidesP[cantAsteroidesPAc - 2].angulo = asteroidesM[i].angulo - 90;
+							asteroidesP[cantAsteroidesPAc - 1].angulo = asteroidesM[i].angulo + 90;
+
+							asteroidesP[cantAsteroidesPAc - 2].pos = asteroidesM[i].pos;
+							asteroidesP[cantAsteroidesPAc - 1].pos = asteroidesM[i].pos;
 						}
 					}
 				}
+			}
+
+			for (int i = 0; i < cantAsteroidesP; i++)
+			{
+				if (asteroidesP[i].activo)
+				{
+					if (CheckCollisionCircles({ nave.posPrin.x + sin(nave.rotacion*DEG2RAD)*(nave.altura / 2.5f),
+						nave.posPrin.y - cos(nave.rotacion*DEG2RAD)*(nave.altura / 2.5f) },
+						nave.radioColision, asteroidesP[i].pos, asteroidesP[i].radio))
+					{
+						gameOver = true;
+					}
+
+					for (int j = 0; j < cantDisparos; j++)
+					{
+						if (CheckCollisionCircles(disparos[j].pos, disparos[j].radio, asteroidesP[i].pos, asteroidesP[i].radio))
+						{
+							disparos[j].activo = false;
+							asteroidesP[i].activo = false;
+						}
+					}
+				}
+			}
+
+			if (cantAsteroidesMAc == cantAsteroidesM)
+			{
+				cantAsteroidesMAc = 0;
+			}
+
+			if (cantAsteroidesPAc == cantAsteroidesP)
+			{
+				cantAsteroidesPAc = 0;
 			}
 		}
 
@@ -416,11 +491,20 @@ namespace Juego
 					DrawCircle(asteroidesG[i].pos.x, asteroidesG[i].pos.y, asteroidesG[i].radio, asteroidesG[i].color);
 				}
 			}
+
 			for (int i = 0; i < cantAsteroidesM; i++)
 			{
 				if (asteroidesM[i].activo)
 				{
 					DrawCircle(asteroidesM[i].pos.x, asteroidesM[i].pos.y, asteroidesM[i].radio, asteroidesM[i].color);
+				}
+			}
+
+			for (int i = 0; i < cantAsteroidesP; i++)
+			{
+				if (asteroidesP[i].activo)
+				{
+					DrawCircleV(asteroidesP[i].pos, asteroidesP[i].radio, asteroidesP[i].color);
 				}
 			}
 		}
