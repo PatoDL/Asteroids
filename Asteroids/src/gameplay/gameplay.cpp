@@ -14,8 +14,10 @@ namespace Juego
 		};
 
 		Nave nave;
-		static const int cantAsteroides = 5;
-		Asteroide asteroides[cantAsteroides];
+		static const int cantAsteroidesG = 5;
+		static const int cantAsteroidesM = 15;
+		Asteroide asteroidesG[cantAsteroidesG];
+		Asteroide asteroidesM[cantAsteroidesM];
 		static bool gameOver;
 		float bordes[4];
 		const int cantDisparos = 30;
@@ -44,40 +46,49 @@ namespace Juego
 			for (int i = 0; i < cantDisparos; i++)
 			{
 				disparos[i].radio = 4.0f;
-				disparos[i].active = false;
+				disparos[i].activo = false;
 			}
 		}
 
 		void iniciarAsteroides()
 		{
-			for (int i = 0; i < cantAsteroides; i++)
+			for (int i = 0; i <cantAsteroidesG; i++)
 			{
-				asteroides[i].radio = 45;
+				asteroidesG[i].radio = 60;
 
-				asteroides[i].pos = { (float)GetRandomValue(asteroides[i].radio,screenWidth - asteroides[i].radio),
-									  (float)GetRandomValue(asteroides[i].radio,screenHeight - asteroides[i].radio) };
+				asteroidesG[i].pos = { (float)GetRandomValue(asteroidesG[i].radio,screenWidth - asteroidesG[i].radio),
+									  (float)GetRandomValue(asteroidesG[i].radio,screenHeight - asteroidesG[i].radio) };
 			
-				asteroides[i].color = { (unsigned char)randomizarColor() ,(unsigned char)randomizarColor() ,
+				asteroidesG[i].color = { (unsigned char)randomizarColor() ,(unsigned char)randomizarColor() ,
 										(unsigned char)randomizarColor() ,(unsigned char)255 };
 
-				asteroides[i].angulo = (float)GetRandomValue(-360, 360);
-			}
+				asteroidesG[i].angulo = (float)GetRandomValue(-360, 360);
 
-			for (int i = 0; i < cantAsteroides; i++)
-			{
-				for (int j = 0; j < cantAsteroides; j++)
+				asteroidesG[i].activo = true;
+
+				for (int j = 0; j <cantAsteroidesG; j++)
 				{
 					if (i != j)
 					{
-						while (CheckCollisionCircles(asteroides[i].pos, asteroides[i].radio, asteroides[j].pos, asteroides[j].radio + 20) || 
-							   CheckCollisionCircles({ screenWidth / 2 - nave.base / 2,screenHeight / 2 - nave.altura / 2 }, 250.0, asteroides[i].pos, 
-							   asteroides[i].radio))
+						while (CheckCollisionCircles({ screenWidth / 2 - nave.base / 2,
+								screenHeight / 2 - nave.altura / 2 }, 250.0, asteroidesG[i].pos, 
+							   asteroidesG[i].radio))
 						{
-							asteroides[i].pos = { (float)GetRandomValue(asteroides[i].radio,screenWidth - asteroides[i].radio),
-												  (float)GetRandomValue(asteroides[i].radio,screenHeight - asteroides[i].radio) };
+							asteroidesG[i].pos = { (float)GetRandomValue(asteroidesG[i].radio,screenWidth - asteroidesG[i].radio),
+												  (float)GetRandomValue(asteroidesG[i].radio,screenHeight - asteroidesG[i].radio) };
 						}
 					}
 				}
+			}
+
+			for (int i = 0; i < cantAsteroidesM; i++)
+			{
+				asteroidesM[i].activo = false;
+				asteroidesM[i].angulo = 0;
+				asteroidesM[i].color = { (unsigned char)randomizarColor(),(unsigned char)randomizarColor(),
+										 (unsigned char)randomizarColor(),(unsigned char)255, };
+				asteroidesM[i].pos = { -100,-100 };
+				asteroidesM[i].radio = asteroidesG[0].radio / 2;
 			}
 		}
 
@@ -123,7 +134,7 @@ namespace Juego
 			static int balaADisp = 0;
 			if (IsKeyPressed(KEY_P))
 			{
-				disparos[balaADisp].active = true;	
+				disparos[balaADisp].activo = true;	
 				balaADisp++;
 			}
 
@@ -132,7 +143,7 @@ namespace Juego
 				balaADisp = 0;
 				for (int i = 0; i < cantDisparos; i++)
 				{
-					disparos[i].active = false;
+					disparos[i].activo = false;
 				}
 			}
 		}
@@ -141,7 +152,7 @@ namespace Juego
 		{
 			for (int i = 0; i < cantDisparos; i++)
 			{
-				if (disparos[i].active)
+				if (disparos[i].activo)
 				{
 					disparos[i].pos.x += sinf(disparos[i].angulo*DEG2RAD) * 8;
 					disparos[i].pos.y -= cosf(disparos[i].angulo*DEG2RAD) * 8;
@@ -158,7 +169,7 @@ namespace Juego
 			}
 			if (IsKeyDown(KEY_DOWN))
 			{
-				//nave.posPrin.y+=5;
+
 			}
 			if (IsKeyDown(KEY_LEFT))
 			{
@@ -174,7 +185,7 @@ namespace Juego
 		{
 			for (int i = 0; i < cantDisparos; i++)
 			{
-				if (!disparos[i].active)
+				if (!disparos[i].activo)
 				{
 					disparos[i].angulo = nave.rotacion;
 					disparos[i].pos = nave.posPrin;
@@ -233,40 +244,126 @@ namespace Juego
 
 		void moverAsteroides()
 		{
-			for (int i = 0; i < cantAsteroides; i++)
+			for (int i = 0; i <cantAsteroidesG; i++)
 			{
-				asteroides[i].pos.x += sinf(asteroides[i].angulo*DEG2RAD)*2;
-				asteroides[i].pos.y -= cosf(asteroides[i].angulo*DEG2RAD)*2;
-				
-				if (asteroides[i].pos.x > screenWidth + asteroides[i].radio)
+				if (asteroidesG[i].activo)
 				{
-					asteroides[i].pos.x = -asteroides[i].radio;
+					asteroidesG[i].pos.x += sinf(asteroidesG[i].angulo*DEG2RAD) * 2;
+					asteroidesG[i].pos.y -= cosf(asteroidesG[i].angulo*DEG2RAD) * 2;
+
+					if (asteroidesG[i].pos.x > screenWidth + asteroidesG[i].radio)
+					{
+						asteroidesG[i].pos.x = -asteroidesG[i].radio;
+					}
+					if (asteroidesG[i].pos.x < -asteroidesG[i].radio)
+					{
+						asteroidesG[i].pos.x = screenWidth + asteroidesG[i].radio;
+					}
+					if (asteroidesG[i].pos.y < -asteroidesG[i].radio)
+					{
+						asteroidesG[i].pos.y = screenHeight + asteroidesG[i].radio;
+					}
+					if (asteroidesG[i].pos.y > screenHeight + asteroidesG[i].radio)
+					{
+						asteroidesG[i].pos.y = -asteroidesG[i].radio;
+					}
 				}
-				if (asteroides[i].pos.x < -asteroides[i].radio)
+			}
+
+			for (int i = 0; i <cantAsteroidesM; i++)
+			{
+				if (asteroidesM[i].activo)
 				{
-					asteroides[i].pos.x = screenWidth + asteroides[i].radio;
-				}
-				if (asteroides[i].pos.y < -asteroides[i].radio)
-				{
-					asteroides[i].pos.y = screenHeight + asteroides[i].radio;
-				}
-				if (asteroides[i].pos.y > screenHeight + asteroides[i].radio)
-				{
-					asteroides[i].pos.y = -asteroides[i].radio;
+					asteroidesM[i].pos.x += sinf(asteroidesM[i].angulo*DEG2RAD) * 2;
+					asteroidesM[i].pos.y -= cosf(asteroidesM[i].angulo*DEG2RAD) * 2;
+
+					if (asteroidesM[i].pos.x > screenWidth + asteroidesM[i].radio)
+					{
+						asteroidesM[i].pos.x = -asteroidesM[i].radio;
+					}
+					if (asteroidesM[i].pos.x < -asteroidesM[i].radio)
+					{
+						asteroidesM[i].pos.x = screenWidth + asteroidesM[i].radio;
+					}
+					if (asteroidesM[i].pos.y < -asteroidesM[i].radio)
+					{
+						asteroidesM[i].pos.y = screenHeight + asteroidesM[i].radio;
+					}
+					if (asteroidesM[i].pos.y > screenHeight + asteroidesM[i].radio)
+					{
+						asteroidesM[i].pos.y = -asteroidesM[i].radio;
+					}
 				}
 			}
 		}
 
+		
+
 		void chequearColisionConAsteroide()
 		{
-			for (int i = 0; i < cantAsteroides; i++)
+			static int cantAsteroidesMAc = 0;
+			for (int i = 0; i <cantAsteroidesG; i++)
 			{
-				if (CheckCollisionCircles({ nave.posPrin.x + sin(nave.rotacion*DEG2RAD)*(nave.altura / 2.5f),
-					nave.posPrin.y - cos(nave.rotacion*DEG2RAD)*(nave.altura / 2.5f) },
-					nave.radioColision,asteroides[i].pos,asteroides[i].radio))
+				if (asteroidesG[i].activo)
 				{
-					//asteroides[i].color = BLACK;
-					gameOver = true;
+					if (CheckCollisionCircles({ nave.posPrin.x + sin(nave.rotacion*DEG2RAD)*(nave.altura / 2.5f),
+						nave.posPrin.y - cos(nave.rotacion*DEG2RAD)*(nave.altura / 2.5f) },
+						nave.radioColision, asteroidesG[i].pos, asteroidesG[i].radio))
+					{
+						gameOver = true;
+					}
+
+
+					for (int j = 0; j < cantDisparos; j++)
+					{
+						if (CheckCollisionCircles(disparos[j].pos, disparos[j].radio, asteroidesG[i].pos, asteroidesG[i].radio))
+						{
+							asteroidesG[i].activo = false;
+							cantAsteroidesMAc+=3;
+							disparos[j].activo = false;
+
+							asteroidesM[cantAsteroidesMAc - 3].angulo = disparos[j].angulo;
+							asteroidesM[cantAsteroidesMAc-2].angulo = disparos[j].angulo - 90;
+							asteroidesM[cantAsteroidesMAc-1].angulo = disparos[j].angulo + 90;
+								
+							asteroidesM[cantAsteroidesMAc - 3].activo = true;
+							asteroidesM[cantAsteroidesMAc-2].activo = true;
+							asteroidesM[cantAsteroidesMAc-1].activo = true;
+
+							asteroidesM[cantAsteroidesMAc - 3].pos = asteroidesG[i].pos;
+							asteroidesM[cantAsteroidesMAc-2].pos = asteroidesG[i].pos;
+							asteroidesM[cantAsteroidesMAc-1].pos = asteroidesG[i].pos;
+							
+						}
+					}
+				}
+
+			}
+
+			if (cantAsteroidesMAc == cantAsteroidesM)
+			{
+				cantAsteroidesMAc = 0;
+			}
+
+			for (int i = 0; i < cantAsteroidesM; i++)
+			{
+				if (asteroidesM[i].activo)
+				{
+					if (CheckCollisionCircles({ nave.posPrin.x + sin(nave.rotacion*DEG2RAD)*(nave.altura / 2.5f),
+						nave.posPrin.y - cos(nave.rotacion*DEG2RAD)*(nave.altura / 2.5f) },
+						nave.radioColision, asteroidesM[i].pos, asteroidesM[i].radio))
+					{
+						gameOver = true;
+					}
+
+					for (int j = 0; j < cantDisparos; j++)
+					{
+						if (CheckCollisionCircles(disparos[j].pos, disparos[j].radio, asteroidesM[i].pos, asteroidesM[i].radio))
+						{
+							disparos[j].activo = false;
+							asteroidesM[i].activo = false;
+						}
+					}
 				}
 			}
 		}
@@ -288,7 +385,7 @@ namespace Juego
 		{
 			for (int i = 0; i < cantDisparos; i++)
 			{
-				if (disparos[i].active)
+				if (disparos[i].activo)
 				{
 					DrawCircleV(disparos[i].pos, disparos[i].radio, BLUE);
 				}
@@ -312,9 +409,19 @@ namespace Juego
 
 		void dibujarAsteroides()
 		{
-			for (int i = 0; i < cantAsteroides; i++)
+			for (int i = 0; i <cantAsteroidesG; i++)
 			{
-				DrawCircle(asteroides[i].pos.x, asteroides[i].pos.y, asteroides[i].radio, asteroides[i].color);
+				if (asteroidesG[i].activo)
+				{
+					DrawCircle(asteroidesG[i].pos.x, asteroidesG[i].pos.y, asteroidesG[i].radio, asteroidesG[i].color);
+				}
+			}
+			for (int i = 0; i < cantAsteroidesM; i++)
+			{
+				if (asteroidesM[i].activo)
+				{
+					DrawCircle(asteroidesM[i].pos.x, asteroidesM[i].pos.y, asteroidesM[i].radio, asteroidesM[i].color);
+				}
 			}
 		}
 

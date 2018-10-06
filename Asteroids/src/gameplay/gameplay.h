@@ -21,7 +21,7 @@ namespace Juego
 		{
 			Vector2 pos;
 			float radio;
-			bool active;
+			bool activo;
 			float angulo;
 		};
 
@@ -32,6 +32,7 @@ namespace Juego
 			Vector2 vel;
 			float angulo;
 			Color color;
+			bool activo;
 		};
 
 		void iniciarComponentesGP();
