@@ -122,7 +122,7 @@ namespace Juego
 							  nave.posPrin.y - cos(nave.rotacion*DEG2RAD)*(nave.altura / 2.5f) };
 			nave.radioColision=nave.altura*2/3+10;
 			nave.color = WHITE;
-			nave.sprite = LoadTexture("../res/cohete.png");
+			nave.sprite = LoadTexture("res/cohete.png");
 		}
 
 		void iniciarComponentesGP()
