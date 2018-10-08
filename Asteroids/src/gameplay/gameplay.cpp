@@ -43,6 +43,7 @@ namespace Juego
 		void dibujarGameplay();
 		void iniciarComponentesGP();
 		void desinicializarGP();
+		bool pausa;
 
 
 		void inicializarDisparos()
@@ -135,6 +136,7 @@ namespace Juego
 			inicializarDisparos();
 			fondo = LoadTexture("res/fondo.png");
 			gameOver = false;
+			pausa = false;
 		}
 
 		void desinicializarGP()
@@ -146,6 +148,11 @@ namespace Juego
 		void chequearInputGP()
 		{
 			moverNave();
+
+			if (IsKeyPressed(KEY_P))
+			{
+				pausa = !pausa;
+			}
 
 			if (IsKeyDown(KEY_ESCAPE))
 			{
@@ -187,19 +194,21 @@ namespace Juego
 			//screenwidth ----> 360
 			//pos actual mouse x ---->x
 
-
-			if (IsKeyDown(KEY_UP))
+			if (!pausa)
 			{
-				nave.posPrin.y -= cos(nave.rotacion*DEG2RAD) * 6;
-				nave.posPrin.x += sin(nave.rotacion*DEG2RAD) * 6;
-			}
-			if (IsKeyDown(KEY_LEFT))
-			{
-				nave.rotacion -= 5;
-			}
-			if (IsKeyDown(KEY_RIGHT))
-			{
-				nave.rotacion += 5;
+				if (IsKeyDown(KEY_UP))
+				{
+					nave.posPrin.y -= cos(nave.rotacion*DEG2RAD) * 6;
+					nave.posPrin.x += sin(nave.rotacion*DEG2RAD) * 6;
+				}
+				if (IsKeyDown(KEY_LEFT))
+				{
+					nave.rotacion -= 5;
+				}
+				if (IsKeyDown(KEY_RIGHT))
+				{
+					nave.rotacion += 5;
+				}
 			}
 		}
 
@@ -455,14 +464,17 @@ namespace Juego
 
 		void actualizarGP()
 		{
-			chequearColisionConAsteroide();
-			chequearColisionConBordes();
-			moverAsteroides();
-			actualizarDisparos();
-			moverDisparos();
-			if (gameOver)
+			if (!pausa)
 			{
-				estado = gameover;
+				chequearColisionConAsteroide();
+				chequearColisionConBordes();
+				moverAsteroides();
+				actualizarDisparos();
+				moverDisparos();
+				if (gameOver)
+				{
+					estado = gameover;
+				}
 			}
 		}
 
@@ -525,6 +537,10 @@ namespace Juego
 			dibujarNave();
 			dibujarAsteroides();
 			dibujarDisparos();
+			if (pausa)
+			{
+				DrawRectangleV({ 0.0f,0.0f }, { (float)screenWidth,(float)screenHeight }, { (unsigned char)0,(unsigned char)0,(unsigned char)0,(unsigned char)150 });
+			}
 		}
 	}
 }
