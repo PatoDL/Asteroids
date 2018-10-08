@@ -4,9 +4,10 @@ namespace Juego
 {
 	namespace Menu
 	{
-		void setearPosBotones();
+		void inicializarMenu();
 		void chequearInputMenu();
 		void dibujarMenu();
+		void desinicializarMenu();
 	}
 }
 #endif // !MENU_H

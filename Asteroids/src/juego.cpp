@@ -108,12 +108,13 @@ namespace Juego
 		//init game
 		InitWindow(screenWidth, screenHeight, "Asteroids");
 		SetTargetFPS(60);
-		Menu::setearPosBotones();
+		Menu::inicializarMenu();
 	}
 
 	void finalizarJuego()
 	{
 		//close game
+		Menu::desinicializarMenu();
 		CloseWindow();
 	}
 }
