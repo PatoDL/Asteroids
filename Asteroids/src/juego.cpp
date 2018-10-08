@@ -115,6 +115,7 @@ namespace Juego
 	{
 		//close game
 		Menu::desinicializarMenu();
+		Gameplay::desinicializarGP();
 		CloseWindow();
 	}
 }

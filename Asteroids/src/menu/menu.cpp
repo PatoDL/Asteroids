@@ -72,16 +72,15 @@ namespace Juego
 		
 		void chequearInputMenu()
 		{
-			if (IsKeyDown(KEY_ENTER))
-			{
-				estado = juego;
-			}
 			chequearMouse();
 		}
 
 		void desinicializarMenu()
 		{
 			UnloadTexture(portada);
+			UnloadTexture(portada_);
+			UnloadTexture(botonCreditos);
+			UnloadTexture(botonJugar);
 		}
 
 		void dibujarMenu()

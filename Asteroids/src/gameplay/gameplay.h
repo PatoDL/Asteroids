@@ -39,6 +39,7 @@ namespace Juego
 		void chequearInputGP();
 		void actualizarGP();
 		void dibujarGameplay();
+		void desinicializarGP();
 	}
 }
 #endif // !GAMEPLAY_H

@@ -24,6 +24,7 @@ namespace Juego
 		float bordes[4];
 		const int cantDisparos = 30;
 		Disparo disparos[cantDisparos];
+		Texture2D fondo;
 		
 		static void iniciarNave();
 		static void iniciarBordes();
@@ -41,6 +42,7 @@ namespace Juego
 		void actualizarGP();
 		void dibujarGameplay();
 		void iniciarComponentesGP();
+		void desinicializarGP();
 
 
 		void inicializarDisparos()
@@ -131,7 +133,14 @@ namespace Juego
 			iniciarBordes();
 			iniciarAsteroides();
 			inicializarDisparos();
+			fondo = LoadTexture("res/fondo.png");
 			gameOver = false;
+		}
+
+		void desinicializarGP()
+		{
+			UnloadTexture(nave.sprite);
+			UnloadTexture(fondo);
 		}
 
 		void chequearInputGP()
@@ -144,7 +153,7 @@ namespace Juego
 			}
 
 			static int balaADisp = 0;
-			if (IsKeyPressed(KEY_P))
+			if (IsKeyPressed(KEY_SPACE))
 			{
 				disparos[balaADisp].activo = true;	
 				balaADisp++;
@@ -174,14 +183,15 @@ namespace Juego
 
 		void moverNave()
 		{
+			//regla de 3: si el 100% de la pantalla es el screenwidth, el angulo maximo en x al que se puede acceder es equivalente
+			//screenwidth ----> 360
+			//pos actual mouse x ---->x
+
+
 			if (IsKeyDown(KEY_UP))
 			{
 				nave.posPrin.y -= cos(nave.rotacion*DEG2RAD) * 6;
 				nave.posPrin.x += sin(nave.rotacion*DEG2RAD) * 6;
-			}
-			if (IsKeyDown(KEY_DOWN))
-			{
-
 			}
 			if (IsKeyDown(KEY_LEFT))
 			{
@@ -469,7 +479,7 @@ namespace Juego
 
 		void dibujarNave()
 		{
-			if (IsKeyDown(KEY_SPACE))
+			if (IsKeyDown(KEY_C))
 			{
 				DrawCircle(nave.posPrin.x + sin(nave.rotacion*DEG2RAD)*(nave.altura / 2.5f),
 						   nave.posPrin.y - cos(nave.rotacion*DEG2RAD)*(nave.altura / 2.5f),
@@ -511,6 +521,7 @@ namespace Juego
 
 		void dibujarGameplay()
 		{
+			DrawTexture(fondo, screenWidth / 2 - fondo.width / 2, screenHeight / 2 - fondo.height / 2, WHITE);
 			dibujarNave();
 			dibujarAsteroides();
 			dibujarDisparos();
