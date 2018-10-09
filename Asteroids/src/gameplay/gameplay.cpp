@@ -64,6 +64,8 @@ namespace Juego
 		const int cantDisparos = 30;
 		Disparo disparos[cantDisparos];
 		Texture2D fondo;
+		Texture2D botonPausa;
+		Texture2D pantPausa;
 		bool pausa;
 		bool gano;
 
@@ -184,6 +186,8 @@ namespace Juego
 			iniciarAsteroides();
 			inicializarDisparos();
 			fondo = LoadTexture("res/fondo.png");
+			botonPausa = LoadTexture("res/boton pausa.png");
+			pantPausa = LoadTexture("res/pausa.png");
 			gameOver = false;
 			pausa = false;
 			gano = false;
@@ -198,25 +202,30 @@ namespace Juego
 		void chequearInputGP()
 		{
 			moverNave();
-
-			if (IsKeyPressed(KEY_P))
+			static int balaADisp = 0;
+			
+			if (GetMouseX() >= 24 && GetMouseX() <= 56 && GetMouseY() >= 23 && GetMouseY() <= 57)
 			{
-				pausa = !pausa;
+				if (IsMouseButtonPressed(0))
+				{
+					pausa = !pausa;
+				}
 			}
-
+			else
+			{
+				if (IsMouseButtonPressed(0))
+				{
+					disparos[balaADisp].activo = true;
+					balaADisp++;
+				}
+			}
+			
 			if (IsKeyDown(KEY_ESCAPE))
 			{
 				estado = menu;
 			}
 
-			static int balaADisp = 0;
-			if (IsMouseButtonPressed(0))
-			{
-				disparos[balaADisp].activo = true;	
-				balaADisp++;
-			}
-
-			if (balaADisp == cantDisparos - 1)
+			if (balaADisp == cantDisparos - 1) //reinicia los disparos
 			{
 				balaADisp = 0;
 				for (int i = 0; i < cantDisparos; i++)
@@ -263,8 +272,6 @@ namespace Juego
 		void moverNave()
 		{
 			calcularAnguloRotacion();
-			nave.pos.y -= cos(nave.anguloAceler*DEG2RAD) * nave.velocidad*nave.aceleracion;
-			nave.pos.x += sin(nave.anguloAceler*DEG2RAD) * nave.velocidad*nave.aceleracion;
 
 			if (!pausa)
 			{
@@ -543,6 +550,8 @@ namespace Juego
 		{
 			if (!pausa)
 			{
+				nave.pos.y -= cos(nave.anguloAceler*DEG2RAD) * nave.velocidad*nave.aceleracion;
+				nave.pos.x += sin(nave.anguloAceler*DEG2RAD) * nave.velocidad*nave.aceleracion;
 				if (nave.aceleracion < 0.5 && !nave.detenida)
 				{
 					nave.aceleracion = 0.5;
@@ -620,6 +629,7 @@ namespace Juego
 		void dibujarGameplay()
 		{
 			DrawTexture(fondo, screenWidth / 2 - fondo.width / 2, screenHeight / 2 - fondo.height / 2, WHITE);
+			DrawTexture(botonPausa, 20, 20, WHITE);
 			DrawText(FormatText("%i", nave.puntaje), screenWidth - screenWidth/10, screenHeight/30, screenWidth*screenHeight/10800, MAGENTA);
 			dibujarNave();
 			dibujarAsteroides();
@@ -628,6 +638,7 @@ namespace Juego
 			if (pausa)
 			{
 				DrawRectangleV({ 0.0f,0.0f }, { (float)screenWidth,(float)screenHeight }, { (unsigned char)0,(unsigned char)0,(unsigned char)0,(unsigned char)150 });
+				DrawTexture(pantPausa, screenWidth / 2 - pantPausa.width / 2, screenHeight - pantPausa.height,WHITE);
 			}
 		}
 	}

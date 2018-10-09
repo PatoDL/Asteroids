@@ -34,8 +34,6 @@ namespace Juego
 
 		void chequearMouse()
 		{
-			cout << GetMousePosition().x << "," << GetMousePosition().y << endl;
-
 			if (Gameplay::gano)
 			{
 				if (GetMouseX() >= 166 && GetMouseX() <= 762)
