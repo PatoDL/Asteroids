@@ -65,6 +65,7 @@ namespace Juego
 		Disparo disparos[cantDisparos];
 		Texture2D fondo;
 		bool pausa;
+		bool gano;
 
 		Vector2 v1;      //variables para calcular la rotacion
 		Vector2 v2;
@@ -185,6 +186,7 @@ namespace Juego
 			fondo = LoadTexture("res/fondo.png");
 			gameOver = false;
 			pausa = false;
+			gano = false;
 		}
 
 		void desinicializarGP()
@@ -553,6 +555,11 @@ namespace Juego
 				if (gameOver)
 				{
 					estado = gameover;
+				}
+				if (nave.puntaje == cantAsteroidesG * cantAsteroidesM*cantAsteroidesP)
+				{
+					gano = true;
+					gameOver = true;
 				}
 			}
 		}

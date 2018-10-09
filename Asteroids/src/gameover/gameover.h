@@ -5,7 +5,9 @@ namespace Juego
 {
 	namespace Gameover
 	{
+		void inicializarGO();
 		void chequearInputGO();
+		void dibujarGO();
 	}
 }
 

@@ -21,26 +21,29 @@ namespace Juego
 
 		void chequearMouse()
 		{
-			if (GetMouseX() <= 583 && GetMouseX() >= 315 && GetMouseY() >= 384 &&
-				GetMouseY() <= 472)
+			if (estado == estadoA)
 			{
-				portada_ = botonJugar;
-				if (IsMouseButtonDown(0))
+				if (GetMouseX() <= 583 && GetMouseX() >= 315 && GetMouseY() >= 384 &&
+					GetMouseY() <= 472)
 				{
-					estado = juego;
+					portada_ = botonJugar;
+					if (IsMouseButtonDown(0))
+					{
+						estado = juego;
+					}
 				}
-			}
-			else if (GetMouseX() >= 313 && GetMouseX() <= 582 && GetMouseY() >= 491 && GetMouseY() <= 577)
-			{
-				portada_ = botonCreditos;
-				if (IsMouseButtonDown(0))
+				else if (GetMouseX() >= 313 && GetMouseX() <= 582 && GetMouseY() >= 491 && GetMouseY() <= 577)
 				{
-					estado = creditos;
+					portada_ = botonCreditos;
+					if (IsMouseButtonDown(0))
+					{
+						estado = creditos;
+					}
 				}
-			}
-			else
-			{
-				portada_ = portada;
+				else
+				{
+					portada_ = portada;
+				}
 			}
 		}
 		

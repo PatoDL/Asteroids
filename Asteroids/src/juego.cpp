@@ -63,6 +63,9 @@ namespace Juego
 			}
 			Gameplay::actualizarGP();
 			break;
+		case gameover:
+			ShowCursor();
+			break;
 		}
 	}
 
@@ -95,6 +98,9 @@ namespace Juego
 		case juego:
 			Gameplay::dibujarGameplay();
 			break;
+		case gameover:
+			Gameover::dibujarGO();
+			break;
 		}
 		EndDrawing();
 	}
@@ -121,6 +127,7 @@ namespace Juego
 		InitWindow(screenWidth, screenHeight, "Asteroids");
 		SetTargetFPS(60);
 		Menu::inicializarMenu();
+		Gameover::inicializarGO();
 	}
 
 	void finalizarJuego()

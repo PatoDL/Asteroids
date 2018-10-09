@@ -7,6 +7,8 @@ namespace Juego
 {
 	namespace Gameplay
 	{
+		extern bool gano;
+
 		void iniciarComponentesGP();
 		void chequearInputGP();
 		void actualizarGP();
