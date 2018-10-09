@@ -13,45 +13,57 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="Archivos de origen\gameplay">
-      <UniqueIdentifier>{806cd7b2-cd7b-4e42-b9fa-79a8112e9b72}</UniqueIdentifier>
+    <Filter Include="Archivos de origen\juego">
+      <UniqueIdentifier>{6f2f9710-6761-4d20-9c7b-d0e7e40e164d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Archivos de origen\menu">
-      <UniqueIdentifier>{fedcb8a6-25a0-456d-88d0-2eb8175bced9}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Archivos de origen\gameover">
+    <Filter Include="Archivos de origen\juego\gameover">
       <UniqueIdentifier>{e1b2f2e0-9cc5-4910-9b7c-6882cfb2927c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Archivos de origen\juego\gameplay">
+      <UniqueIdentifier>{806cd7b2-cd7b-4e42-b9fa-79a8112e9b72}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de origen\juego\menu">
+      <UniqueIdentifier>{fedcb8a6-25a0-456d-88d0-2eb8175bced9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de origen\juego\creditos">
+      <UniqueIdentifier>{59cd97b4-c3ee-47e2-9342-bc12e4b9c305}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\src\juego.cpp">
-      <Filter>Archivos de origen</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\main.cpp">
-      <Filter>Archivos de origen</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\gameplay\gameplay.cpp">
-      <Filter>Archivos de origen\gameplay</Filter>
+      <Filter>Archivos de origen\juego\gameplay</Filter>
     </ClCompile>
     <ClCompile Include="..\src\menu\menu.cpp">
-      <Filter>Archivos de origen\menu</Filter>
+      <Filter>Archivos de origen\juego\menu</Filter>
     </ClCompile>
     <ClCompile Include="..\src\gameover\gameover.cpp">
-      <Filter>Archivos de origen\gameover</Filter>
+      <Filter>Archivos de origen\juego\gameover</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\main.cpp">
+      <Filter>Archivos de origen\juego</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\juego.cpp">
+      <Filter>Archivos de origen\juego</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\creditos\creditos.cpp">
+      <Filter>Archivos de origen\juego\creditos</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\src\juego.h">
-      <Filter>Archivos de origen</Filter>
-    </ClInclude>
     <ClInclude Include="..\src\gameplay\gameplay.h">
-      <Filter>Archivos de origen\gameplay</Filter>
+      <Filter>Archivos de origen\juego\gameplay</Filter>
     </ClInclude>
     <ClInclude Include="..\src\menu\menu.h">
-      <Filter>Archivos de origen\menu</Filter>
+      <Filter>Archivos de origen\juego\menu</Filter>
     </ClInclude>
     <ClInclude Include="..\src\gameover\gameover.h">
-      <Filter>Archivos de origen\gameover</Filter>
+      <Filter>Archivos de origen\juego\gameover</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\juego.h">
+      <Filter>Archivos de origen\juego</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\creditos\creditos.h">
+      <Filter>Archivos de origen\juego\creditos</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

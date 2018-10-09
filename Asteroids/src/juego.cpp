@@ -1,8 +1,10 @@
 #include "juego.h"
+
 #include "raylib.h"
 #include "menu/menu.h"
 #include "gameplay/gameplay.h"
 #include "gameover/gameover.h"
+#include "creditos/creditos.h"
 
 namespace Juego 
 {
@@ -36,6 +38,9 @@ namespace Juego
 			break;
 		case gameover:
 			Gameover::chequearInputGO();
+			break;
+		case creditos:
+			Creditos::chequearInputCreditos();
 			break;
 		}
 	}

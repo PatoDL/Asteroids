@@ -1,5 +1,6 @@
 #ifndef MENU_H
 #define MENU_H
+
 namespace Juego
 {
 	namespace Menu
@@ -10,4 +11,5 @@ namespace Juego
 		void desinicializarMenu();
 	}
 }
+
 #endif // !MENU_H
