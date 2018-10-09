@@ -49,10 +49,17 @@ namespace Juego
 	{
 		switch (estado)
 		{
+		case menu:
+			if (estadoA == juego)
+			{
+				ShowCursor();
+			}
+			break;
 		case juego:
 			if (estado != estadoA)
 			{
 				Gameplay::iniciarComponentesGP();
+				HideCursor();
 			}
 			Gameplay::actualizarGP();
 			break;

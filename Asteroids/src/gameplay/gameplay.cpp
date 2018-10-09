@@ -26,6 +26,11 @@ namespace Juego
 			Color color;
 			Vector2 pos;
 			Texture2D sprite;
+			float velocidad;
+			float anguloAceler;
+			float aceleracion;
+			bool detenida;
+			int puntaje;
 		};
 
 		struct Disparo
@@ -34,6 +39,7 @@ namespace Juego
 			float radio;
 			bool activo;
 			float angulo;
+			float velocidad;
 		};
 
 		struct Asteroide
@@ -66,7 +72,7 @@ namespace Juego
 		float prodPunto;
 		float moduloV1;
 		float moduloV2;
-		float prodModulo;
+		float prodModulo; //--------------------------------------
 		
 		static void iniciarNave();
 		static void iniciarBordes();
@@ -88,6 +94,7 @@ namespace Juego
 			{
 				disparos[i].radio = 4.0f;
 				disparos[i].activo = false;
+				disparos[i].velocidad = nave.velocidad * 2;
 			}
 		}
 
@@ -162,6 +169,11 @@ namespace Juego
 			nave.radioColision=nave.altura*2/3+10;
 			nave.color = WHITE;
 			nave.sprite = LoadTexture("res/cohete.png");
+			nave.velocidad = 3;
+			nave.aceleracion = 0.0f;
+			nave.anguloAceler = 0.0f;
+			nave.detenida = true;
+			nave.puntaje = 0;
 		}
 
 		void iniciarComponentesGP()
@@ -218,8 +230,8 @@ namespace Juego
 			{
 				if (disparos[i].activo)
 				{
-					disparos[i].pos.x += sinf(disparos[i].angulo*DEG2RAD) * 8;
-					disparos[i].pos.y -= cosf(disparos[i].angulo*DEG2RAD) * 8;
+					disparos[i].pos.x += sinf(disparos[i].angulo*DEG2RAD) * disparos[i].velocidad;
+					disparos[i].pos.y -= cosf(disparos[i].angulo*DEG2RAD) * disparos[i].velocidad;
 				}
 			}
 		}
@@ -249,21 +261,23 @@ namespace Juego
 		void moverNave()
 		{
 			calcularAnguloRotacion();
+			nave.pos.y -= cos(nave.anguloAceler*DEG2RAD) * nave.velocidad*nave.aceleracion;
+			nave.pos.x += sin(nave.anguloAceler*DEG2RAD) * nave.velocidad*nave.aceleracion;
 
 			if (!pausa)
 			{
 				if (IsMouseButtonDown(1))
 				{
-					nave.pos.y -= cos(nave.rotacion*DEG2RAD) * 6;
-					nave.pos.x += sin(nave.rotacion*DEG2RAD) * 6;
+					if (nave.detenida)
+					{
+						nave.detenida = false;
+					}
+					nave.anguloAceler = nave.rotacion;
+					nave.aceleracion = 1;
 				}
-				if (IsKeyDown(KEY_LEFT))
+				if (IsMouseButtonUp(1)&&nave.aceleracion!=0)
 				{
-					nave.rotacion -= 5;
-				}
-				if (IsKeyDown(KEY_RIGHT))
-				{
-					nave.rotacion += 5;
+					nave.aceleracion -= 0.1;
 				}
 			}
 		}
@@ -446,6 +460,8 @@ namespace Juego
 							asteroidesM[cantAsteroidesMAc - 3].pos = asteroidesG[i].pos;
 							asteroidesM[cantAsteroidesMAc-2].pos = asteroidesG[i].pos;
 							asteroidesM[cantAsteroidesMAc-1].pos = asteroidesG[i].pos;
+
+							nave.puntaje += 5;
 							
 						}
 					}
@@ -480,6 +496,8 @@ namespace Juego
 
 							asteroidesP[cantAsteroidesPAc - 2].pos = asteroidesM[i].pos;
 							asteroidesP[cantAsteroidesPAc - 1].pos = asteroidesM[i].pos;
+
+							nave.puntaje += 5;
 						}
 					}
 				}
@@ -502,6 +520,7 @@ namespace Juego
 						{
 							disparos[j].activo = false;
 							asteroidesP[i].activo = false;
+							nave.puntaje += 5;
 						}
 					}
 				}
@@ -522,9 +541,13 @@ namespace Juego
 		{
 			if (!pausa)
 			{
+				if (nave.aceleracion < 0.5 && !nave.detenida)
+				{
+					nave.aceleracion = 0.5;
+				}
 				chequearColisionConAsteroide();
 				chequearColisionConBordes();
-				//moverAsteroides();
+				moverAsteroides();
 				actualizarDisparos();
 				moverDisparos();
 				if (gameOver)
@@ -590,10 +613,11 @@ namespace Juego
 		void dibujarGameplay()
 		{
 			DrawTexture(fondo, screenWidth / 2 - fondo.width / 2, screenHeight / 2 - fondo.height / 2, WHITE);
+			DrawText(FormatText("%i", nave.puntaje), screenWidth - screenWidth/10, screenHeight/30, screenWidth*screenHeight/10800, MAGENTA);
 			dibujarNave();
 			dibujarAsteroides();
 			dibujarDisparos();
-			//DrawCircleV(GetMousePosition(), 3, RED);
+			DrawCircleV(GetMousePosition(), 3, RED);
 			if (pausa)
 			{
 				DrawRectangleV({ 0.0f,0.0f }, { (float)screenWidth,(float)screenHeight }, { (unsigned char)0,(unsigned char)0,(unsigned char)0,(unsigned char)150 });
