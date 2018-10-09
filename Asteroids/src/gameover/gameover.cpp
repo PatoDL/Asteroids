@@ -32,6 +32,17 @@ namespace Juego
 			resultado = perdiste;
 		}
 
+		void desinicializarGO()
+		{
+			UnloadTexture(ganaste);
+			UnloadTexture(perdiste);
+			UnloadTexture(gMenu);
+			UnloadTexture(pMenu);
+			UnloadTexture(gJugar);
+			UnloadTexture(pJugar);
+			UnloadTexture(resultado);
+		}
+
 		void chequearMouse()
 		{
 			if (Gameplay::gano)
@@ -41,7 +52,7 @@ namespace Juego
 					if (GetMouseY() >= 389 && GetMouseY() <= 476)
 					{
 						resultado = gJugar;
-						if (IsMouseButtonPressed(0))
+						if (IsMouseButtonReleased(MOUSE_LEFT_BUTTON))
 						{
 							estado = juego;
 						}
@@ -49,7 +60,7 @@ namespace Juego
 					else if (GetMouseY() >= 497 && GetMouseY() <= 583)
 					{
 						resultado = gMenu;
-						if (IsMouseButtonPressed(0))
+						if (IsMouseButtonReleased(MOUSE_LEFT_BUTTON))
 						{
 							estado = menu;
 						}
@@ -71,7 +82,7 @@ namespace Juego
 					if (GetMouseY() >= 389 && GetMouseY() <= 476)
 					{
 						resultado = pJugar;
-						if (IsMouseButtonPressed(0))
+						if (IsMouseButtonReleased(MOUSE_LEFT_BUTTON))
 						{
 							estado = juego;
 						}
@@ -79,7 +90,7 @@ namespace Juego
 					else if (GetMouseY() >= 497 && GetMouseY() <= 583)
 					{
 						resultado = pMenu;
-						if (IsMouseButtonPressed(0))
+						if (IsMouseButtonReleased(MOUSE_LEFT_BUTTON))
 						{
 							estado = menu;
 						}

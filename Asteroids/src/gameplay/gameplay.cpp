@@ -171,7 +171,7 @@ namespace Juego
 							  nave.pos.y - cos(nave.rotacion*DEG2RAD)*(nave.altura / 2.5f) };
 			nave.radioColision=nave.altura*2/3+10;
 			nave.color = WHITE;
-			nave.sprite = LoadTexture("res/cohete.png");
+			nave.sprite = LoadTexture("res/nave2-2.png");
 			nave.velocidad = 3;
 			nave.aceleracion = 0.0f;
 			nave.anguloAceler = 0.0f;
@@ -305,35 +305,6 @@ namespace Juego
 
 		void chequearColisionConBordes()
 		{
-			Rectangle bordesR[4];
-			bordesR[0].x = -1;
-			bordesR[0].y = 0;
-			bordesR[0].width = 3;
-			bordesR[0].height = screenHeight;
-			bordesR[1].x = 0;
-			bordesR[1].y = -1;
-			bordesR[1].width = screenWidth;
-			bordesR[1].height = 3;
-			bordesR[2].x = 0;
-			bordesR[2].y = screenHeight-2;
-			bordesR[2].height = 3;
-			bordesR[2].width = screenWidth;
-			bordesR[3].x = screenWidth-2;
-			bordesR[3].y = 0;
-			bordesR[3].width = 3;
-			bordesR[3].height = screenHeight;
-
-			for (int i = 0; i < 4; i++)
-			{
-				if (CheckCollisionCircleRec(nave.pos, nave.radioColision,bordesR[i]))
-				{
-					DrawRectangleRec(bordesR[i], RED);
-					if(IsKeyDown(KEY_SPACE))nave.color = BLUE;
-					else nave.color = WHITE;
-				}
-
-			}
-
 			if (nave.pos.x < bordes[izquierda])
 			{
 				nave.pos.x = bordes[derecha];

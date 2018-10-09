@@ -18,5 +18,6 @@ namespace Juego
 	void ejecutarJuego();
 	int randomizarColor();
 }
+
 #endif // !JUEGO_H
 
