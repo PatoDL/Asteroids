@@ -197,6 +197,7 @@ namespace Juego
 		{
 			UnloadTexture(nave.sprite);
 			UnloadTexture(fondo);
+			UnloadTexture(pantPausa);
 		}
 
 		void chequearInputGP()

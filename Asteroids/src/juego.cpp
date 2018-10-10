@@ -117,6 +117,12 @@ namespace Juego
 			actualizarJuego();
 			//dibujo
 			dibujarJuego();
+
+			//-------------
+			if (Menu::salir)
+			{
+				break;
+			}
 		}
 		finalizarJuego();
 	}

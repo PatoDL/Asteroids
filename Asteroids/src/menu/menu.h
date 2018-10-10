@@ -5,6 +5,8 @@ namespace Juego
 {
 	namespace Menu
 	{
+		extern bool salir;
+
 		void inicializarMenu();
 		void chequearInputMenu();
 		void dibujarMenu();
