@@ -4,6 +4,8 @@
 #include <cmath>
 #include "juego.h"
 
+using namespace std;
+
 namespace Juego
 {
 	namespace Gameplay
@@ -63,9 +65,17 @@ namespace Juego
 		float bordes[4];
 		const int cantDisparos = 30;
 		Disparo disparos[cantDisparos];
-		Texture2D fondo;
+
+		Texture2D fondo;   //botones pausa
 		Texture2D botonPausa;
-		Texture2D pantPausa;
+		Texture2D botonDespausa;
+		Texture2D botonReiniciar;
+		Texture2D botonReiniciarP;
+		Texture2D botonMenu;
+		Texture2D botonMenuP;
+		Texture2D reiniciarB;
+		Texture2D menuB;   //---------------------
+
 		bool pausa;
 		bool gano;
 
@@ -179,6 +189,18 @@ namespace Juego
 			nave.puntaje = 0;
 		}
 
+		void iniciarComponentesPausa()
+		{
+			botonPausa = LoadTexture("res/pausa/boton pausa.png");
+			botonDespausa = LoadTexture("res/pausa/boton despausa.png");
+			botonMenu = LoadTexture("res/pausa/volver al menu.png");
+			botonMenuP = LoadTexture("res/pausa/volver al menuP.png");
+			botonReiniciar = LoadTexture("res/pausa/reiniciar juego.png");
+			botonReiniciarP = LoadTexture("res/pausa/reiniciar juegoP.png");
+			reiniciarB = botonReiniciar;
+			menuB = botonMenu;
+		}
+
 		void iniciarComponentesGP()
 		{
 			iniciarNave();
@@ -186,8 +208,7 @@ namespace Juego
 			iniciarAsteroides();
 			inicializarDisparos();
 			fondo = LoadTexture("res/fondo.png");
-			botonPausa = LoadTexture("res/boton pausa.png");
-			pantPausa = LoadTexture("res/pausa.png");
+			iniciarComponentesPausa();
 			gameOver = false;
 			pausa = false;
 			gano = false;
@@ -197,7 +218,12 @@ namespace Juego
 		{
 			UnloadTexture(nave.sprite);
 			UnloadTexture(fondo);
-			UnloadTexture(pantPausa);
+			UnloadTexture(botonPausa);
+			UnloadTexture(botonDespausa);
+			UnloadTexture(botonMenu);
+			UnloadTexture(botonMenuP);
+			UnloadTexture(botonReiniciar);
+			UnloadTexture(botonReiniciarP);
 		}
 
 		void chequearInputGP()
@@ -207,23 +233,46 @@ namespace Juego
 			
 			if (GetMouseX() >= 24 && GetMouseX() <= 56 && GetMouseY() >= 23 && GetMouseY() <= 57)
 			{
-				if (IsMouseButtonPressed(0))
+				if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
 				{
 					pausa = !pausa;
 				}
 			}
+			if (pausa)
+			{
+				if (GetMouseX() >= (screenWidth - reiniciarB.width) / 2 &&
+					GetMouseX() <= (screenWidth - reiniciarB.width) / 2 + reiniciarB.width)
+				{
+					if (GetMouseY() >= reiniciarB.height && GetMouseY() <= reiniciarB.height * 2)
+					{
+						reiniciarB = botonReiniciarP;
+						if (IsMouseButtonReleased(MOUSE_LEFT_BUTTON))
+						{
+							estadoA = menu;
+						}
+					}
+					else if (GetMouseY() >= menuB.height * 4 && GetMouseY() <= menuB.height * 5)
+					{
+						menuB = botonMenuP;
+						if (IsMouseButtonReleased(MOUSE_LEFT_BUTTON))
+						{
+							estado = menu;
+						}
+					}
+					else
+					{
+						reiniciarB = botonReiniciar;
+						menuB = botonMenu;
+					}
+				}
+			}
 			else
 			{
-				if (IsMouseButtonPressed(0))
+				if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
 				{
 					disparos[balaADisp].activo = true;
 					balaADisp++;
 				}
-			}
-			
-			if (IsKeyDown(KEY_ESCAPE))
-			{
-				estado = menu;
 			}
 
 			if (balaADisp == cantDisparos - 1) //reinicia los disparos
@@ -276,7 +325,7 @@ namespace Juego
 
 			if (!pausa)
 			{
-				if (IsMouseButtonDown(1))
+				if (IsMouseButtonDown(MOUSE_RIGHT_BUTTON))
 				{
 					if (nave.detenida)
 					{
@@ -285,7 +334,7 @@ namespace Juego
 					nave.anguloAceler = nave.rotacion;
 					nave.aceleracion = 1;
 				}
-				if (IsMouseButtonUp(1)&&nave.aceleracion!=0)
+				if (IsMouseButtonUp(MOUSE_RIGHT_BUTTON)&&nave.aceleracion!=0)
 				{
 					nave.aceleracion -= 0.1;
 				}
@@ -601,17 +650,26 @@ namespace Juego
 		void dibujarGameplay()
 		{
 			DrawTexture(fondo, screenWidth / 2 - fondo.width / 2, screenHeight / 2 - fondo.height / 2, WHITE);
-			DrawTexture(botonPausa, 20, 20, WHITE);
+			if (!pausa)
+			{
+				DrawTexture(botonPausa, 20, 20, WHITE);
+			}
 			DrawText(FormatText("%i", nave.puntaje), screenWidth - screenWidth/10, screenHeight/30, screenWidth*screenHeight/10800, MAGENTA);
 			dibujarNave();
 			dibujarAsteroides();
 			dibujarDisparos();
-			DrawCircleV(GetMousePosition(), 3, RED);
+			
 			if (pausa)
 			{
-				DrawRectangleV({ 0.0f,0.0f }, { (float)screenWidth,(float)screenHeight }, { (unsigned char)0,(unsigned char)0,(unsigned char)0,(unsigned char)150 });
-				DrawTexture(pantPausa, screenWidth / 2 - pantPausa.width / 2, screenHeight - pantPausa.height,WHITE);
+				DrawRectangleV({ 0.0f,0.0f }, { (float)screenWidth,(float)screenHeight }, 
+							   { (unsigned char)0,(unsigned char)0,(unsigned char)0,(unsigned char)150 });
+
+
+				DrawTexture(reiniciarB,(screenWidth-reiniciarB.width)/2,reiniciarB.height,WHITE);
+				DrawTexture(menuB,(screenWidth-menuB.width)/2,reiniciarB.height*4,WHITE);
+				DrawTexture(botonDespausa, 30, 30, WHITE);
 			}
+			DrawCircleV(GetMousePosition(), 3, RED);
 		}
 	}
 }
