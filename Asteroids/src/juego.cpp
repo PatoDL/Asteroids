@@ -133,6 +133,7 @@ namespace Juego
 		InitWindow(screenWidth, screenHeight, "Asteroids");
 		SetTargetFPS(60);
 		Menu::inicializarMenu();
+		Gameplay::iniciarComponentesGP();
 		Gameover::inicializarGO();
 	}
 
@@ -141,6 +142,7 @@ namespace Juego
 		//close game
 		Menu::desinicializarMenu();
 		Gameplay::desinicializarGP();
+		Gameover::desinicializarGO();
 		CloseWindow();
 	}
 }

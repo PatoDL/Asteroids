@@ -11,55 +11,57 @@ namespace Juego
 {
 	namespace Gameover
 	{
-		Texture2D ganaste;
-		Texture2D perdiste;
-		Texture2D gMenu;
-		Texture2D pMenu;
-		Texture2D gJugar;
-		Texture2D pJugar;
+		Texture2D fondo;
 		Texture2D resultado;
+		Texture2D felicidades;
+		Texture2D perdiste;
+		Texture2D volverAJ;
+		Texture2D volverAJP;
+		Texture2D jugarB;
+		Texture2D volverMB;
 
 		static void chequearMouse();
 
 		void inicializarGO()
 		{
-			ganaste = LoadTexture("res/gameover/ganaste.png");
-			perdiste = LoadTexture("res/gameover/perdiste.png");
-			gMenu = LoadTexture("res/gameover/ganaste-menu.png");
-			pMenu = LoadTexture("res/gameover/perdiste-menu.png");
-			gJugar = LoadTexture("res/gameover/ganaste-jugar.png");
-			pJugar = LoadTexture("res/gameover/perdiste-jugar.png");
+			fondo = LoadTexture("res/fondo portada.png");
+			felicidades = LoadTexture("res/gameover/felicidades.png");
+			perdiste = LoadTexture("res/gameover/perdiste0.png");
+			volverAJ = LoadTexture("res/gameover/volver a jugar.png");
+			volverAJP = LoadTexture("res/gameover/volver a jugarP.png");
+			jugarB = volverAJ;
+			volverMB = Gameplay::botonMenu;
 			resultado = perdiste;
 		}
 
 		void desinicializarGO()
 		{
-			UnloadTexture(ganaste);
+			UnloadTexture(fondo);
+			UnloadTexture(felicidades);
 			UnloadTexture(perdiste);
-			UnloadTexture(gMenu);
-			UnloadTexture(pMenu);
-			UnloadTexture(gJugar);
-			UnloadTexture(pJugar);
+			UnloadTexture(volverAJ);
+			UnloadTexture(volverAJP);
+			UnloadTexture(jugarB);
+			UnloadTexture(volverMB);
 			UnloadTexture(resultado);
 		}
 
 		void chequearMouse()
 		{
-			if (Gameplay::gano)
-			{
-				if (GetMouseX() >= 166 && GetMouseX() <= 762)
+				if (GetMouseX() >= (screenWidth - jugarB.width) / 2 &&
+					GetMouseX() <= (screenWidth - jugarB.width) / 2 + jugarB.width)
 				{
-					if (GetMouseY() >= 389 && GetMouseY() <= 476)
+					if (GetMouseY() >= screenHeight - (jugarB.height * 2 + jugarB.height) && GetMouseY() <= (screenHeight - (jugarB.height * 2 + jugarB.height)) + jugarB.height)
 					{
-						resultado = gJugar;
+						jugarB = volverAJP;
 						if (IsMouseButtonReleased(MOUSE_LEFT_BUTTON))
 						{
 							estado = juego;
 						}
 					}
-					else if (GetMouseY() >= 497 && GetMouseY() <= 583)
+					else if (GetMouseY() >= screenHeight - (volverMB.height + volverMB.height / 2) && GetMouseY()<=(screenHeight - (volverMB.height + volverMB.height / 2))+volverMB.height)
 					{
-						resultado = gMenu;
+						volverMB = Gameplay::botonMenuP;
 						if (IsMouseButtonReleased(MOUSE_LEFT_BUTTON))
 						{
 							estado = menu;
@@ -67,45 +69,19 @@ namespace Juego
 					}
 					else
 					{
-						resultado = ganaste;
+						jugarB = volverAJ;
+						volverMB = Gameplay::botonMenu;
 					}
+				
 				}
-				else
+				if (Gameplay::gano)
 				{
-					resultado = ganaste;
-				}
-			}
-			else
-			{
-				if (GetMouseX() >= 166 && GetMouseX() <= 762)
-				{
-					if (GetMouseY() >= 389 && GetMouseY() <= 476)
-					{
-						resultado = pJugar;
-						if (IsMouseButtonReleased(MOUSE_LEFT_BUTTON))
-						{
-							estado = juego;
-						}
-					}
-					else if (GetMouseY() >= 497 && GetMouseY() <= 583)
-					{
-						resultado = pMenu;
-						if (IsMouseButtonReleased(MOUSE_LEFT_BUTTON))
-						{
-							estado = menu;
-						}
-					}
-					else
-					{
-						resultado = perdiste;
-					}
+					resultado = felicidades;
 				}
 				else
 				{
 					resultado = perdiste;
 				}
-			}
-		
 		}
 
 		void chequearInputGO()
@@ -124,7 +100,10 @@ namespace Juego
 
 		void dibujarGO()
 		{
-			DrawTexture(resultado, screenWidth / 2 - resultado.width / 2, screenHeight / 2 - resultado.height / 2, WHITE);
+			DrawTexture(fondo, screenWidth / 2 - fondo.width / 2, screenHeight / 2 - fondo.height / 2, WHITE);
+			DrawTexture(resultado, (screenWidth - resultado.width) / 2, resultado.height * 2, WHITE);
+			DrawTexture(jugarB, (screenWidth - jugarB.width) / 2, screenHeight - (jugarB.height * 2 + jugarB.height), WHITE);
+			DrawTexture(volverMB, (screenWidth - volverMB.width) / 2, screenHeight - (volverMB.height + volverMB.height / 2), WHITE);
 		}
 	}
 }

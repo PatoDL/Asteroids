@@ -8,6 +8,9 @@ namespace Juego
 	namespace Gameplay
 	{
 		extern bool gano;
+		extern Texture2D botonMenu;
+		extern Texture2D botonMenuP;
+
 
 		void iniciarComponentesGP();
 		void chequearInputGP();

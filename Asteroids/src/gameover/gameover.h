@@ -8,6 +8,7 @@ namespace Juego
 		void inicializarGO();
 		void chequearInputGO();
 		void dibujarGO();
+		void desinicializarGO();
 	}
 }
 
