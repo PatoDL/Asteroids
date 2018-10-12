@@ -48,7 +48,7 @@ namespace Juego
 		{
 			Vector2 pos;
 			float radio;
-			Vector2 vel;
+			float vel;
 			float angulo;
 			Color color;
 			bool activo;
@@ -63,7 +63,7 @@ namespace Juego
 		Asteroide asteroidesP[cantAsteroidesP];
 		static bool gameOver;
 		float bordes[4];
-		const int cantDisparos = 30;
+		const int cantDisparos = 6;
 		Disparo disparos[cantDisparos];
 
 		Texture2D fondo;   //botones pausa
@@ -107,7 +107,7 @@ namespace Juego
 			{
 				disparos[i].radio = 4.0f;
 				disparos[i].activo = false;
-				disparos[i].velocidad = nave.velocidad * 2;
+				disparos[i].velocidad = nave.velocidad * 3/2;
 			}
 		}
 
@@ -126,6 +126,8 @@ namespace Juego
 				asteroidesG[i].angulo = (float)GetRandomValue(-360, 360);
 
 				asteroidesG[i].activo = true;
+
+				asteroidesG[i].vel = 150.0f;
 
 				for (int j = 0; j <cantAsteroidesG; j++)
 				{
@@ -150,6 +152,7 @@ namespace Juego
 										 (unsigned char)randomizarColor(),(unsigned char)255, };
 				asteroidesM[i].pos = { -100,-100 };
 				asteroidesM[i].radio = asteroidesG[0].radio / 2;
+				asteroidesM[i].vel = 150.0f;
 			}
 
 			for (int i = 0; i < cantAsteroidesP; i++)
@@ -160,6 +163,7 @@ namespace Juego
 										 (unsigned char)randomizarColor(),(unsigned char)255, };
 				asteroidesP[i].pos = { -100,-100 };
 				asteroidesP[i].radio = asteroidesM[0].radio / 2;
+				asteroidesP[i].vel = 150.0f;
 			}
 		}
 
@@ -181,8 +185,8 @@ namespace Juego
 							  nave.pos.y - cos(nave.rotacion*DEG2RAD)*(nave.altura / 2.5f) };
 			nave.radioColision=nave.altura*2/3+10;
 			nave.color = WHITE;
-			nave.sprite = LoadTexture("res/nave2-2.png");
-			nave.velocidad = 3;
+			nave.sprite = LoadTexture("res/cohete.png");
+			nave.velocidad = 300.0f;
 			nave.aceleracion = 0.0f;
 			nave.anguloAceler = 0.0f;
 			nave.detenida = true;
@@ -275,14 +279,12 @@ namespace Juego
 				}
 			}
 
+			
 			if (balaADisp == cantDisparos - 1) //reinicia los disparos
 			{
 				balaADisp = 0;
-				for (int i = 0; i < cantDisparos; i++)
-				{
-					disparos[i].activo = false;
-				}
 			}
+			
 		}
 
 		void moverDisparos()
@@ -291,8 +293,12 @@ namespace Juego
 			{
 				if (disparos[i].activo)
 				{
-					disparos[i].pos.x += sinf(disparos[i].angulo*DEG2RAD) * disparos[i].velocidad;
-					disparos[i].pos.y -= cosf(disparos[i].angulo*DEG2RAD) * disparos[i].velocidad;
+					disparos[i].pos.x += sinf(disparos[i].angulo*DEG2RAD) * disparos[i].velocidad*GetFrameTime();
+					disparos[i].pos.y -= cosf(disparos[i].angulo*DEG2RAD) * disparos[i].velocidad*GetFrameTime();
+					if (disparos[i].pos.x > screenWidth || disparos[i].pos.x < 0 || disparos[i].pos.y<0 || disparos[i].pos.y>screenHeight)
+					{
+						disparos[i].activo = false;
+					}
 				}
 			}
 		}
@@ -332,11 +338,11 @@ namespace Juego
 						nave.detenida = false;
 					}
 					nave.anguloAceler = nave.rotacion;
-					nave.aceleracion = 1;
+					nave.aceleracion = 0.8;
 				}
 				if (IsMouseButtonUp(MOUSE_RIGHT_BUTTON)&&nave.aceleracion!=0)
 				{
-					nave.aceleracion -= 0.1;
+					nave.aceleracion -= 0.05;
 				}
 			}
 		}
@@ -379,8 +385,8 @@ namespace Juego
 			{
 				if (asteroidesG[i].activo)
 				{
-					asteroidesG[i].pos.x += sinf(asteroidesG[i].angulo*DEG2RAD) * 2;
-					asteroidesG[i].pos.y -= cosf(asteroidesG[i].angulo*DEG2RAD) * 2;
+					asteroidesG[i].pos.x += sinf(asteroidesG[i].angulo*DEG2RAD) * asteroidesG[i].vel * GetFrameTime();
+					asteroidesG[i].pos.y -= cosf(asteroidesG[i].angulo*DEG2RAD) * asteroidesG[i].vel* GetFrameTime();
 
 					if (asteroidesG[i].pos.x > screenWidth + asteroidesG[i].radio)
 					{
@@ -405,8 +411,8 @@ namespace Juego
 			{
 				if (asteroidesM[i].activo)
 				{
-					asteroidesM[i].pos.x += sinf(asteroidesM[i].angulo*DEG2RAD) * 2;
-					asteroidesM[i].pos.y -= cosf(asteroidesM[i].angulo*DEG2RAD) * 2;
+					asteroidesM[i].pos.x += sinf(asteroidesM[i].angulo*DEG2RAD) * asteroidesM[i].vel*GetFrameTime();
+					asteroidesM[i].pos.y -= cosf(asteroidesM[i].angulo*DEG2RAD) * asteroidesM[i].vel* GetFrameTime();
 
 					if (asteroidesM[i].pos.x > screenWidth + asteroidesM[i].radio)
 					{
@@ -431,8 +437,8 @@ namespace Juego
 			{
 				if (asteroidesP[i].activo)
 				{
-					asteroidesP[i].pos.x += sinf(asteroidesP[i].angulo*DEG2RAD) * 2;
-					asteroidesP[i].pos.y -= cosf(asteroidesP[i].angulo*DEG2RAD) * 2;
+					asteroidesP[i].pos.x += sinf(asteroidesP[i].angulo*DEG2RAD) * asteroidesP[i].vel * GetFrameTime();
+					asteroidesP[i].pos.y -= cosf(asteroidesP[i].angulo*DEG2RAD) * asteroidesP[i].vel * GetFrameTime();
 
 					if (asteroidesP[i].pos.x > screenWidth + asteroidesP[i].radio)
 					{
@@ -571,11 +577,11 @@ namespace Juego
 		{
 			if (!pausa)
 			{
-				nave.pos.y -= cos(nave.anguloAceler*DEG2RAD) * nave.velocidad*nave.aceleracion;
-				nave.pos.x += sin(nave.anguloAceler*DEG2RAD) * nave.velocidad*nave.aceleracion;
-				if (nave.aceleracion < 0.5 && !nave.detenida)
+				nave.pos.y -= cos(nave.anguloAceler*DEG2RAD) * nave.velocidad*nave.aceleracion * GetFrameTime();
+				nave.pos.x += sin(nave.anguloAceler*DEG2RAD) * nave.velocidad*nave.aceleracion * GetFrameTime();
+				if (nave.aceleracion < 0.2 && !nave.detenida)
 				{
-					nave.aceleracion = 0.5;
+					nave.aceleracion = 0.2;
 				}
 				chequearColisionConAsteroide();
 				chequearColisionConBordes();

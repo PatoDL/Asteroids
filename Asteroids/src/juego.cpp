@@ -126,7 +126,6 @@ namespace Juego
 		//init game
 		InitWindow(screenWidth, screenHeight, "Asteroids");
 		SetExitKey(0);
-		SetTargetFPS(60);
 		Menu::inicializarMenu();
 		Creditos::inicializarCreditos();
 		Gameplay::iniciarComponentesGP();
