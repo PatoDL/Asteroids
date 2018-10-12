@@ -5,7 +5,10 @@ namespace Juego
 {
 	namespace Creditos
 	{
+		void inicializarCreditos();
 		void chequearInputCreditos();
+		void dibujarCreditos();
+		void desinicializarCreditos();
 	}
 }
 

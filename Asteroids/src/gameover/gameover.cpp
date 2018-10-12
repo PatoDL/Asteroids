@@ -87,15 +87,6 @@ namespace Juego
 		void chequearInputGO()
 		{
 			chequearMouse();
-
-			if (IsKeyDown(KEY_ENTER))
-			{
-				estado = juego;
-			}
-			if (IsKeyDown(KEY_ESCAPE))
-			{
-				estado = menu;
-			}
 		}
 
 		void dibujarGO()

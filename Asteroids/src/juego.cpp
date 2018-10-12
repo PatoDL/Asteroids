@@ -74,15 +74,6 @@ namespace Juego
 		if (estado != estadoA)
 		{
 			estadoA = estado;
-			switch (estado)
-			{
-			case menu:
-				SetExitKey(KEY_ESCAPE);
-				break;
-			default:
-				SetExitKey(0);
-				break;
-			}
 		}
 	}
 
@@ -94,6 +85,9 @@ namespace Juego
 		{
 		case menu:
 			Menu::dibujarMenu();
+			break;
+		case creditos:
+			Creditos::dibujarCreditos();
 			break;
 		case juego:
 			Gameplay::dibujarGameplay();
@@ -131,8 +125,10 @@ namespace Juego
 	{
 		//init game
 		InitWindow(screenWidth, screenHeight, "Asteroids");
+		SetExitKey(0);
 		SetTargetFPS(60);
 		Menu::inicializarMenu();
+		Creditos::inicializarCreditos();
 		Gameplay::iniciarComponentesGP();
 		Gameover::inicializarGO();
 	}
@@ -141,6 +137,7 @@ namespace Juego
 	{
 		//close game
 		Menu::desinicializarMenu();
+		Creditos::desinicializarCreditos();
 		Gameplay::desinicializarGP();
 		Gameover::desinicializarGO();
 		CloseWindow();
