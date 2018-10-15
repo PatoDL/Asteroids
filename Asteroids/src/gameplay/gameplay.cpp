@@ -51,6 +51,7 @@ namespace Juego
 			UnloadTexture(nave.sprite);
 			UnloadTexture(botonPausa);
 			UnloadTexture(fondo);
+			desinicializarAsteroides();
 		}
 
 		void chequearInputGP()

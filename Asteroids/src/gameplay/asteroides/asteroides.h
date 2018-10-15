@@ -10,6 +10,7 @@ namespace Juego
 		extern const int cantAsteroidesP;
 
 		void iniciarAsteroides();
+		void desinicializarAsteroides();
 		void moverAsteroides();
 		void chequearColisionConAsteroide();
 		void dibujarAsteroides();

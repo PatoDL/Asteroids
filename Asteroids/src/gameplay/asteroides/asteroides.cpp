@@ -19,6 +19,8 @@ namespace Juego
 			float angulo;
 			Color color;
 			bool activo;
+			Texture2D sprite;
+			float rotacionCuerpo;
 		};
 
 		const int cantAsteroidesG = 5;
@@ -27,9 +29,12 @@ namespace Juego
 		Asteroide asteroidesG[cantAsteroidesG];
 		Asteroide asteroidesM[cantAsteroidesM];
 		Asteroide asteroidesP[cantAsteroidesP];
+		Texture2D aSprite;
 
 		void iniciarAsteroides()
 		{
+			aSprite = LoadTexture("res/asteroide.png");
+
 			for (int i = 0; i <cantAsteroidesG; i++)
 			{
 				asteroidesG[i].radio = 60;
@@ -45,6 +50,10 @@ namespace Juego
 				asteroidesG[i].activo = true;
 
 				asteroidesG[i].vel = 150.0f;
+
+				asteroidesG[i].sprite = aSprite;
+
+				asteroidesG[i].rotacionCuerpo = (float)GetRandomValue(0, 1);
 
 				for (int j = 0; j <cantAsteroidesG; j++)
 				{
@@ -70,6 +79,8 @@ namespace Juego
 				asteroidesM[i].pos = { -100,-100 };
 				asteroidesM[i].radio = asteroidesG[0].radio / 2;
 				asteroidesM[i].vel = 150.0f;
+				asteroidesM[i].sprite = aSprite;
+				asteroidesM[i].rotacionCuerpo = (float)GetRandomValue(0, 1);
 			}
 
 			for (int i = 0; i < cantAsteroidesP; i++)
@@ -81,6 +92,26 @@ namespace Juego
 				asteroidesP[i].pos = { -100,-100 };
 				asteroidesP[i].radio = asteroidesM[0].radio / 2;
 				asteroidesP[i].vel = 150.0f;
+				asteroidesP[i].sprite = aSprite;
+				asteroidesP[i].rotacionCuerpo = (float)GetRandomValue(0, 1);
+			}
+		}
+
+		void desinicializarAsteroides()
+		{
+			UnloadTexture(aSprite);
+
+			for (int i = 0; i < cantAsteroidesG; i++)
+			{
+				UnloadTexture(asteroidesG[i].sprite);
+			}
+			for (int i = 0; i < cantAsteroidesM; i++)
+			{
+				UnloadTexture(asteroidesM[i].sprite);
+			}
+			for (int i = 0; i < cantAsteroidesP; i++)
+			{
+				UnloadTexture(asteroidesP[i].sprite);
 			}
 		}
 
@@ -109,6 +140,15 @@ namespace Juego
 					{
 						asteroidesG[i].pos.y = -asteroidesG[i].radio;
 					}
+
+					if (asteroidesG[i].rotacionCuerpo > 0)
+					{
+						asteroidesG[i].rotacionCuerpo += 0.3;
+					}
+					else
+					{
+						asteroidesG[i].rotacionCuerpo-=0.3;
+					}
 				}
 			}
 
@@ -134,6 +174,15 @@ namespace Juego
 					if (asteroidesM[i].pos.y > screenHeight + asteroidesM[i].radio)
 					{
 						asteroidesM[i].pos.y = -asteroidesM[i].radio;
+					}
+
+					if (asteroidesM[i].rotacionCuerpo > 0)
+					{
+						asteroidesM[i].rotacionCuerpo += 0.3;
+					}
+					else
+					{
+						asteroidesM[i].rotacionCuerpo -= 0.3;
 					}
 				}
 			}
@@ -161,6 +210,15 @@ namespace Juego
 					{
 						asteroidesP[i].pos.y = -asteroidesP[i].radio;
 					}
+
+					if (asteroidesP[i].rotacionCuerpo > 0)
+					{
+						asteroidesP[i].rotacionCuerpo += 0.3;
+					}
+					else
+					{
+						asteroidesP[i].rotacionCuerpo -= 0.3;
+					}
 				}
 			}
 		}
@@ -174,8 +232,8 @@ namespace Juego
 			{
 				if (asteroidesG[i].activo)
 				{
-					if (CheckCollisionCircles({ nave.pos.x + sin(nave.rotacion*DEG2RAD)*(nave.altura / 2.5f),
-						nave.pos.y - cos(nave.rotacion*DEG2RAD)*(nave.altura / 2.5f) },
+					if (CheckCollisionCircles({ nave.pos.x + sin(nave.rotacion*DEG2RAD),
+						nave.pos.y - cos(nave.rotacion*DEG2RAD) },
 						nave.radioColision, asteroidesG[i].pos, asteroidesG[i].radio))
 					{
 						gameOver = true;
@@ -214,8 +272,8 @@ namespace Juego
 			{
 				if (asteroidesM[i].activo)
 				{
-					if (CheckCollisionCircles({ nave.pos.x + sin(nave.rotacion*DEG2RAD)*(nave.altura / 2.5f),
-						nave.pos.y - cos(nave.rotacion*DEG2RAD)*(nave.altura / 2.5f) },
+					if (CheckCollisionCircles({ nave.pos.x + sin(nave.rotacion*DEG2RAD),
+						nave.pos.y - cos(nave.rotacion*DEG2RAD) },
 						nave.radioColision, asteroidesM[i].pos, asteroidesM[i].radio))
 					{
 						gameOver = true;
@@ -248,8 +306,8 @@ namespace Juego
 			{
 				if (asteroidesP[i].activo)
 				{
-					if (CheckCollisionCircles({ nave.pos.x + sin(nave.rotacion*DEG2RAD)*(nave.altura / 2.5f),
-						nave.pos.y - cos(nave.rotacion*DEG2RAD)*(nave.altura / 2.5f) },
+					if (CheckCollisionCircles({ nave.pos.x + sin(nave.rotacion*DEG2RAD),
+						nave.pos.y - cos(nave.rotacion*DEG2RAD)},
 						nave.radioColision, asteroidesP[i].pos, asteroidesP[i].radio))
 					{
 						gameOver = true;
@@ -280,11 +338,24 @@ namespace Juego
 
 		void dibujarAsteroides()
 		{
+			Rectangle sourceRec;
+			sourceRec.height = (float)aSprite.height;
+			sourceRec.width = (float)aSprite.width;
+			sourceRec.x = 0.0f;
+			sourceRec.y = 0.0f;
+
 			for (int i = 0; i <cantAsteroidesG; i++)
 			{
 				if (asteroidesG[i].activo)
 				{
-					DrawCircle(asteroidesG[i].pos.x, asteroidesG[i].pos.y, asteroidesG[i].radio, asteroidesG[i].color);
+					DrawTexturePro(asteroidesG[i].sprite,
+									sourceRec,
+									{ asteroidesG[i].pos.x,
+									  asteroidesG[i].pos.y,
+									  (float)asteroidesG[i].sprite.width/5, (float)asteroidesG[i].sprite.height/5 },
+									{(float)asteroidesG[i].sprite.width/10,(float)asteroidesG[i].sprite.height/10},
+									asteroidesG[i].rotacionCuerpo, WHITE);
+					//DrawCircle(asteroidesG[i].pos.x, asteroidesG[i].pos.y, asteroidesG[i].radio, asteroidesG[i].color);
 				}
 			}
 
@@ -292,7 +363,15 @@ namespace Juego
 			{
 				if (asteroidesM[i].activo)
 				{
-					DrawCircle(asteroidesM[i].pos.x, asteroidesM[i].pos.y, asteroidesM[i].radio, asteroidesM[i].color);
+					DrawTexturePro(asteroidesM[i].sprite,
+						sourceRec,
+						{ asteroidesM[i].pos.x,
+						asteroidesM[i].pos.y,
+						(float)asteroidesM[i].sprite.width / 8, (float)asteroidesM[i].sprite.height / 8 },
+						{ (float)asteroidesM[i].sprite.width / 16,(float)asteroidesM[i].sprite.height / 16 },
+						asteroidesM[i].rotacionCuerpo, WHITE);
+
+					//DrawCircle(asteroidesM[i].pos.x, asteroidesM[i].pos.y, asteroidesM[i].radio, asteroidesM[i].color);
 				}
 			}
 
@@ -300,7 +379,15 @@ namespace Juego
 			{
 				if (asteroidesP[i].activo)
 				{
-					DrawCircleV(asteroidesP[i].pos, asteroidesP[i].radio, asteroidesP[i].color);
+					DrawTexturePro(asteroidesP[i].sprite,
+						sourceRec,
+						{ asteroidesP[i].pos.x,
+						asteroidesP[i].pos.y,
+						(float)asteroidesP[i].sprite.width / 14, (float)asteroidesP[i].sprite.height / 14 },
+						{ (float)asteroidesP[i].sprite.width / 28,(float)asteroidesP[i].sprite.height / 28 },
+						asteroidesP[i].rotacionCuerpo, WHITE);
+
+					//DrawCircleV(asteroidesP[i].pos, asteroidesP[i].radio, asteroidesP[i].color);
 				}
 			}
 		}

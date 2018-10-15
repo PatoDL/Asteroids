@@ -31,11 +31,11 @@ namespace Juego
 				nave.altura = (nave.base / 2) / tanf(25 * DEG2RAD);
 				nave.rotacion = 0;
 				nave.pos = { (float)screenWidth / 2,(float)screenHeight / 2 };
-				nave.colision = { nave.pos.x + sin(nave.rotacion*DEG2RAD)*(nave.altura / 2.5f),
-					nave.pos.y - cos(nave.rotacion*DEG2RAD)*(nave.altura / 2.5f) };
+				nave.colision = { nave.pos.x + sin(nave.rotacion*DEG2RAD),
+					nave.pos.y - cos(nave.rotacion*DEG2RAD) };
 				nave.radioColision = nave.altura * 2 / 3 + 10;
 				nave.color = WHITE;
-				nave.sprite = LoadTexture("res/cohete.png");
+				nave.sprite = LoadTexture("res/nave.png");
 				nave.velocidad = (float)screenWidth/3;
 				nave.aceleracion = 0.0f;
 				nave.anguloAceler = 0.0f;
@@ -139,14 +139,14 @@ namespace Juego
 			{
 				if (IsKeyDown(KEY_C))
 				{
-					DrawCircle(nave.pos.x + sin(nave.rotacion*DEG2RAD)*(nave.altura / 2.5f),
-						nave.pos.y - cos(nave.rotacion*DEG2RAD)*(nave.altura / 2.5f),
+					DrawCircle(nave.pos.x + sin(nave.rotacion*DEG2RAD),
+						nave.pos.y - cos(nave.rotacion*DEG2RAD),
 						nave.radioColision,
 						GREEN);
 				}
 
 				DrawTexturePro(nave.sprite, { 0.0f,0.0f,(float)nave.sprite.width,(float)nave.sprite.height },
-					{ nave.pos.x , nave.pos.y , (float)nave.sprite.width / 8 , (float)nave.sprite.height / 8 },
+					{ nave.pos.x , nave.pos.y, (float)nave.sprite.width / 8 , (float)nave.sprite.height / 8 },
 					{ (float)nave.sprite.width / 16,(float)nave.sprite.height / 16 }, nave.rotacion, WHITE);
 			}
 	}
