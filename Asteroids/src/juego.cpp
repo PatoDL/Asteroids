@@ -16,18 +16,13 @@ namespace Juego
 	Estado estadoA=menu;
 	static bool enjuego = true;
 
-	void ejecutarJuego();
 	static void inicializarJuego();
 	static void finalizarJuego();
 	static void dibujarJuego();
 	static void cambiarEstado();
 	static void chequearInput();
 	static void actualizarJuego();
-
-	int randomizarColor()
-	{
-		return GetRandomValue(0, 255);
-	}
+	static void dibujarVersion();
 
 	void chequearInput()
 	{
@@ -122,6 +117,11 @@ namespace Juego
 		}
 	}
 
+	void dibujarVersion()
+	{
+		DrawText("v0.7", screenWidth - screenWidth/10, screenHeight/20, screenHeight*screenWidth/27000, WHITE);
+	}
+
 	void dibujarJuego()
 	{
 		BeginDrawing();
@@ -130,9 +130,11 @@ namespace Juego
 		{
 		case menu:
 			Menu::dibujarMenu();
+			dibujarVersion();
 			break;
 		case creditos:
 			Creditos::dibujarCreditos();
+			dibujarVersion();
 			break;
 		case juego:
 			Gameplay::dibujarGameplay();

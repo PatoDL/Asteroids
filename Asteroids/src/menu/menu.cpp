@@ -36,6 +36,15 @@ namespace Juego
 			salir = false;
 		}
 
+		void desinicializarMenu()
+		{
+			UnloadTexture(titulo);
+			UnloadTexture(botonCreditosP);
+			UnloadTexture(botonCreditos);
+			UnloadTexture(botonJugar);
+			UnloadTexture(botonJugarP);
+		}
+
 		void chequearMouse()
 		{
 			if (GetMouseX() <= (screenWidth - jugarB.width) / 2 + jugarB.width 
@@ -83,15 +92,6 @@ namespace Juego
 		void chequearInputMenu()
 		{
 			chequearMouse();
-		}
-
-		void desinicializarMenu()
-		{
-			UnloadTexture(titulo);
-			UnloadTexture(botonCreditosP);
-			UnloadTexture(botonCreditos);
-			UnloadTexture(botonJugar);
-			UnloadTexture(botonJugarP);
 		}
 
 		void dibujarMenu()

@@ -73,7 +73,7 @@ namespace Juego
 				nave.rotacion = angulo;*/
 			}
 
-			float direccionNormalizada;
+			float direccionNormalizada = 0.0f;
 			Vector2 vectorNorm;
 
 			void normalizarDireccion()

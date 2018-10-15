@@ -42,9 +42,6 @@ namespace Juego
 				asteroidesG[i].pos = { (float)GetRandomValue(asteroidesG[i].radio,screenWidth - asteroidesG[i].radio),
 					(float)GetRandomValue(asteroidesG[i].radio,screenHeight - asteroidesG[i].radio) };
 
-				asteroidesG[i].color = { (unsigned char)randomizarColor() ,(unsigned char)randomizarColor() ,
-					(unsigned char)randomizarColor() ,(unsigned char)255 };
-
 				asteroidesG[i].angulo = (float)GetRandomValue(-360, 360);
 
 				asteroidesG[i].activo = true;
@@ -74,8 +71,6 @@ namespace Juego
 			{
 				asteroidesM[i].activo = false;
 				asteroidesM[i].angulo = 0;
-				asteroidesM[i].color = { (unsigned char)randomizarColor(),(unsigned char)randomizarColor(),
-					(unsigned char)randomizarColor(),(unsigned char)255, };
 				asteroidesM[i].pos = { -100,-100 };
 				asteroidesM[i].radio = asteroidesG[0].radio / 2;
 				asteroidesM[i].vel = 150.0f;
@@ -87,8 +82,6 @@ namespace Juego
 			{
 				asteroidesP[i].activo = false;
 				asteroidesP[i].angulo = 0;
-				asteroidesP[i].color = { (unsigned char)randomizarColor(),(unsigned char)randomizarColor(),
-					(unsigned char)randomizarColor(),(unsigned char)255, };
 				asteroidesP[i].pos = { -100,-100 };
 				asteroidesP[i].radio = asteroidesM[0].radio / 2;
 				asteroidesP[i].vel = 150.0f;

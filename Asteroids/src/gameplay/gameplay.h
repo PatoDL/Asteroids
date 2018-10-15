@@ -19,10 +19,10 @@ namespace Juego
 		extern bool gameOver;
 
 		void iniciarComponentesGP();
+		void desinicializarGP();
 		void chequearInputGP();
 		void actualizarGP();
 		void dibujarGameplay();
-		void desinicializarGP();
 	}
 }
 

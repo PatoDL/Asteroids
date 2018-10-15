@@ -11,13 +11,13 @@ namespace Juego
 		creditos,
 		juegoPausado
 	};
+
 	extern Estado estado;
 	extern Estado estadoA;
 	extern int screenWidth;
 	extern int screenHeight;
 
 	void ejecutarJuego();
-	int randomizarColor();
 }
 
 #endif // !JUEGO_H

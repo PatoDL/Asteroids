@@ -6,9 +6,9 @@ namespace Juego
 	namespace Creditos
 	{
 		void inicializarCreditos();
+		void desinicializarCreditos();
 		void chequearInputCreditos();
 		void dibujarCreditos();
-		void desinicializarCreditos();
 	}
 }
 

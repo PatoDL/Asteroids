@@ -8,9 +8,9 @@ namespace Juego
 		extern bool salir;
 
 		void inicializarMenu();
+		void desinicializarMenu();
 		void chequearInputMenu();
 		void dibujarMenu();
-		void desinicializarMenu();
 	}
 }
 
