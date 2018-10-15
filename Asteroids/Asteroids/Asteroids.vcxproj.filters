@@ -48,6 +48,15 @@
     <ClCompile Include="..\src\creditos\creditos.cpp">
       <Filter>Archivos de origen\juego\creditos</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\gameplay\asteroides.cpp">
+      <Filter>Archivos de origen\juego\gameplay</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\gameplay\disparos.cpp">
+      <Filter>Archivos de origen\juego\gameplay</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\gameplay\nave.cpp">
+      <Filter>Archivos de origen\juego\gameplay</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\gameplay\gameplay.h">
@@ -64,6 +73,15 @@
     </ClInclude>
     <ClInclude Include="..\src\creditos\creditos.h">
       <Filter>Archivos de origen\juego\creditos</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\gameplay\asteroides.h">
+      <Filter>Archivos de origen\juego\gameplay</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\gameplay\disparos.h">
+      <Filter>Archivos de origen\juego\gameplay</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\gameplay\nave.h">
+      <Filter>Archivos de origen\juego\gameplay</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

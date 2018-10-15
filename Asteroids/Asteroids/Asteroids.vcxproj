@@ -21,7 +21,10 @@
   <ItemGroup>
     <ClCompile Include="..\src\creditos\creditos.cpp" />
     <ClCompile Include="..\src\gameover\gameover.cpp" />
+    <ClCompile Include="..\src\gameplay\asteroides.cpp" />
+    <ClCompile Include="..\src\gameplay\disparos.cpp" />
     <ClCompile Include="..\src\gameplay\gameplay.cpp" />
+    <ClCompile Include="..\src\gameplay\nave.cpp" />
     <ClCompile Include="..\src\juego.cpp" />
     <ClCompile Include="..\src\main.cpp" />
     <ClCompile Include="..\src\menu\menu.cpp" />
@@ -29,7 +32,10 @@
   <ItemGroup>
     <ClInclude Include="..\src\creditos\creditos.h" />
     <ClInclude Include="..\src\gameover\gameover.h" />
+    <ClInclude Include="..\src\gameplay\asteroides.h" />
+    <ClInclude Include="..\src\gameplay\disparos.h" />
     <ClInclude Include="..\src\gameplay\gameplay.h" />
+    <ClInclude Include="..\src\gameplay\nave.h" />
     <ClInclude Include="..\src\juego.h" />
     <ClInclude Include="..\src\menu\menu.h" />
   </ItemGroup>
