@@ -85,7 +85,7 @@ namespace Juego
 			void moverNave()
 			{
 				calcularAnguloRotacion();
-				normalizarDireccion();
+				//normalizarDireccion();
 
 				if (!pausa)
 				{
@@ -137,14 +137,6 @@ namespace Juego
 
 			void dibujarNave()
 			{
-				if (IsKeyDown(KEY_C))
-				{
-					DrawCircle(nave.pos.x + sin(nave.rotacion*DEG2RAD),
-						nave.pos.y - cos(nave.rotacion*DEG2RAD),
-						nave.radioColision,
-						GREEN);
-				}
-
 				DrawTexturePro(nave.sprite, { 0.0f,0.0f,(float)nave.sprite.width,(float)nave.sprite.height },
 					{ nave.pos.x , nave.pos.y, (float)nave.sprite.width / 8 , (float)nave.sprite.height / 8 },
 					{ (float)nave.sprite.width / 16,(float)nave.sprite.height / 16 }, nave.rotacion, WHITE);

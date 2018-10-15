@@ -261,7 +261,6 @@ namespace Juego
 							asteroidesM[cantAsteroidesMAc - 1].pos = asteroidesG[i].pos;
 
 							nave.puntaje += 5;
-
 						}
 					}
 				}
@@ -355,7 +354,7 @@ namespace Juego
 									  (float)asteroidesG[i].sprite.width/5, (float)asteroidesG[i].sprite.height/5 },
 									{(float)asteroidesG[i].sprite.width/10,(float)asteroidesG[i].sprite.height/10},
 									asteroidesG[i].rotacionCuerpo, WHITE);
-					//DrawCircle(asteroidesG[i].pos.x, asteroidesG[i].pos.y, asteroidesG[i].radio, asteroidesG[i].color);
+					
 				}
 			}
 
@@ -371,7 +370,7 @@ namespace Juego
 						{ (float)asteroidesM[i].sprite.width / 16,(float)asteroidesM[i].sprite.height / 16 },
 						asteroidesM[i].rotacionCuerpo, WHITE);
 
-					//DrawCircle(asteroidesM[i].pos.x, asteroidesM[i].pos.y, asteroidesM[i].radio, asteroidesM[i].color);
+					
 				}
 			}
 
@@ -387,7 +386,7 @@ namespace Juego
 						{ (float)asteroidesP[i].sprite.width / 28,(float)asteroidesP[i].sprite.height / 28 },
 						asteroidesP[i].rotacionCuerpo, WHITE);
 
-					//DrawCircleV(asteroidesP[i].pos, asteroidesP[i].radio, asteroidesP[i].color);
+					
 				}
 			}
 		}
