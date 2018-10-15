@@ -28,11 +28,20 @@
     <Filter Include="Archivos de origen\juego\creditos">
       <UniqueIdentifier>{59cd97b4-c3ee-47e2-9342-bc12e4b9c305}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Archivos de origen\juego\gameplay\pausa">
+      <UniqueIdentifier>{3d6f6385-aa51-4983-8f6f-db299176f81b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de origen\juego\gameplay\nave">
+      <UniqueIdentifier>{8d464b22-dd98-413a-84da-b7a3614a90a7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de origen\juego\gameplay\asteroides">
+      <UniqueIdentifier>{8ec4f25f-543c-4e03-9267-71ae0c2f54c3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de origen\juego\gameplay\disparos">
+      <UniqueIdentifier>{24010cdf-160b-49d4-9cc0-9b335424939a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\src\gameplay\gameplay.cpp">
-      <Filter>Archivos de origen\juego\gameplay</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\menu\menu.cpp">
       <Filter>Archivos de origen\juego\menu</Filter>
     </ClCompile>
@@ -48,20 +57,23 @@
     <ClCompile Include="..\src\creditos\creditos.cpp">
       <Filter>Archivos de origen\juego\creditos</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\gameplay\asteroides.cpp">
+    <ClCompile Include="..\src\gameplay\gameplay.cpp">
       <Filter>Archivos de origen\juego\gameplay</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\gameplay\disparos.cpp">
-      <Filter>Archivos de origen\juego\gameplay</Filter>
+    <ClCompile Include="..\src\gameplay\nave\nave.cpp">
+      <Filter>Archivos de origen\juego\gameplay\nave</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\gameplay\nave.cpp">
-      <Filter>Archivos de origen\juego\gameplay</Filter>
+    <ClCompile Include="..\src\gameplay\asteroides\asteroides.cpp">
+      <Filter>Archivos de origen\juego\gameplay\asteroides</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\gameplay\disparos\disparos.cpp">
+      <Filter>Archivos de origen\juego\gameplay\disparos</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\gameplay\pausa\pausa.cpp">
+      <Filter>Archivos de origen\juego\gameplay\pausa</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\src\gameplay\gameplay.h">
-      <Filter>Archivos de origen\juego\gameplay</Filter>
-    </ClInclude>
     <ClInclude Include="..\src\menu\menu.h">
       <Filter>Archivos de origen\juego\menu</Filter>
     </ClInclude>
@@ -74,14 +86,20 @@
     <ClInclude Include="..\src\creditos\creditos.h">
       <Filter>Archivos de origen\juego\creditos</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\gameplay\asteroides.h">
+    <ClInclude Include="..\src\gameplay\gameplay.h">
       <Filter>Archivos de origen\juego\gameplay</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\gameplay\disparos.h">
-      <Filter>Archivos de origen\juego\gameplay</Filter>
+    <ClInclude Include="..\src\gameplay\nave\nave.h">
+      <Filter>Archivos de origen\juego\gameplay\nave</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\gameplay\nave.h">
-      <Filter>Archivos de origen\juego\gameplay</Filter>
+    <ClInclude Include="..\src\gameplay\asteroides\asteroides.h">
+      <Filter>Archivos de origen\juego\gameplay\asteroides</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\gameplay\disparos\disparos.h">
+      <Filter>Archivos de origen\juego\gameplay\disparos</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\gameplay\pausa\pausa.h">
+      <Filter>Archivos de origen\juego\gameplay\pausa</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

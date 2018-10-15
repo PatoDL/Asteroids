@@ -17,6 +17,8 @@ namespace Juego
 		Texture2D perdiste;
 		Texture2D volverAJ;
 		Texture2D volverAJP;
+		Texture2D volverAM;
+		Texture2D volverAMP;
 		Texture2D jugarB;
 		Texture2D volverMB;
 
@@ -29,8 +31,10 @@ namespace Juego
 			perdiste = LoadTexture("res/gameover/perdiste0.png");
 			volverAJ = LoadTexture("res/gameover/volver a jugar.png");
 			volverAJP = LoadTexture("res/gameover/volver a jugarP.png");
+			volverAM = LoadTexture("res/pausa/volver al menu.png");
+			volverAMP = LoadTexture("res/pausa/volver al menuP.png");
 			jugarB = volverAJ;
-			volverMB = Gameplay::botonMenu;
+			volverMB = volverAM;
 			resultado = perdiste;
 		}
 
@@ -41,6 +45,8 @@ namespace Juego
 			UnloadTexture(perdiste);
 			UnloadTexture(volverAJ);
 			UnloadTexture(volverAJP);
+			UnloadTexture(volverAM);
+			UnloadTexture(volverAMP);
 			UnloadTexture(jugarB);
 			UnloadTexture(volverMB);
 			UnloadTexture(resultado);
@@ -63,7 +69,7 @@ namespace Juego
 					else if (GetMouseY() >= screenHeight - (volverMB.height + volverMB.height / 2) &&
 						GetMouseY()<=(screenHeight - (volverMB.height + volverMB.height / 2))+volverMB.height)
 					{
-						volverMB = Gameplay::botonMenuP;
+						volverMB = volverAMP;
 						if (IsMouseButtonReleased(MOUSE_LEFT_BUTTON))
 						{
 							estado = menu;
@@ -72,7 +78,7 @@ namespace Juego
 					else
 					{
 						jugarB = volverAJ;
-						volverMB = Gameplay::botonMenu;
+						volverMB = volverAM;
 					}
 				
 				}

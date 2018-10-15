@@ -3,7 +3,7 @@
 #include <cmath>
 #include "raylib.h"
 #include "juego.h"
-#include "nave.h"
+#include "gameplay/nave/nave.h"
 
 namespace Juego
 {

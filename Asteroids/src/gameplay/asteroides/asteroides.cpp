@@ -3,9 +3,9 @@
 #include <cmath>
 #include "raylib.h"
 #include "juego.h"
-#include "nave.h"
-#include "gameplay.h"
-#include "disparos.h"
+#include "gameplay/nave/nave.h"
+#include "gameplay/gameplay.h"
+#include "gameplay/disparos/disparos.h"
 
 namespace Juego
 {

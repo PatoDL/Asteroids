@@ -8,7 +8,8 @@ namespace Juego
 		menu,
 		juego,
 		gameover,
-		creditos
+		creditos,
+		juegoPausado
 	};
 	extern Estado estado;
 	extern Estado estadoA;

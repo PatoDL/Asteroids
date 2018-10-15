@@ -5,6 +5,7 @@
 #include "gameplay/gameplay.h"
 #include "gameover/gameover.h"
 #include "creditos/creditos.h"
+#include "gameplay/pausa/pausa.h"
 
 namespace Juego 
 {
@@ -13,6 +14,8 @@ namespace Juego
 
 	Estado estado=menu;
 	Estado estadoA=menu;
+	static bool enjuego = true;
+
 	void ejecutarJuego();
 	static void inicializarJuego();
 	static void finalizarJuego();
@@ -34,6 +37,7 @@ namespace Juego
 			Menu::chequearInputMenu();
 			break;
 		case juego:
+		case juegoPausado:
 			Gameplay::chequearInputGP();
 			break;
 		case gameover:
@@ -50,21 +54,61 @@ namespace Juego
 		switch (estado)
 		{
 		case menu:
-			if (estadoA == juego)
+			if (estado != estadoA)
 			{
-				ShowCursor();
+				Menu::inicializarMenu();
+				Creditos::desinicializarCreditos();
+				if (estadoA == juego)
+				{
+					Gameplay::desinicializarGP();
+					ShowCursor();
+				}
 			}
 			break;
 		case juego:
 			if (estado != estadoA)
 			{
-				Gameplay::iniciarComponentesGP();
-				HideCursor();
+				if (estadoA != juegoPausado)
+				{
+					Gameplay::iniciarComponentesGP();
+					HideCursor();
+				}
+				if(estadoA==juegoPausado)
+				{
+					Gameplay::desinicializarPausa();
+				}
+				if (estadoA == menu)
+				{
+					Menu::desinicializarMenu();
+				}
+				else if (estadoA == gameover)
+				{
+					Gameover::desinicializarGO();
+				}
 			}
 			Gameplay::actualizarGP();
 			break;
 		case gameover:
+			if (estado!=estadoA)
+			{
+				Gameover::inicializarGO();
+				Gameplay::desinicializarGP();
+			}
 			ShowCursor();
+			break;
+		case juegoPausado:
+			if (estado != estadoA)
+			{
+				Gameplay::iniciarComponentesPausa();
+			}
+			ShowCursor();
+			break;
+		case creditos:
+			if (estado != estadoA)
+			{
+				Creditos::inicializarCreditos();
+				Menu::desinicializarMenu();
+			}
 			break;
 		}
 	}
@@ -95,6 +139,9 @@ namespace Juego
 		case gameover:
 			Gameover::dibujarGO();
 			break;
+		case juegoPausado:
+			Gameplay::dibujarGameplay();
+			break;
 		}
 		EndDrawing();
 	}
@@ -102,9 +149,8 @@ namespace Juego
 	void ejecutarJuego()
 	{
 		inicializarJuego();
-		while (!WindowShouldClose())
+		while (enjuego)
 		{
-			cambiarEstado();
 			//input
 			chequearInput();
 			//actualizacion
@@ -112,10 +158,15 @@ namespace Juego
 			//dibujo
 			dibujarJuego();
 
+			if (estado != gameover)
+			{
+				cambiarEstado();
+			}
+
 			//-------------
 			if (Menu::salir)
 			{
-				break;
+				enjuego=false;
 			}
 		}
 		finalizarJuego();
@@ -127,18 +178,12 @@ namespace Juego
 		InitWindow(screenWidth, screenHeight, "Asteroids");
 		SetExitKey(0);
 		Menu::inicializarMenu();
-		Creditos::inicializarCreditos();
-		Gameplay::iniciarComponentesGP();
-		Gameover::inicializarGO();
 	}
 
 	void finalizarJuego()
 	{
 		//close game
 		Menu::desinicializarMenu();
-		Creditos::desinicializarCreditos();
-		Gameplay::desinicializarGP();
-		Gameover::desinicializarGO();
 		CloseWindow();
 	}
 }

@@ -4,7 +4,8 @@
 #include <iostream>
 #include "raylib.h"
 #include "juego.h"
-#include "gameplay.h"
+#include "gameplay/gameplay.h"
+#include "gameplay/pausa/pausa.h"
 
 using namespace std;
 

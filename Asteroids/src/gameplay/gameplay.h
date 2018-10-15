@@ -18,7 +18,6 @@ namespace Juego
 		extern float bordes[4];
 
 		extern bool gano;
-		extern bool pausa;
 		extern bool gameOver;
 		extern Texture2D botonMenu;
 		extern Texture2D botonMenuP;
