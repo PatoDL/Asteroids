@@ -30,7 +30,8 @@ namespace Juego
 
 		void chequearInputCreditos()
 		{
-			if (GetMouseX() >= 17 && GetMouseX() <= 17+atrasB.width && GetMouseY() >= 20 && GetMouseY() <= 20+atrasB.height)
+			if (GetMouseX() >= screenWidth/53 && GetMouseX() <= screenWidth / 53 + atrasB.width &&
+				GetMouseY() >= screenHeight/30 && GetMouseY() <= screenHeight / 30 +atrasB.height)
 			{
 				atrasB = botonAtrasP;
 				if (IsMouseButtonReleased(MOUSE_LEFT_BUTTON))
@@ -47,7 +48,7 @@ namespace Juego
 		void dibujarCreditos()
 		{
 			DrawTexture(creditosT, 0, 0, WHITE);
-			DrawTexture(atrasB, 17, 20, WHITE);
+			DrawTexture(atrasB, screenWidth / 53, screenHeight / 30, WHITE);
 		}
 	}
 }

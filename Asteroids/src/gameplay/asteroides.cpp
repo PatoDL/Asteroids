@@ -4,7 +4,7 @@
 #include "raylib.h"
 #include "juego.h"
 #include "nave.h"
-//#include "gameplay.h"
+#include "gameplay.h"
 #include "disparos.h"
 
 namespace Juego

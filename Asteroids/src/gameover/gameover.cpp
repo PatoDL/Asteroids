@@ -51,7 +51,8 @@ namespace Juego
 				if (GetMouseX() >= (screenWidth - jugarB.width) / 2 &&
 					GetMouseX() <= (screenWidth - jugarB.width) / 2 + jugarB.width)
 				{
-					if (GetMouseY() >= screenHeight - (jugarB.height * 2 + jugarB.height) && GetMouseY() <= (screenHeight - (jugarB.height * 2 + jugarB.height)) + jugarB.height)
+					if (GetMouseY() >= screenHeight - (jugarB.height * 2 + jugarB.height) &&
+						GetMouseY() <= (screenHeight - (jugarB.height * 2 + jugarB.height)) + jugarB.height)
 					{
 						jugarB = volverAJP;
 						if (IsMouseButtonReleased(MOUSE_LEFT_BUTTON))
@@ -59,7 +60,8 @@ namespace Juego
 							estado = juego;
 						}
 					}
-					else if (GetMouseY() >= screenHeight - (volverMB.height + volverMB.height / 2) && GetMouseY()<=(screenHeight - (volverMB.height + volverMB.height / 2))+volverMB.height)
+					else if (GetMouseY() >= screenHeight - (volverMB.height + volverMB.height / 2) &&
+						GetMouseY()<=(screenHeight - (volverMB.height + volverMB.height / 2))+volverMB.height)
 					{
 						volverMB = Gameplay::botonMenuP;
 						if (IsMouseButtonReleased(MOUSE_LEFT_BUTTON))

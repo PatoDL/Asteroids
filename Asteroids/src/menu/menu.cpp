@@ -1,7 +1,10 @@
 #include "menu.h"
 
+#include <iostream>
 #include "raylib.h"
 #include "juego.h"
+
+using namespace std;
 
 namespace Juego
 {
@@ -36,8 +39,10 @@ namespace Juego
 
 		void chequearMouse()
 		{
-			if (GetMouseX() <= 583 && GetMouseX() >= 315 && GetMouseY() >= 384 &&
-				GetMouseY() <= 472)
+			if (GetMouseX() <= (screenWidth - jugarB.width) / 2 + jugarB.width 
+				&& GetMouseX() >= (screenWidth-jugarB.width)/2 
+				&& GetMouseY() >= screenHeight / 6 * 4 - jugarB.height / 3 
+				&& GetMouseY() <= screenHeight / 6 * 4 - jugarB.height / 3 + jugarB.height)
 			{
 				jugarB = botonJugarP;
 				if (IsMouseButtonDown(MOUSE_LEFT_BUTTON))
@@ -45,7 +50,10 @@ namespace Juego
 					estado = juego;
 				}
 			}
-			else if (GetMouseX() >= 313 && GetMouseX() <= 582 && GetMouseY() >= 491 && GetMouseY() <= 577)
+			else if (GetMouseX() <= (screenWidth - jugarB.width) / 2 + jugarB.width 
+					&& GetMouseX() >= (screenWidth - jugarB.width) / 2 
+					&& GetMouseY() >= screenHeight / 6 * 5 - creditosB.height / 4
+					&& GetMouseY() <= screenHeight / 6 * 5 - creditosB.height / 4 + creditosB.height)
 			{
 				creditosB = botonCreditosP;
 				if (IsMouseButtonDown(MOUSE_LEFT_BUTTON))
@@ -58,7 +66,8 @@ namespace Juego
 				creditosB = botonCreditos;
 				jugarB = botonJugar;
 			}
-			if (GetMouseX() >= 30 && GetMouseX() <= 30 + botonSalir.width && GetMouseY() >= 30 && GetMouseY() <= 30 + botonSalir.height)
+			if (GetMouseX() >= screenWidth/30 && GetMouseX() <= screenWidth/30 + botonSalir.width 
+				&& GetMouseY() >= screenHeight/20 && GetMouseY() <= screenHeight/20 + botonSalir.height)
 			{
 				salirB = botonSalirP;
 				if (IsMouseButtonReleased(MOUSE_LEFT_BUTTON))
@@ -89,9 +98,9 @@ namespace Juego
 		void dibujarMenu()
 		{
 			DrawTexture(titulo,0,0, WHITE);
-			DrawTexture(jugarB, 313, 384, WHITE);
-			DrawTexture(creditosB, 313, 491, WHITE);
-			DrawTexture(salirB, 30, 30, WHITE);
+			DrawTexture(jugarB, (screenWidth-jugarB.width)/2, screenHeight / 6*4-jugarB.height/3, WHITE);
+			DrawTexture(creditosB, (screenWidth - creditosB.width) / 2, screenHeight / 6 * 5 - creditosB.height / 4, WHITE);
+			DrawTexture(salirB, screenWidth/30, screenHeight/20, WHITE);
 		}
 	}
 }
