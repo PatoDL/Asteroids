@@ -1,6 +1,8 @@
 #ifndef GAMEPLAY_H
 #define GAMEPLAY_H
 
+#include "raylib.h"
+
 namespace Juego
 {
 	namespace Gameplay
@@ -17,6 +19,7 @@ namespace Juego
 
 		extern bool gano;
 		extern bool gameOver;
+		extern Music musicaFondo;
 
 		void iniciarComponentesGP();
 		void desinicializarGP();

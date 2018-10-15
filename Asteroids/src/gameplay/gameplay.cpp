@@ -15,6 +15,7 @@ namespace Juego
 	{	
 		Texture2D fondo;
 		Texture2D botonPausa;
+		Music musicaFondo;
 
 		float bordes[4];
 
@@ -41,6 +42,8 @@ namespace Juego
 			inicializarDisparos();
 			botonPausa = LoadTexture("res/pausa/boton pausa.png");
 			fondo = LoadTexture("res/fondo.png");
+			musicaFondo = LoadMusicStream("res/sonidos/musica espacio.ogg");
+			PlayMusicStream(musicaFondo);
 			gameOver = false;
 			pausa = false;
 			gano = false;
@@ -48,9 +51,11 @@ namespace Juego
 
 		void desinicializarGP()
 		{
+			StopMusicStream(musicaFondo);
 			UnloadTexture(nave.sprite);
 			UnloadTexture(botonPausa);
 			UnloadTexture(fondo);
+			UnloadMusicStream(musicaFondo);
 			desinicializarAsteroides();
 		}
 
@@ -72,6 +77,7 @@ namespace Juego
 
 		void actualizarGP()
 		{
+				UpdateMusicStream(musicaFondo);
 				actualizarPosNave();
 				chequearColisionConAsteroide();
 				chequearColisionConBordes();

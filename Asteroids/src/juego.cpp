@@ -15,6 +15,7 @@ namespace Juego
 	Estado estado=menu;
 	Estado estadoA=menu;
 	static bool enjuego = true;
+	Music musicaJuego;
 
 	static void inicializarJuego();
 	static void finalizarJuego();
@@ -53,12 +54,14 @@ namespace Juego
 			{
 				Menu::inicializarMenu();
 				Creditos::desinicializarCreditos();
-				if (estadoA == juego)
+				if (estadoA == juegoPausado)
 				{
 					Gameplay::desinicializarGP();
+					ResumeMusicStream(musicaJuego);
 					ShowCursor();
 				}
 			}
+			UpdateMusicStream(musicaJuego);
 			break;
 		case juego:
 			if (estado != estadoA)
@@ -66,11 +69,13 @@ namespace Juego
 				if (estadoA != juegoPausado)
 				{
 					Gameplay::iniciarComponentesGP();
+					PauseMusicStream(musicaJuego);
 					HideCursor();
 				}
 				if(estadoA==juegoPausado)
 				{
 					Gameplay::desinicializarPausa();
+					HideCursor();
 				}
 				if (estadoA == menu)
 				{
@@ -88,15 +93,19 @@ namespace Juego
 			{
 				Gameover::inicializarGO();
 				Gameplay::desinicializarGP();
+				StopMusicStream(musicaJuego);
 				estadoA = gameover; //la unica solucion que le encontré al problema
+				PlayMusicStream(musicaJuego);
 			}
 			ShowCursor();
+			UpdateMusicStream(musicaJuego);
 			break;
 		case juegoPausado:
 			if (estado != estadoA)
 			{
 				Gameplay::iniciarComponentesPausa();
 			}
+			UpdateMusicStream(Gameplay::musicaFondo);
 			ShowCursor();
 			break;
 		case creditos:
@@ -105,6 +114,7 @@ namespace Juego
 				Creditos::inicializarCreditos();
 				Menu::desinicializarMenu();
 			}
+			UpdateMusicStream(musicaJuego);
 			break;
 		}
 	}
@@ -178,6 +188,9 @@ namespace Juego
 	{
 		//init game
 		InitWindow(screenWidth, screenHeight, "Asteroids");
+		InitAudioDevice();
+		musicaJuego = LoadMusicStream("res/sonidos/titulo.ogg");
+		PlayMusicStream(musicaJuego);
 		SetExitKey(0);
 		Menu::inicializarMenu();
 	}
@@ -186,6 +199,8 @@ namespace Juego
 	{
 		//close game
 		Menu::desinicializarMenu();
+		UnloadMusicStream(musicaJuego);
+		CloseAudioDevice();
 		CloseWindow();
 	}
 }

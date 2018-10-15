@@ -15,10 +15,8 @@ namespace Juego
 	{		
 		Nave nave;
 
-			//variables para calcular la rotacion
-			Vector2 vDireccion;
-			//--------------------------------------
-
+			Vector2 vDireccion;  //vector que va de la nave a la pos del mouse, sirve para calcular la rotacion
+			Vector2 vNormalizador;
 			static void calcularAnguloRotacion();
 			static void normalizarDireccion();
 
@@ -34,7 +32,7 @@ namespace Juego
 				nave.color = WHITE;
 				nave.sprite = LoadTexture("res/nave.png");
 				nave.velocidad = (float)screenWidth/3;
-				nave.aceleracion = 0.0f;
+				nave.aceleracion = { 0.0f };
 				nave.anguloAceler = 0.0f;
 				nave.detenida = true;
 				nave.puntaje = 0;
@@ -49,7 +47,7 @@ namespace Juego
 
 				/*if (IsKeyReleased(KEY_F))
 				{
-					cout << angulorot << endl;
+					cout << nave.rotacion << endl;
 					cout << "x:" << GetMouseX() << ",y:" << GetMouseY() << endl;
 					cout << "navex:" << nave.pos.x << ", navey:" << nave.pos.y << endl;
 				}*/
@@ -60,13 +58,18 @@ namespace Juego
 
 			void normalizarDireccion()
 			{
+				vNormalizador.x = vDireccion.x / sqrt(pow(vDireccion.x, 2) + pow(vDireccion.y, 2));
+				vNormalizador.y = vDireccion.y / sqrt(pow(vDireccion.x, 2) + pow(vDireccion.y, 2));
 				
+				//direccionNormalizada = atan2(vNormalizador.y, vNormalizador.x)*RAD2DEG;
+
+				//nave.aceleracion = { vNormalizador.x,vNormalizador.y };
 			}
 
 			void moverNave()
 			{
 				calcularAnguloRotacion();
-				//normalizarDireccion();
+				normalizarDireccion();
 
 				if (!pausa)
 				{
@@ -77,7 +80,7 @@ namespace Juego
 							nave.detenida = false;
 						}
 						nave.anguloAceler = nave.rotacion;
-						nave.aceleracion = 0.8 + direccionNormalizada;
+						nave.aceleracion = 0.8;
 					}
 					if (IsMouseButtonUp(MOUSE_RIGHT_BUTTON) && nave.aceleracion != 0)
 					{

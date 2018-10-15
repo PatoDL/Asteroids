@@ -30,10 +30,12 @@ namespace Juego
 		Asteroide asteroidesM[cantAsteroidesM];
 		Asteroide asteroidesP[cantAsteroidesP];
 		Texture2D aSprite;
+		Sound aColision;
 
 		void iniciarAsteroides()
 		{
 			aSprite = LoadTexture("res/asteroide.png");
+			aColision = LoadSound("res/sonidos/colision_asteroide.wav");
 
 			for (int i = 0; i <cantAsteroidesG; i++)
 			{
@@ -106,6 +108,8 @@ namespace Juego
 			{
 				UnloadTexture(asteroidesP[i].sprite);
 			}
+
+			UnloadSound(aColision);
 		}
 
 		void moverAsteroides()
@@ -220,6 +224,7 @@ namespace Juego
 		{
 			static int cantAsteroidesMAc = 0;
 			static int cantAsteroidesPAc = 0;
+			bool colisiono=false;
 
 			for (int i = 0; i <cantAsteroidesG; i++)
 			{
@@ -240,6 +245,7 @@ namespace Juego
 							asteroidesG[i].activo = false;
 							cantAsteroidesMAc += 3;
 							disparos[j].activo = false;
+							colisiono = true;
 
 							asteroidesM[cantAsteroidesMAc - 3].angulo = disparos[j].angulo;
 							asteroidesM[cantAsteroidesMAc - 2].angulo = disparos[j].angulo - 90;
@@ -278,6 +284,7 @@ namespace Juego
 							disparos[j].activo = false;
 							asteroidesM[i].activo = false;
 							cantAsteroidesPAc += 2;
+							colisiono = true;
 
 							asteroidesP[cantAsteroidesPAc - 2].activo = true;
 							asteroidesP[cantAsteroidesPAc - 1].activo = true;
@@ -312,6 +319,7 @@ namespace Juego
 							disparos[j].activo = false;
 							asteroidesP[i].activo = false;
 							nave.puntaje += 5;
+							colisiono = true;
 						}
 					}
 				}
@@ -325,6 +333,10 @@ namespace Juego
 			if (cantAsteroidesPAc == cantAsteroidesP)
 			{
 				cantAsteroidesPAc = 0;
+			}
+			if (colisiono)
+			{
+				PlaySound(aColision);
 			}
 		}
 
