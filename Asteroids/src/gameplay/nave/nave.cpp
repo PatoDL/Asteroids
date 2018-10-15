@@ -5,6 +5,9 @@
 #include "juego.h"
 #include "gameplay/gameplay.h"
 #include "gameplay/pausa/pausa.h"
+#include <iostream>
+
+using namespace std;
 
 namespace Juego
 {
@@ -13,13 +16,7 @@ namespace Juego
 		Nave nave;
 
 			//variables para calcular la rotacion
-			Vector2 v1;
-			Vector2 v2;
-
-			float prodPunto;
-			float moduloV1;
-			float moduloV2;
-			float prodModulo; 
+			Vector2 vDireccion;
 			//--------------------------------------
 
 			static void calcularAnguloRotacion();
@@ -45,32 +42,17 @@ namespace Juego
 
 			void calcularAnguloRotacion()
 			{
-				v1.x = 0;
-				v1.y = -nave.pos.y;
+				vDireccion.x = (float)GetMouseX() - nave.pos.x;
+				vDireccion.y = (float)GetMouseY() - nave.pos.y;
+				
+				nave.rotacion = atan2(vDireccion.y , vDireccion.x)*RAD2DEG+90.0f;
 
-				v2.x = GetMouseX() - nave.pos.x;
-				v2.y = GetMouseY() - nave.pos.y;
-
-				prodPunto = v1.x*v2.x + v1.y*v2.y;
-				moduloV1 = sqrt(pow(v1.x, 2) + pow(v1.y, 2));
-				moduloV2 = sqrt(pow(v2.x, 2) + pow(v2.y, 2));
-				prodModulo = moduloV1 * moduloV2;
-				nave.rotacion = acosf(prodPunto / (prodModulo));
-
-				nave.rotacion *= RAD2DEG;
-
-				if (GetMouseX() < nave.pos.x)
+				/*if (IsKeyReleased(KEY_F))
 				{
-					nave.rotacion = 360 - nave.rotacion;
-				}
-
-				/*v1 = { GetMouseX() - nave.pos.x,GetMouseY() - nave.pos.y };
-				float angulo = atanf(v1.y / v1.x)*RAD2DEG;
-				if (GetMouseX() < nave.pos.x)
-				{
-				angulo = 360 - angulo;
-				}
-				nave.rotacion = angulo;*/
+					cout << angulorot << endl;
+					cout << "x:" << GetMouseX() << ",y:" << GetMouseY() << endl;
+					cout << "navex:" << nave.pos.x << ", navey:" << nave.pos.y << endl;
+				}*/
 			}
 
 			float direccionNormalizada = 0.0f;
@@ -78,8 +60,7 @@ namespace Juego
 
 			void normalizarDireccion()
 			{
-				vectorNorm = { v2.x / moduloV2, v2.y / moduloV2 };
-				direccionNormalizada = sqrtf(pow(vectorNorm.x, 2) + pow(vectorNorm.y, 2));
+				
 			}
 
 			void moverNave()
