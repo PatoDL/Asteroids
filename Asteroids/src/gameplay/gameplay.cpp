@@ -1,7 +1,5 @@
 #include "gameplay.h"
 
-#include <iostream>
-#include <cmath>
 #include "raylib.h"
 #include "juego.h"
 #include "nave/nave.h"
@@ -25,6 +23,7 @@ namespace Juego
 		bool gameOver;
 
 		static void iniciarBordes();
+		static void dibujarBotonPausa();
 
 		void iniciarBordes()
 		{
@@ -52,8 +51,6 @@ namespace Juego
 			UnloadTexture(nave.sprite);
 			UnloadTexture(botonPausa);
 			UnloadTexture(fondo);
-			
-			desinicializarPausa();
 		}
 
 		void chequearInputGP()
@@ -94,7 +91,7 @@ namespace Juego
 
 		void dibujarBotonPausa()
 		{
-			DrawTexture(botonPausa, 20, 20, WHITE);
+			DrawTexture(botonPausa, screenWidth/45, screenHeight/30, WHITE);
 		}
 
 		void dibujarGameplay()

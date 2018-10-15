@@ -2,7 +2,6 @@
 
 #include "raylib.h"
 #include "juego.h"
-#include "gameplay/gameplay.h"
 
 namespace Juego
 {

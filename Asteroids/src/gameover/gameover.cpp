@@ -1,11 +1,8 @@
 #include "gameover.h"
 
-#include <iostream>
 #include "raylib.h"
 #include "gameplay/gameplay.h"
 #include "juego.h"
-
-using namespace std;
 
 namespace Juego
 {

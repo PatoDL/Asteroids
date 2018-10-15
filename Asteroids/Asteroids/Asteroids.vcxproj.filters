@@ -66,11 +66,11 @@
     <ClCompile Include="..\src\gameplay\asteroides\asteroides.cpp">
       <Filter>Archivos de origen\juego\gameplay\asteroides</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\gameplay\disparos\disparos.cpp">
-      <Filter>Archivos de origen\juego\gameplay\disparos</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\gameplay\pausa\pausa.cpp">
       <Filter>Archivos de origen\juego\gameplay\pausa</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\gameplay\disparos\disparos.cpp">
+      <Filter>Archivos de origen\juego\gameplay\disparos</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -95,11 +95,11 @@
     <ClInclude Include="..\src\gameplay\asteroides\asteroides.h">
       <Filter>Archivos de origen\juego\gameplay\asteroides</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\gameplay\disparos\disparos.h">
-      <Filter>Archivos de origen\juego\gameplay\disparos</Filter>
-    </ClInclude>
     <ClInclude Include="..\src\gameplay\pausa\pausa.h">
       <Filter>Archivos de origen\juego\gameplay\pausa</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\gameplay\disparos\disparos.h">
+      <Filter>Archivos de origen\juego\gameplay\disparos</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -1,10 +1,7 @@
 #include "menu.h"
 
-#include <iostream>
 #include "raylib.h"
 #include "juego.h"
-
-using namespace std;
 
 namespace Juego
 {
@@ -21,6 +18,8 @@ namespace Juego
 		Texture2D botonSalirP;
 		Texture2D salirB;
 		bool salir;
+
+		static void chequearMouse();
 
 		void inicializarMenu()
 		{

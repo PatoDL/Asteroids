@@ -1,13 +1,10 @@
 #include "nave.h"
 
 #include <cmath>
-#include <iostream>
 #include "raylib.h"
 #include "juego.h"
 #include "gameplay/gameplay.h"
 #include "gameplay/pausa/pausa.h"
-
-using namespace std;
 
 namespace Juego
 {
@@ -25,9 +22,12 @@ namespace Juego
 			float prodModulo; 
 			//--------------------------------------
 
+			static void calcularAnguloRotacion();
+			static void normalizarDireccion();
+
 			void iniciarNave()
 			{
-				nave.base = 30;
+				nave.base = screenWidth/30;
 				nave.altura = (nave.base / 2) / tanf(25 * DEG2RAD);
 				nave.rotacion = 0;
 				nave.pos = { (float)screenWidth / 2,(float)screenHeight / 2 };
@@ -36,7 +36,7 @@ namespace Juego
 				nave.radioColision = nave.altura * 2 / 3 + 10;
 				nave.color = WHITE;
 				nave.sprite = LoadTexture("res/cohete.png");
-				nave.velocidad = 300.0f;
+				nave.velocidad = (float)screenWidth/3;
 				nave.aceleracion = 0.0f;
 				nave.anguloAceler = 0.0f;
 				nave.detenida = true;
@@ -80,7 +80,6 @@ namespace Juego
 			{
 				vectorNorm = { v2.x / moduloV2, v2.y / moduloV2 };
 				direccionNormalizada = sqrtf(pow(vectorNorm.x, 2) + pow(vectorNorm.y, 2));
-				cout << direccionNormalizada << endl;
 			}
 
 			void moverNave()

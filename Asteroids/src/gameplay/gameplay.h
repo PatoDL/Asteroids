@@ -1,8 +1,6 @@
 #ifndef GAMEPLAY_H
 #define GAMEPLAY_H
 
-#include "raylib.h"
-
 namespace Juego
 {
 	namespace Gameplay
@@ -19,8 +17,6 @@ namespace Juego
 
 		extern bool gano;
 		extern bool gameOver;
-		extern Texture2D botonMenu;
-		extern Texture2D botonMenuP;
 
 		void iniciarComponentesGP();
 		void chequearInputGP();

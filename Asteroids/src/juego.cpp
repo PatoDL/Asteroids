@@ -93,6 +93,7 @@ namespace Juego
 			{
 				Gameover::inicializarGO();
 				Gameplay::desinicializarGP();
+				estadoA = gameover; //la unica solucion que le encontré al problema
 			}
 			ShowCursor();
 			break;
@@ -151,17 +152,16 @@ namespace Juego
 		inicializarJuego();
 		while (enjuego)
 		{
+			if (estado != gameover) //unica solucion que le encontré al problema
+			{
+				cambiarEstado();
+			}
 			//input
 			chequearInput();
 			//actualizacion
 			actualizarJuego();
 			//dibujo
 			dibujarJuego();
-
-			if (estado != gameover)
-			{
-				cambiarEstado();
-			}
 
 			//-------------
 			if (Menu::salir)

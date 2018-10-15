@@ -11,15 +11,13 @@ namespace Juego
 	{
 		static int balaADisp = 0;
 
-		//const int cantDisparos=6;
-
 		Disparo disparos[cantDisparos];
 
 		void inicializarDisparos()
 		{
 			for (int i = 0; i < cantDisparos; i++)
 			{
-				disparos[i].radio = 4.0f;
+				disparos[i].radio = (float)screenHeight*screenWidth/135000;
 				disparos[i].activo = false;
 				disparos[i].velocidad = nave.velocidad * 3 / 2;
 			}
