@@ -129,7 +129,7 @@ namespace Juego
 
 	void dibujarVersion()
 	{
-		DrawText("v0.7", screenWidth - screenWidth/10, screenHeight/20, screenHeight*screenWidth/27000, WHITE);
+		DrawText("v0.8", screenWidth - screenWidth/10, screenHeight/20, screenHeight*screenWidth/27000, WHITE);
 	}
 
 	void dibujarJuego()
