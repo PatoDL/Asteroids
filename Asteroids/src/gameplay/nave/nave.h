@@ -19,7 +19,8 @@ namespace Juego
 			Texture2D sprite;
 			float velocidad;
 			float anguloAceler;
-			float aceleracion;
+			float aceleracionBase;
+			Vector2 aceleracion;
 			bool detenida;
 			int puntaje;
 		};

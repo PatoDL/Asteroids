@@ -10,7 +10,7 @@ namespace Juego
 {
 	namespace Gameplay
 	{		
-		Nave nave;
+			Nave nave;
 
 			Vector2 vDireccion;  //vector que va de la nave a la pos del mouse, sirve para calcular la rotacion
 			Vector2 vNormalizador;
@@ -29,7 +29,8 @@ namespace Juego
 				nave.color = WHITE;
 				nave.sprite = LoadTexture("res/nave.png");
 				nave.velocidad = (float)screenWidth/3;
-				nave.aceleracion = { 0.0f };
+				nave.aceleracionBase = { 0.8f };
+				nave.aceleracion = { 0.0f,0.0f };
 				nave.anguloAceler = 0.0f;
 				nave.detenida = true;
 				nave.puntaje = 0;
@@ -37,8 +38,8 @@ namespace Juego
 
 			void calcularAnguloRotacion()
 			{
-				vDireccion.x = (float)GetMouseX() - nave.pos.x;
-				vDireccion.y = (float)GetMouseY() - nave.pos.y;
+				vDireccion.x = GetMouseX() - nave.pos.x;
+				vDireccion.y = GetMouseY() - nave.pos.y;
 				
 				nave.rotacion = atan2(vDireccion.y , vDireccion.x)*RAD2DEG+90.0f;
 
@@ -50,24 +51,17 @@ namespace Juego
 				}*/
 			}
 
-			float direccionNormalizada = 0.0f;
-			Vector2 vectorNorm;
-
 			void normalizarDireccion()
 			{
-				vNormalizador.x = vDireccion.x / sqrt(pow(vDireccion.x, 2) + pow(vDireccion.y, 2));
-				vNormalizador.y = vDireccion.y / sqrt(pow(vDireccion.x, 2) + pow(vDireccion.y, 2));
-				
-				//direccionNormalizada = atan2(vNormalizador.y, vNormalizador.x)*RAD2DEG;
-
-				//nave.aceleracion = { vNormalizador.x,vNormalizador.y };
+				/*vNormalizador.x = vDireccion.x / sqrtf(powf(vDireccion.x, 2) + powf(vDireccion.y, 2));
+				vNormalizador.y = vDireccion.y / sqrtf(powf(vDireccion.x, 2) + powf(vDireccion.y, 2));*/
 			}
 
 			void moverNave()
 			{
 				calcularAnguloRotacion();
-				normalizarDireccion();
-
+				//normalizarDireccion();
+				
 				if (!pausa)
 				{
 					if (IsMouseButtonDown(MOUSE_RIGHT_BUTTON))
@@ -76,23 +70,22 @@ namespace Juego
 						{
 							nave.detenida = false;
 						}
+						
 						nave.anguloAceler = nave.rotacion;
-						nave.aceleracion = 0.8;
 					}
-					if (IsMouseButtonUp(MOUSE_RIGHT_BUTTON) && nave.aceleracion != 0)
-					{
-						nave.aceleracion -= 0.05;
-					}
+
+					nave.aceleracion = { nave.aceleracionBase //* vNormalizador.x 
+										,nave.aceleracionBase //* vNormalizador.y
+									   };
 				}
 			}
 
 			void actualizarPosNave()
 			{
-				nave.pos.y -= cos(nave.anguloAceler*DEG2RAD) * nave.velocidad*nave.aceleracion * GetFrameTime();
-				nave.pos.x += sin(nave.anguloAceler*DEG2RAD) * nave.velocidad*nave.aceleracion * GetFrameTime();
-				if (nave.aceleracion < 0.2 && !nave.detenida)
+				if (!nave.detenida)
 				{
-					nave.aceleracion = 0.2;
+					nave.pos.y -= cos(nave.anguloAceler*DEG2RAD) * nave.velocidad * nave.aceleracion.x * GetFrameTime();
+					nave.pos.x += sin(nave.anguloAceler*DEG2RAD) * nave.velocidad * nave.aceleracion.y * GetFrameTime();
 				}
 			}
 

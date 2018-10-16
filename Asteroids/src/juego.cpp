@@ -6,9 +6,6 @@
 #include "gameover/gameover.h"
 #include "creditos/creditos.h"
 #include "gameplay/pausa/pausa.h"
-#include <iostream>
-
-using namespace std;
 
 namespace Juego 
 {
@@ -197,7 +194,7 @@ namespace Juego
 
 	void dibujarVersion()
 	{
-		DrawText("v0.8", screenWidth - screenWidth/10, screenHeight/20, screenHeight*screenWidth/27000, WHITE);
+		DrawText("v1.0", screenWidth - screenWidth/10, screenHeight/20, screenHeight*screenWidth/27000, WHITE);
 	}
 
 	void dibujarSonido()
