@@ -1,5 +1,6 @@
 #ifndef JUEGO_H
 #define JUEGO_H
+#define AUDIO
 
 namespace Juego
 {
@@ -16,6 +17,7 @@ namespace Juego
 	extern Estado estadoA;
 	extern int screenWidth;
 	extern int screenHeight;
+	extern bool haySonido;
 
 	void ejecutarJuego();
 }

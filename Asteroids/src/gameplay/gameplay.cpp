@@ -7,8 +7,6 @@
 #include "disparos/disparos.h"
 #include "pausa/pausa.h"
 
-using namespace std;
-
 namespace Juego
 {
 	namespace Gameplay
@@ -42,8 +40,13 @@ namespace Juego
 			inicializarDisparos();
 			botonPausa = LoadTexture("res/pausa/boton pausa.png");
 			fondo = LoadTexture("res/fondo.png");
+#ifdef AUDIO
 			musicaFondo = LoadMusicStream("res/sonidos/musica espacio.ogg");
-			PlayMusicStream(musicaFondo);
+			if (haySonido)
+			{
+				PlayMusicStream(musicaFondo);
+			}
+#endif
 			gameOver = false;
 			pausa = false;
 			gano = false;
@@ -51,11 +54,13 @@ namespace Juego
 
 		void desinicializarGP()
 		{
+#ifdef AUDIO
 			StopMusicStream(musicaFondo);
+			UnloadMusicStream(musicaFondo);
+#endif
 			UnloadTexture(nave.sprite);
 			UnloadTexture(botonPausa);
 			UnloadTexture(fondo);
-			UnloadMusicStream(musicaFondo);
 			desinicializarAsteroides();
 		}
 
@@ -77,7 +82,12 @@ namespace Juego
 
 		void actualizarGP()
 		{
-				UpdateMusicStream(musicaFondo);
+#ifdef AUDIO
+				if (haySonido)
+				{
+					UpdateMusicStream(musicaFondo);
+				}
+#endif
 				actualizarPosNave();
 				chequearColisionConAsteroide();
 				chequearColisionConBordes();

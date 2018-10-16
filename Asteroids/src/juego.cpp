@@ -6,6 +6,9 @@
 #include "gameover/gameover.h"
 #include "creditos/creditos.h"
 #include "gameplay/pausa/pausa.h"
+#include <iostream>
+
+using namespace std;
 
 namespace Juego 
 {
@@ -16,6 +19,10 @@ namespace Juego
 	Estado estadoA=menu;
 	static bool enjuego = true;
 	Music musicaJuego;
+	bool haySonido = true;
+	Texture2D unmute;
+	Texture2D mute;
+	Texture2D sonido;
 
 	static void inicializarJuego();
 	static void finalizarJuego();
@@ -24,6 +31,31 @@ namespace Juego
 	static void chequearInput();
 	static void actualizarJuego();
 	static void dibujarVersion();
+	static void mutear();
+	static void dibujarSonido();
+	static void inicializarComponentesJuego();
+	static void desinicializarComponentesjuego();
+
+	void mutear()
+	{
+		if (GetMouseX() >= screenWidth - 90 && GetMouseX() <= screenWidth - 90 + sonido.width
+			&& GetMouseY() >= screenHeight - 90 && GetMouseY() <= screenHeight - 90 + sonido.height)
+		{
+			if (IsMouseButtonReleased(MOUSE_LEFT_BUTTON))
+			{
+				haySonido = !haySonido;
+				if (haySonido)
+				{
+					sonido = unmute;
+				}
+				else
+				{
+					sonido = mute;
+				}
+			}
+
+		}
+	}
 
 	void chequearInput()
 	{
@@ -43,6 +75,7 @@ namespace Juego
 			Creditos::chequearInputCreditos();
 			break;
 		}
+		mutear();
 	}
 
 	void actualizarJuego()
@@ -57,11 +90,21 @@ namespace Juego
 				if (estadoA == juegoPausado)
 				{
 					Gameplay::desinicializarGP();
-					ResumeMusicStream(musicaJuego);
+#ifdef AUDIO		
+					if (haySonido)
+					{
+						ResumeMusicStream(musicaJuego);
+					}
+#endif
 					ShowCursor();
 				}
 			}
-			UpdateMusicStream(musicaJuego);
+#ifdef AUDIO
+			if (haySonido)
+			{
+				UpdateMusicStream(musicaJuego);
+			}
+#endif
 			break;
 		case juego:
 			if (estado != estadoA)
@@ -69,7 +112,12 @@ namespace Juego
 				if (estadoA != juegoPausado)
 				{
 					Gameplay::iniciarComponentesGP();
-					PauseMusicStream(musicaJuego);
+#ifdef AUDIO
+					if (haySonido)
+					{
+						PauseMusicStream(musicaJuego);
+					}
+#endif 
 					HideCursor();
 				}
 				if(estadoA==juegoPausado)
@@ -93,19 +141,34 @@ namespace Juego
 			{
 				Gameover::inicializarGO();
 				Gameplay::desinicializarGP();
-				StopMusicStream(musicaJuego);
 				estadoA = gameover; //la unica solucion que le encontré al problema
-				PlayMusicStream(musicaJuego);
+#ifdef AUDIO
+				if (haySonido)
+				{
+					StopMusicStream(musicaJuego);
+					PlayMusicStream(musicaJuego);
+				}
+#endif 
 			}
 			ShowCursor();
-			UpdateMusicStream(musicaJuego);
+#ifdef AUDIO
+			if (haySonido)
+			{
+				UpdateMusicStream(musicaJuego);
+			}
+#endif
 			break;
 		case juegoPausado:
 			if (estado != estadoA)
 			{
 				Gameplay::iniciarComponentesPausa();
 			}
-			UpdateMusicStream(Gameplay::musicaFondo);
+#ifdef AUDIO
+			if (haySonido)
+			{
+				UpdateMusicStream(Gameplay::musicaFondo);
+			}
+#endif
 			ShowCursor();
 			break;
 		case creditos:
@@ -114,7 +177,12 @@ namespace Juego
 				Creditos::inicializarCreditos();
 				Menu::desinicializarMenu();
 			}
-			UpdateMusicStream(musicaJuego);
+#ifdef AUDIO
+			if (haySonido)
+			{
+				UpdateMusicStream(musicaJuego);
+			}
+#endif
 			break;
 		}
 	}
@@ -130,6 +198,11 @@ namespace Juego
 	void dibujarVersion()
 	{
 		DrawText("v0.8", screenWidth - screenWidth/10, screenHeight/20, screenHeight*screenWidth/27000, WHITE);
+	}
+
+	void dibujarSonido()
+	{
+		DrawTexture(sonido,screenWidth - screenWidth/10, screenHeight - screenHeight/6.66, WHITE);
 	}
 
 	void dibujarJuego()
@@ -156,6 +229,7 @@ namespace Juego
 			Gameplay::dibujarGameplay();
 			break;
 		}
+		dibujarSonido();
 		EndDrawing();
 	}
 
@@ -184,23 +258,47 @@ namespace Juego
 		finalizarJuego();
 	}
 
+	void inicializarComponentesJuego()
+	{
+#ifdef AUDIO
+		musicaJuego = LoadMusicStream("res/sonidos/titulo.ogg");
+		PlayMusicStream(musicaJuego);
+#endif
+		unmute = LoadTexture("res/sonidos/sonido.png");
+		mute = LoadTexture("res/sonidos/mute.png");
+		sonido = unmute;
+	}
+
 	void inicializarJuego()
 	{
 		//init game
 		InitWindow(screenWidth, screenHeight, "Asteroids");
+#ifdef AUDIO
 		InitAudioDevice();
-		musicaJuego = LoadMusicStream("res/sonidos/titulo.ogg");
-		PlayMusicStream(musicaJuego);
+#endif
+		inicializarComponentesJuego();
 		SetExitKey(0);
 		Menu::inicializarMenu();
+	}
+
+	void desinicializarComponentesjuego()
+	{
+#ifdef AUDIO
+		UnloadMusicStream(musicaJuego);
+#endif
+		UnloadTexture(unmute);
+		UnloadTexture(mute);
+		UnloadTexture(sonido);
 	}
 
 	void finalizarJuego()
 	{
 		//close game
 		Menu::desinicializarMenu();
-		UnloadMusicStream(musicaJuego);
+		desinicializarComponentesjuego();
+#ifdef AUDIO
 		CloseAudioDevice();
+#endif
 		CloseWindow();
 	}
 }

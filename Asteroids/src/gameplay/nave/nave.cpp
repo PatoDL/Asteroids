@@ -5,9 +5,6 @@
 #include "juego.h"
 #include "gameplay/gameplay.h"
 #include "gameplay/pausa/pausa.h"
-#include <iostream>
-
-using namespace std;
 
 namespace Juego
 {

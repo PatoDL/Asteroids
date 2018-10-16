@@ -35,7 +35,9 @@ namespace Juego
 		void iniciarAsteroides()
 		{
 			aSprite = LoadTexture("res/asteroide.png");
+#ifdef AUDIO
 			aColision = LoadSound("res/sonidos/colision_asteroide.wav");
+#endif
 
 			for (int i = 0; i <cantAsteroidesG; i++)
 			{
@@ -108,8 +110,9 @@ namespace Juego
 			{
 				UnloadTexture(asteroidesP[i].sprite);
 			}
-
+#ifdef AUDIO
 			UnloadSound(aColision);
+#endif
 		}
 
 		void moverAsteroides()
@@ -334,10 +337,13 @@ namespace Juego
 			{
 				cantAsteroidesPAc = 0;
 			}
-			if (colisiono)
+
+#ifdef AUDIO
+			if (colisiono && haySonido)
 			{
 				PlaySound(aColision);
 			}
+#endif
 		}
 
 		void dibujarAsteroides()
