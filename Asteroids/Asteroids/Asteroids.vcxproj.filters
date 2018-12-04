@@ -1,105 +1,84 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Archivos de origen">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
-    <Filter Include="Archivos de encabezado">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;hm;inl;inc;ipp;xsd</Extensions>
-    </Filter>
-    <Filter Include="Archivos de recursos">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
-    </Filter>
-    <Filter Include="Archivos de origen\juego">
-      <UniqueIdentifier>{6f2f9710-6761-4d20-9c7b-d0e7e40e164d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Archivos de origen\juego\gameover">
-      <UniqueIdentifier>{e1b2f2e0-9cc5-4910-9b7c-6882cfb2927c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Archivos de origen\juego\gameplay">
-      <UniqueIdentifier>{806cd7b2-cd7b-4e42-b9fa-79a8112e9b72}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Archivos de origen\juego\menu">
-      <UniqueIdentifier>{fedcb8a6-25a0-456d-88d0-2eb8175bced9}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Archivos de origen\juego\creditos">
+    <Filter Include="creditos">
       <UniqueIdentifier>{59cd97b4-c3ee-47e2-9342-bc12e4b9c305}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Archivos de origen\juego\gameplay\pausa">
+    <Filter Include="gameover">
+      <UniqueIdentifier>{e1b2f2e0-9cc5-4910-9b7c-6882cfb2927c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="gameplay">
+      <UniqueIdentifier>{806cd7b2-cd7b-4e42-b9fa-79a8112e9b72}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="gameplay\pausa">
       <UniqueIdentifier>{3d6f6385-aa51-4983-8f6f-db299176f81b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Archivos de origen\juego\gameplay\nave">
+    <Filter Include="gameplay\nave">
       <UniqueIdentifier>{8d464b22-dd98-413a-84da-b7a3614a90a7}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Archivos de origen\juego\gameplay\asteroides">
+    <Filter Include="gameplay\asteroides">
       <UniqueIdentifier>{8ec4f25f-543c-4e03-9267-71ae0c2f54c3}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Archivos de origen\juego\gameplay\disparos">
+    <Filter Include="gameplay\disparos">
       <UniqueIdentifier>{24010cdf-160b-49d4-9cc0-9b335424939a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="menu">
+      <UniqueIdentifier>{fedcb8a6-25a0-456d-88d0-2eb8175bced9}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\menu\menu.cpp">
-      <Filter>Archivos de origen\juego\menu</Filter>
+      <Filter>menu</Filter>
     </ClCompile>
     <ClCompile Include="..\src\gameover\gameover.cpp">
-      <Filter>Archivos de origen\juego\gameover</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\main.cpp">
-      <Filter>Archivos de origen\juego</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\juego.cpp">
-      <Filter>Archivos de origen\juego</Filter>
+      <Filter>gameover</Filter>
     </ClCompile>
     <ClCompile Include="..\src\creditos\creditos.cpp">
-      <Filter>Archivos de origen\juego\creditos</Filter>
+      <Filter>creditos</Filter>
     </ClCompile>
     <ClCompile Include="..\src\gameplay\gameplay.cpp">
-      <Filter>Archivos de origen\juego\gameplay</Filter>
+      <Filter>gameplay</Filter>
     </ClCompile>
     <ClCompile Include="..\src\gameplay\nave\nave.cpp">
-      <Filter>Archivos de origen\juego\gameplay\nave</Filter>
+      <Filter>gameplay\nave</Filter>
     </ClCompile>
     <ClCompile Include="..\src\gameplay\asteroides\asteroides.cpp">
-      <Filter>Archivos de origen\juego\gameplay\asteroides</Filter>
+      <Filter>gameplay\asteroides</Filter>
     </ClCompile>
     <ClCompile Include="..\src\gameplay\pausa\pausa.cpp">
-      <Filter>Archivos de origen\juego\gameplay\pausa</Filter>
+      <Filter>gameplay\pausa</Filter>
     </ClCompile>
     <ClCompile Include="..\src\gameplay\disparos\disparos.cpp">
-      <Filter>Archivos de origen\juego\gameplay\disparos</Filter>
+      <Filter>gameplay\disparos</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\main.cpp" />
+    <ClCompile Include="..\src\juego.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\menu\menu.h">
-      <Filter>Archivos de origen\juego\menu</Filter>
+      <Filter>menu</Filter>
     </ClInclude>
     <ClInclude Include="..\src\gameover\gameover.h">
-      <Filter>Archivos de origen\juego\gameover</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\juego.h">
-      <Filter>Archivos de origen\juego</Filter>
+      <Filter>gameover</Filter>
     </ClInclude>
     <ClInclude Include="..\src\creditos\creditos.h">
-      <Filter>Archivos de origen\juego\creditos</Filter>
+      <Filter>creditos</Filter>
     </ClInclude>
     <ClInclude Include="..\src\gameplay\gameplay.h">
-      <Filter>Archivos de origen\juego\gameplay</Filter>
+      <Filter>gameplay</Filter>
     </ClInclude>
     <ClInclude Include="..\src\gameplay\nave\nave.h">
-      <Filter>Archivos de origen\juego\gameplay\nave</Filter>
+      <Filter>gameplay\nave</Filter>
     </ClInclude>
     <ClInclude Include="..\src\gameplay\asteroides\asteroides.h">
-      <Filter>Archivos de origen\juego\gameplay\asteroides</Filter>
+      <Filter>gameplay\asteroides</Filter>
     </ClInclude>
     <ClInclude Include="..\src\gameplay\pausa\pausa.h">
-      <Filter>Archivos de origen\juego\gameplay\pausa</Filter>
+      <Filter>gameplay\pausa</Filter>
     </ClInclude>
     <ClInclude Include="..\src\gameplay\disparos\disparos.h">
-      <Filter>Archivos de origen\juego\gameplay\disparos</Filter>
+      <Filter>gameplay\disparos</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\juego.h" />
   </ItemGroup>
 </Project>
