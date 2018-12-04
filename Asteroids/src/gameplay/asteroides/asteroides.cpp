@@ -27,6 +27,11 @@ namespace Juego
 		const int cantAsteroidesM = 15;
 		const int cantAsteroidesP = 30;
 
+		static const int rotacionAsteroide = 250.0f;
+
+		static const int anguloDe2Asteroides = 90; //Al destruir un asteroide salen 3, dos de ellos salen a 90 grados
+												   //del que sale en direccion opuesta al disparo
+
 		static Asteroide asteroidesG[cantAsteroidesG];
 		static Asteroide asteroidesM[cantAsteroidesM];
 		static Asteroide asteroidesP[cantAsteroidesP];
@@ -144,11 +149,11 @@ namespace Juego
 
 					if (asteroidesG[i].rotacionCuerpo > 0)
 					{
-						asteroidesG[i].rotacionCuerpo += 0.3;
+						asteroidesG[i].rotacionCuerpo += rotacionAsteroide * GetFrameTime();
 					}
 					else
 					{
-						asteroidesG[i].rotacionCuerpo-=0.3;
+						asteroidesG[i].rotacionCuerpo-=rotacionAsteroide * GetFrameTime();
 					}
 				}
 			}
@@ -179,11 +184,11 @@ namespace Juego
 
 					if (asteroidesM[i].rotacionCuerpo > 0)
 					{
-						asteroidesM[i].rotacionCuerpo += 0.3;
+						asteroidesM[i].rotacionCuerpo += rotacionAsteroide * GetFrameTime();
 					}
 					else
 					{
-						asteroidesM[i].rotacionCuerpo -= 0.3;
+						asteroidesM[i].rotacionCuerpo -= rotacionAsteroide * GetFrameTime();
 					}
 				}
 			}
@@ -214,11 +219,11 @@ namespace Juego
 
 					if (asteroidesP[i].rotacionCuerpo > 0)
 					{
-						asteroidesP[i].rotacionCuerpo += 0.3;
+						asteroidesP[i].rotacionCuerpo += rotacionAsteroide * GetFrameTime();
 					}
 					else
 					{
-						asteroidesP[i].rotacionCuerpo -= 0.3;
+						asteroidesP[i].rotacionCuerpo -= rotacionAsteroide * GetFrameTime();
 					}
 				}
 			}
@@ -252,8 +257,8 @@ namespace Juego
 							colisiono = true;
 
 							asteroidesM[cantAsteroidesMAc - 3].angulo = disparos[j].angulo;
-							asteroidesM[cantAsteroidesMAc - 2].angulo = disparos[j].angulo - 90;
-							asteroidesM[cantAsteroidesMAc - 1].angulo = disparos[j].angulo + 90;
+							asteroidesM[cantAsteroidesMAc - 2].angulo = disparos[j].angulo - anguloDe2Asteroides;
+							asteroidesM[cantAsteroidesMAc - 1].angulo = disparos[j].angulo + anguloDe2Asteroides;
 
 							asteroidesM[cantAsteroidesMAc - 3].activo = true;
 							asteroidesM[cantAsteroidesMAc - 2].activo = true;
@@ -293,8 +298,8 @@ namespace Juego
 							asteroidesP[cantAsteroidesPAc - 2].activo = true;
 							asteroidesP[cantAsteroidesPAc - 1].activo = true;
 
-							asteroidesP[cantAsteroidesPAc - 2].angulo = asteroidesM[i].angulo - 90;
-							asteroidesP[cantAsteroidesPAc - 1].angulo = asteroidesM[i].angulo + 90;
+							asteroidesP[cantAsteroidesPAc - 2].angulo = asteroidesM[i].angulo - anguloDe2Asteroides;
+							asteroidesP[cantAsteroidesPAc - 1].angulo = asteroidesM[i].angulo + anguloDe2Asteroides;
 
 							asteroidesP[cantAsteroidesPAc - 2].pos = asteroidesM[i].pos;
 							asteroidesP[cantAsteroidesPAc - 1].pos = asteroidesM[i].pos;

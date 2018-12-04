@@ -33,10 +33,12 @@ namespace Juego
 	static void inicializarComponentesJuego();
 	static void desinicializarComponentesjuego();
 
+	static const int auxPosMute = 90; //numero auxiliar que me ayuda a determinar el sector en que el mouse debe estar para silenciar
+
 	void mutear()
 	{
-		if (GetMouseX() >= screenWidth - 90 && GetMouseX() <= screenWidth - 90 + sonido.width
-			&& GetMouseY() >= screenHeight - 90 && GetMouseY() <= screenHeight - 90 + sonido.height)
+		if (GetMouseX() >= screenWidth - auxPosMute && GetMouseX() <= screenWidth - auxPosMute + sonido.width
+			&& GetMouseY() >= screenHeight - auxPosMute && GetMouseY() <= screenHeight - auxPosMute + sonido.height)
 		{
 			if (IsMouseButtonReleased(MOUSE_LEFT_BUTTON))
 			{
@@ -194,7 +196,7 @@ namespace Juego
 
 	void dibujarVersion()
 	{
-		DrawText("v1.0", screenWidth - screenWidth/10, screenHeight/20, screenHeight*screenWidth/27000, WHITE);
+		DrawText("v1.1", screenWidth - screenWidth/10, screenHeight/20, screenHeight*screenWidth/27000, WHITE);
 	}
 
 	void dibujarSonido()

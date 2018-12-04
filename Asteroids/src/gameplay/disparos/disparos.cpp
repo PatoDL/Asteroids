@@ -40,7 +40,8 @@ namespace Juego
 				{
 					disparos[i].pos.x += sinf(disparos[i].angulo*DEG2RAD) * disparos[i].velocidad*GetFrameTime();
 					disparos[i].pos.y -= cosf(disparos[i].angulo*DEG2RAD) * disparos[i].velocidad*GetFrameTime();
-					if (disparos[i].pos.x > screenWidth || disparos[i].pos.x < 0 || disparos[i].pos.y<0 || disparos[i].pos.y>screenHeight)
+					if (disparos[i].pos.x > screenWidth || disparos[i].pos.x < 0 ||
+						disparos[i].pos.y<0 || disparos[i].pos.y>screenHeight)
 					{
 						disparos[i].activo = false;
 					}
