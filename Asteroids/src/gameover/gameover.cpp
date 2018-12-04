@@ -8,16 +8,16 @@ namespace Juego
 {
 	namespace Gameover
 	{
-		Texture2D fondo;
-		Texture2D resultado;
-		Texture2D felicidades;
-		Texture2D perdiste;
-		Texture2D volverAJ;
-		Texture2D volverAJP;
-		Texture2D volverAM;
-		Texture2D volverAMP;
-		Texture2D jugarB;
-		Texture2D volverMB;
+		static Texture2D fondo;
+		static Texture2D resultado;
+		static Texture2D felicidades;
+		static Texture2D perdiste;
+		static Texture2D volverAJ;
+		static Texture2D volverAJP;
+		static Texture2D volverAM;
+		static Texture2D volverAMP;
+		static Texture2D jugarB;
+		static Texture2D volverMB;
 
 		static void chequearMouse();
 

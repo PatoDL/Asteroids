@@ -7,16 +7,16 @@ namespace Juego
 {
 	namespace Menu
 	{
-		Texture2D titulo;
-		Texture2D botonJugar;
-		Texture2D botonCreditos;
-		Texture2D botonJugarP;
-		Texture2D botonCreditosP;
-		Texture2D jugarB;
-		Texture2D creditosB;
-		Texture2D botonSalir;
-		Texture2D botonSalirP;
-		Texture2D salirB;
+		static Texture2D titulo;
+		static Texture2D botonJugar;
+		static Texture2D botonCreditos;
+		static Texture2D botonJugarP;
+		static Texture2D botonCreditosP;
+		static Texture2D jugarB;
+		static Texture2D creditosB;
+		static Texture2D botonSalir;
+		static Texture2D botonSalirP;
+		static Texture2D salirB;
 		bool salir;
 
 		static void chequearMouse();

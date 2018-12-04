@@ -10,13 +10,13 @@ namespace Juego
 		bool pausa = false;
 
 		//botones pausa
-		Texture2D botonDespausa;
-		Texture2D botonReiniciar;
-		Texture2D botonReiniciarP;
-		Texture2D botonMenu;
-		Texture2D botonMenuP;
-		Texture2D reiniciarB;
-		Texture2D menuB;
+		static Texture2D botonDespausa;
+		static Texture2D botonReiniciar;
+		static Texture2D botonReiniciarP;
+		static Texture2D botonMenu;
+		static Texture2D botonMenuP;
+		static Texture2D reiniciarB;
+		static Texture2D menuB;
 		//---------------------
 
 		void iniciarComponentesPausa()

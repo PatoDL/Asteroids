@@ -26,11 +26,11 @@ namespace Juego
 		const int cantAsteroidesG = 5;
 		const int cantAsteroidesM = 15;
 		const int cantAsteroidesP = 30;
-		Asteroide asteroidesG[cantAsteroidesG];
-		Asteroide asteroidesM[cantAsteroidesM];
-		Asteroide asteroidesP[cantAsteroidesP];
-		Texture2D aSprite;
-		Sound aColision;
+		static Asteroide asteroidesG[cantAsteroidesG];
+		static Asteroide asteroidesM[cantAsteroidesM];
+		static Asteroide asteroidesP[cantAsteroidesP];
+		static Texture2D aSprite;
+		static Sound aColision;
 
 		void iniciarAsteroides()
 		{

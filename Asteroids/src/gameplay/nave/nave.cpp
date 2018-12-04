@@ -12,8 +12,8 @@ namespace Juego
 	{		
 			Nave nave;
 
-			Vector2 vDireccion;  //vector que va de la nave a la pos del mouse, sirve para calcular la rotacion
-			Vector2 vNormalizador;
+			static Vector2 vDireccion;  //vector que va de la nave a la pos del mouse, sirve para calcular la rotacion
+			static Vector2 vNormalizador;
 			static void calcularAnguloRotacion();
 			static void normalizarDireccion();
 

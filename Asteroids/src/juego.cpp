@@ -15,11 +15,11 @@ namespace Juego
 	Estado estado=menu;
 	Estado estadoA=menu;
 	static bool enjuego = true;
-	Music musicaJuego;
+	static Music musicaJuego;
 	bool haySonido = true;
-	Texture2D unmute;
-	Texture2D mute;
-	Texture2D sonido;
+	static Texture2D unmute;
+	static Texture2D mute;
+	static Texture2D sonido;
 
 	static void inicializarJuego();
 	static void finalizarJuego();
@@ -233,7 +233,7 @@ namespace Juego
 	void ejecutarJuego()
 	{
 		inicializarJuego();
-		while (enjuego)
+		while (enjuego && !WindowShouldClose())
 		{
 			if (estado != gameover) //unica solucion que le encontré al problema
 			{
