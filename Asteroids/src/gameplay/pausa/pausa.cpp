@@ -37,6 +37,8 @@ namespace Juego
 			UnloadTexture(botonReiniciarP);
 			UnloadTexture(botonMenu);
 			UnloadTexture(botonMenuP);
+			UnloadTexture(reiniciarB);
+			UnloadTexture(menuB);
 		}
 
 		void cambiarPausa()

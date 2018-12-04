@@ -26,6 +26,7 @@ namespace Juego
 		const int cantAsteroidesG = 5;
 		const int cantAsteroidesM = 15;
 		const int cantAsteroidesP = 30;
+
 		static Asteroide asteroidesG[cantAsteroidesG];
 		static Asteroide asteroidesM[cantAsteroidesM];
 		static Asteroide asteroidesP[cantAsteroidesP];
