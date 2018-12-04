@@ -14,8 +14,11 @@ namespace Juego
 
 			static Vector2 vDireccion;  //vector que va de la nave a la pos del mouse, sirve para calcular la rotacion
 			static Vector2 vNormalizador;
-			static void calcularAnguloRotacion();
-			static void normalizarDireccion();
+
+			static Vector2 posNave;
+			static Vector2 posMouse;
+			static Vector2 vecDirector;
+			static float angulo;
 
 			void iniciarNave()
 			{
@@ -29,64 +32,39 @@ namespace Juego
 				nave.color = WHITE;
 				nave.sprite = LoadTexture("res/nave.png");
 				nave.velocidad = (float)screenWidth/3;
-				nave.aceleracionBase = { 0.8f };
-				nave.aceleracion = { 0.0f,0.0f };
-				nave.anguloAceler = 0.0f;
+				nave.aceleracion = {10.0f,10.0f };
+				nave.angleFixer = 90.0f;
 				nave.detenida = true;
 				nave.puntaje = 0;
-			}
-
-			void calcularAnguloRotacion()
-			{
-				vDireccion.x = GetMouseX() - nave.pos.x;
-				vDireccion.y = GetMouseY() - nave.pos.y;
-				
-				nave.rotacion = atan2(vDireccion.y , vDireccion.x)*RAD2DEG+90.0f;
-
-				/*if (IsKeyReleased(KEY_F))
-				{
-					cout << nave.rotacion << endl;
-					cout << "x:" << GetMouseX() << ",y:" << GetMouseY() << endl;
-					cout << "navex:" << nave.pos.x << ", navey:" << nave.pos.y << endl;
-				}*/
-			}
-
-			void normalizarDireccion()
-			{
-				/*vNormalizador.x = vDireccion.x / sqrtf(powf(vDireccion.x, 2) + powf(vDireccion.y, 2));
-				vNormalizador.y = vDireccion.y / sqrtf(powf(vDireccion.x, 2) + powf(vDireccion.y, 2));*/
+				nave.vel = { 0,0 };
 			}
 
 			void moverNave()
 			{
-				calcularAnguloRotacion();
-				//normalizarDireccion();
-				
+
 				if (!pausa)
 				{
 					if (IsMouseButtonDown(MOUSE_RIGHT_BUTTON))
-					{
-						if (nave.detenida)
-						{
-							nave.detenida = false;
-						}
-						
-						nave.anguloAceler = nave.rotacion;
-					}
+					{	
+						vNormalizador.x = vecDirector.x / sqrt(pow(vecDirector.x, 2.0f) + pow(vecDirector.y, 2.0f));
+						vNormalizador.y = vecDirector.y / sqrt(pow(vecDirector.x, 2.0f) + pow(vecDirector.y, 2.0f));
 
-					nave.aceleracion = { nave.aceleracionBase //* vNormalizador.x 
-										,nave.aceleracionBase //* vNormalizador.y
-									   };
+						nave.aceleracion.x += vNormalizador.x;
+						nave.aceleracion.y += vNormalizador.y;
+					}
 				}
 			}
 
 			void actualizarPosNave()
 			{
-				if (!nave.detenida)
-				{
-					nave.pos.y -= cos(nave.anguloAceler*DEG2RAD) * nave.velocidad * nave.aceleracion.x * GetFrameTime();
-					nave.pos.x += sin(nave.anguloAceler*DEG2RAD) * nave.velocidad * nave.aceleracion.y * GetFrameTime();
-				}
+				posNave = nave.pos;
+				posMouse = { GetMousePosition() };
+				vecDirector = { posMouse.x - posNave.x, posMouse.y - posNave.y };
+				angulo = atan2(vecDirector.y , vecDirector.x);
+				nave.rotacion = angulo;
+
+				nave.pos.x = nave.pos.x + nave.aceleracion.x*GetFrameTime();
+				nave.pos.y = nave.pos.y + nave.aceleracion.y*GetFrameTime();
 			}
 
 			void chequearColisionConBordes()
@@ -113,7 +91,7 @@ namespace Juego
 			{
 				DrawTexturePro(nave.sprite, { 0.0f,0.0f,(float)nave.sprite.width,(float)nave.sprite.height },
 					{ nave.pos.x , nave.pos.y, (float)nave.sprite.width / 8 , (float)nave.sprite.height / 8 },
-					{ (float)nave.sprite.width / 16,(float)nave.sprite.height / 16 }, nave.rotacion, WHITE);
+					{ (float)nave.sprite.width / 16,(float)nave.sprite.height / 16 }, nave.rotacion*RAD2DEG+nave.angleFixer, WHITE);
 			}
 	}
 }

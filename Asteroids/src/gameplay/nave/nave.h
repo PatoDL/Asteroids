@@ -18,9 +18,10 @@ namespace Juego
 			Vector2 pos;
 			Texture2D sprite;
 			float velocidad;
-			float anguloAceler;
+			float angleFixer;
 			float aceleracionBase;
 			Vector2 aceleracion;
+			Vector2 vel;
 			bool detenida;
 			int puntaje;
 		};
