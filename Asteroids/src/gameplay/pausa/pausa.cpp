@@ -2,6 +2,7 @@
 
 #include "raylib.h"
 #include "juego.h"
+#include "gameplay/gameplay.h"
 
 namespace Juego
 {
@@ -72,7 +73,8 @@ namespace Juego
 					reiniciarB = botonReiniciarP;
 					if (IsMouseButtonReleased(MOUSE_LEFT_BUTTON))
 					{
-						estadoA = menu;
+						Gameplay::desinicializarGP();
+						Gameplay::iniciarComponentesGP();
 						estado = juego;
 					}
 				}

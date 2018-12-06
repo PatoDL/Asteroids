@@ -27,6 +27,9 @@ namespace Juego
 		const int cantAsteroidesM = 15;
 		const int cantAsteroidesP = 30;
 
+		static int cantAsteroidesMAc = 0;
+		static int cantAsteroidesPAc = 0;
+
 		static const int rotacionAsteroide = 250.0f;
 
 		static const int anguloDe2Asteroides = 90; //Al destruir un asteroide salen 3, dos de ellos salen a 90 grados
@@ -98,6 +101,9 @@ namespace Juego
 				asteroidesP[i].sprite = aSprite;
 				asteroidesP[i].rotacionCuerpo = (float)GetRandomValue(0, 1);
 			}
+
+			cantAsteroidesMAc = 0;
+			cantAsteroidesPAc = 0;
 		}
 
 		void desinicializarAsteroides()
@@ -231,8 +237,6 @@ namespace Juego
 
 		void chequearColisionConAsteroide()
 		{
-			static int cantAsteroidesMAc = 0;
-			static int cantAsteroidesPAc = 0;
 			bool colisiono=false;
 
 			for (int i = 0; i <cantAsteroidesG; i++)
