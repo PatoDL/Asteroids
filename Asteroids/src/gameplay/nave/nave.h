@@ -21,7 +21,6 @@ namespace Juego
 			float angleFixer;
 			float aceleracionBase;
 			Vector2 aceleracion;
-			Vector2 vel;
 			bool detenida;
 			int puntaje;
 		};

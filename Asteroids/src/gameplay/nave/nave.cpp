@@ -12,7 +12,7 @@ namespace Juego
 	{		
 			Nave nave;
 
-			static Vector2 vDireccion;  //vector que va de la nave a la pos del mouse, sirve para calcular la rotacion
+			
 			static Vector2 vNormalizador;
 
 			static Vector2 posNave;
@@ -31,12 +31,11 @@ namespace Juego
 				nave.radioColision = nave.altura * 2 / 3 + 10;
 				nave.color = WHITE;
 				nave.sprite = LoadTexture("res/nave.png");
-				nave.velocidad = (float)screenWidth/3;
+				nave.velocidad = (float)screenWidth/2;
 				nave.aceleracion = {10.0f,10.0f };
 				nave.angleFixer = 90.0f;
 				nave.detenida = true;
 				nave.puntaje = 0;
-				nave.vel = { 0,0 };
 			}
 
 			void moverNave()
@@ -49,8 +48,8 @@ namespace Juego
 						vNormalizador.x = vecDirector.x / sqrt(pow(vecDirector.x, 2.0f) + pow(vecDirector.y, 2.0f));
 						vNormalizador.y = vecDirector.y / sqrt(pow(vecDirector.x, 2.0f) + pow(vecDirector.y, 2.0f));
 
-						nave.aceleracion.x += vNormalizador.x;
-						nave.aceleracion.y += vNormalizador.y;
+						nave.aceleracion.x += vNormalizador.x * nave.velocidad * GetFrameTime();
+						nave.aceleracion.y += vNormalizador.y * nave.velocidad * GetFrameTime();
 					}
 				}
 			}
