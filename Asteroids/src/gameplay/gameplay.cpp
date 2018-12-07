@@ -58,7 +58,7 @@ namespace Juego
 			StopMusicStream(musicaFondo);
 			UnloadMusicStream(musicaFondo);
 #endif
-			UnloadTexture(nave.sprite);
+			desinicializarNave();
 			UnloadTexture(botonPausa);
 			UnloadTexture(fondo);
 			desinicializarAsteroides();

@@ -31,11 +31,16 @@ namespace Juego
 				nave.radioColision = nave.altura * 2 / 3 + 10;
 				nave.color = WHITE;
 				nave.sprite = LoadTexture("res/nave.png");
-				nave.velocidad = (float)screenWidth/2;
+				nave.velocidad = 0.05f;
 				nave.aceleracion = {10.0f,10.0f };
 				nave.angleFixer = 90.0f;
 				nave.detenida = true;
 				nave.puntaje = 0;
+			}
+
+			void desinicializarNave()
+			{
+				UnloadTexture(nave.sprite);
 			}
 
 			void moverNave()
@@ -48,8 +53,8 @@ namespace Juego
 						vNormalizador.x = vecDirector.x / sqrt(pow(vecDirector.x, 2.0f) + pow(vecDirector.y, 2.0f));
 						vNormalizador.y = vecDirector.y / sqrt(pow(vecDirector.x, 2.0f) + pow(vecDirector.y, 2.0f));
 
-						nave.aceleracion.x += vNormalizador.x * nave.velocidad * GetFrameTime();
-						nave.aceleracion.y += vNormalizador.y * nave.velocidad * GetFrameTime();
+						nave.aceleracion.x += vNormalizador.x * nave.velocidad;
+						nave.aceleracion.y += vNormalizador.y * nave.velocidad;
 					}
 				}
 			}

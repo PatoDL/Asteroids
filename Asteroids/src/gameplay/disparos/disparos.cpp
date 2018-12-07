@@ -19,7 +19,7 @@ namespace Juego
 			{
 				disparos[i].radio = (float)screenHeight*screenWidth/135000;
 				disparos[i].activo = false;
-				disparos[i].velocidad = nave.velocidad * 3 / 2;
+				disparos[i].velocidad = 500.0f;
 			}
 		}
 

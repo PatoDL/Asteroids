@@ -28,6 +28,7 @@ namespace Juego
 		extern Nave nave;
 
 		void iniciarNave();
+		void desinicializarNave();
 		void moverNave();
 		void actualizarPosNave();
 		void chequearColisionConBordes();
